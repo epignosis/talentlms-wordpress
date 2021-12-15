@@ -64,7 +64,7 @@ if(!function_exists('tlms_isApiKey')){
 if(!function_exists('tlms_getDateFormat')){
 	function tlms_getDateFormat($no_sec = false){
 		$site_info = tlms_getTalentLMSSiteInfo();
-		$date_format = $site_info['date_format'];
+		$date_format = $site_info instanceof Exception ? '' : $site_info['date_format'];
 
 		switch($date_format){
 			case 'DDMMYYYY':
@@ -84,6 +84,7 @@ if(!function_exists('tlms_getDateFormat')){
 				}
 				break;
 			case 'YYYYMMDD':
+			default:
 				if($no_sec){
 					$format = 'Y/m/d';
 				}
