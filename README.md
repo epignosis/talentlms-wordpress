@@ -55,6 +55,9 @@ If you have a question or any feedback you want to share send us an email at [su
 
 == Changelog ==
 
+= 6.6.9.4 =
+* Added support for Wordpress 5.8 and PHP 7.4
+
 = 6.6.9.3 =
 
 * Fix that respects db prefix on course re-sync action

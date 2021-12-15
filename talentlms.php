@@ -3,13 +3,13 @@
  Plugin Name: TalentLMS
  Plugin URI: http://wordpress.org/extend/plugins/talentlms/
  Description: This plugin integrates Talentlms with Wordpress. Promote your TalentLMS content through your WordPress site.
- Version: 6.6.9.3
+ Version: 6.6.9.4
  Author: Epignosis LLC
  Author URI: www.epignosishq.com
  License: GPL2
  */
 
-define("_TLMS_VERSION_", "6.6.9.3");
+define("_TLMS_VERSION_", "6.6.9.4");
 define("_TLMS_BASEPATH_", dirname(__FILE__));
 define("_TLMS_BASEURL_", plugin_dir_url(__FILE__));
 
