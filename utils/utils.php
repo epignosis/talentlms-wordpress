@@ -109,6 +109,7 @@ if(!function_exists('tlms_getCourses')){
 		$result = $wpdb->get_results("SELECT * FROM ".TLMS_COURSES_TABLE);
 		if(empty($result)){
 			$apiCourses = TalentLMS_Course::all();
+			$format = tlms_getDateFormat();
 
 			foreach($apiCourses as $course){
 				$wpdb->insert(TLMS_COURSES_TABLE, array(
@@ -119,8 +120,8 @@ if(!function_exists('tlms_getCourses')){
 					'description' => $course['description'],
 					'price' => esc_sql(filter_var(html_entity_decode($course['price']), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)),
 					'status' => $course['status'],
-					'creation_date' => DateTime::createFromFormat(tlms_getDateFormat(), $course['creation_date'])->getTimestamp(),
-					'last_update_on' => DateTime::createFromFormat(tlms_getDateFormat(), $course['last_update_on'])->getTimestamp(),
+					'creation_date' => DateTime::createFromFormat($format, $course['creation_date'])->getTimestamp(),
+					'last_update_on' => DateTime::createFromFormat($format, $course['last_update_on'])->getTimestamp(),
 					'hide_catalog' => $course['hide_from_catalog'],
 					'shared' => $course['shared'],
 					'shared_url' => $course['shared_url'],
