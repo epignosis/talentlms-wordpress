@@ -61,6 +61,21 @@ if(!function_exists('tlms_isApiKey')){
 	}
 }
 
+if(!function_exists('tlms_parseDate')){
+	function tlms_parseDate($format, $date){
+		$isPM = (stripos($date, 'PM') !== false);
+		$date = str_replace(array('AM', 'PM'), '', $date);
+
+		$date = DateTime::createFromFormat(trim($format), trim($date));
+
+		if ($isPM){
+			$date->modify('+12 hours');
+		}
+
+		return $date;
+	}
+}
+
 if(!function_exists('tlms_getDateFormat')){
 	function tlms_getDateFormat($no_sec = false){
 		// TODO: Store the site info in the database instead of hitting the API everytime we want to get it.
@@ -120,8 +135,8 @@ if(!function_exists('tlms_getCourses')){
 					'description' => $course['description'],
 					'price' => esc_sql(filter_var(html_entity_decode($course['price']), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)),
 					'status' => $course['status'],
-					'creation_date' => DateTime::createFromFormat($format, $course['creation_date'])->getTimestamp(),
-					'last_update_on' => DateTime::createFromFormat($format, $course['last_update_on'])->getTimestamp(),
+					'creation_date' => tlms_parseDate($format, $course['creation_date'])->getTimestamp(),
+					'last_update_on' => tlms_parseDate($format, $course['last_update_on'])->getTimestamp(),
 					'hide_catalog' => $course['hide_from_catalog'],
 					'shared' => $course['shared'],
 					'shared_url' => $course['shared_url'],
