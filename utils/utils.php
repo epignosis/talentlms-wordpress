@@ -166,6 +166,8 @@ if(!function_exists('tlms_getCategories')){
 if(!function_exists('tlms_selectCourses')){
 	function tlms_selectCourses(){
 		global $wpdb;
+
+		$courses = [];
 		// snom 5
 		$sql = "SELECT c.*, cat.name as category_name FROM ".TLMS_COURSES_TABLE." c LEFT JOIN ".TLMS_CATEGORIES_TABLE
 			." cat ON c.category_id=cat.id WHERE c.status = 'active' AND c.hide_catalog = '0'";
@@ -260,22 +262,26 @@ if(!function_exists('tlms_addProduct')){
 		$tmp = download_url($thumbs_url);
 
 		preg_match('/[^\?]+\.(jpg|JPG|jpe|JPE|jpeg|JPEG|gif|GIF|png|PNG)/', $thumbs_url, $matches);
-		$file_array['name'] = basename($matches[0]);
-		$file_array['tmp_name'] = $tmp;
+		$file_array = [];
 
-		if(is_wp_error($tmp)){
-			@unlink($file_array['tmp_name']);
-			$file_array['tmp_name'] = '';
-			//$logtxt .= "Error: download_url error - $tmp\n";
-		}
-		else{
-			//$logtxt .= "download_url: $tmp\n";
-		}
+		if(count($matches)){
+			$file_array['name'] = basename($matches[0]);
+			$file_array['tmp_name'] = $tmp;
 
-		$thumbid = media_handle_sideload($file_array, $product_id, $courses[$course_id]->name);
-		if(is_wp_error($thumbid)){
-			@unlink($file_array['tmp_name']);
-			$file_array['tmp_name'] = '';
+			if(is_wp_error($tmp)){
+				@unlink($file_array['tmp_name']);
+				$file_array['tmp_name'] = '';
+				//$logtxt .= "Error: download_url error - $tmp\n";
+			}
+			else{
+				//$logtxt .= "download_url: $tmp\n";
+			}
+
+			$thumbid = media_handle_sideload($file_array, $product_id, $courses[$course_id]->name);
+			if(is_wp_error($thumbid)){
+				@unlink($file_array['tmp_name']);
+				$file_array['tmp_name'] = '';
+			}
 		}
 
 		set_post_thumbnail($product_id, $thumbid);
