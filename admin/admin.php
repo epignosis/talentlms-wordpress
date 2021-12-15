@@ -186,12 +186,12 @@ function tlms_logError($message){
 function tlms_showWarnings(){
 	global $talentlmsAdminErrors;
 
-	if(!is_admin() || defined('DOING_AJAX') || DOING_AJAX){
+	if(!is_admin() || (defined('DOING_AJAX') && DOING_AJAX)){
 		return false;
 	}
 
 	foreach($talentlmsAdminErrors as $message){
-		echo '<div id="talentlms-warning" class="error notice">'.$message.'</div>';
+		echo '<div class="error notice">'.$message.'</div>';
 	}
 }
 
