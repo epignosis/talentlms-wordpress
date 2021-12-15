@@ -19,11 +19,11 @@ function talentlms_course_list($atts) {
 	$categories = tlms_selectCategories();
 	$courses = tlms_selectCourses();
 
-	//ob_start();
-	include (_TLMS_BASEPATH_ . '/shortcodes/talentlms_courses.php');
-	//$output = ob_get_clean();
-	//return $output;
+	ob_start();
+	include(_TLMS_BASEPATH_.'/shortcodes/talentlms_courses.php');
+	$output = ob_get_clean();
 
+	return $output;
 }
 
 add_shortcode('talentlms-courses', 'talentlms_course_list');
