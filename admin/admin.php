@@ -35,11 +35,12 @@ function tlms_enqueueAdminScripts() {
 add_action("admin_enqueue_scripts", 'tlms_enqueueAdminScripts');
 
 // add contextual help
-function tlms_contextualHelp($contextual_help, $screen_id, $screen) {
+function tlms_contextualHelp() {
 	global $tlms_menu, $tlms_dashboard, $tlms_setup, $tlms_integrations;
+	$screen_id = get_current_screen()->id;
 	include 'menu-pages/help.php';
 }
-add_filter('contextual_help', 'tlms_contextualHelp', 10, 3);
+add_filter('admin_head', 'tlms_contextualHelp', 10, 0);
 
 /*
  * Pages
@@ -78,7 +79,7 @@ function tlms_setupPage () {
 				$action_status = "updated";
 				$action_message = __('Details edited successfully', 'talentlms');
 			}
-			
+
 		} else {
 			$action_status = "error";
 
@@ -101,7 +102,7 @@ function tlms_setupPage () {
 
 function tlms_integrationsPage () {
 
-	
+
 	$courses = tlms_selectCourses();
 
 	if(isset($_POST['tlms_products']) && $_POST['tlms_products']) {
