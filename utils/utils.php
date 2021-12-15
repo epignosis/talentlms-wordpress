@@ -63,6 +63,7 @@ if(!function_exists('tlms_isApiKey')){
 
 if(!function_exists('tlms_getDateFormat')){
 	function tlms_getDateFormat($no_sec = false){
+		// TODO: Store the site info in the database instead of hitting the API everytime we want to get it.
 		$site_info = tlms_getTalentLMSSiteInfo();
 		$date_format = $site_info instanceof Exception ? '' : $site_info['date_format'];
 
