@@ -65,10 +65,9 @@ if(!function_exists('tlms_parseDate')){
 	function tlms_parseDate($format, $date){
 		$isPM = (stripos($date, 'PM') !== false);
 		$date = str_replace(array('AM', 'PM'), '', $date);
-
 		$date = DateTime::createFromFormat(trim($format), trim($date));
 
-		if ($isPM){
+		if($isPM && $date->format('H') !== '12'){
 			$date->modify('+12 hours');
 		}
 
