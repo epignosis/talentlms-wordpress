@@ -64,17 +64,20 @@ if(!function_exists('tlms_isApiKey')){
 if(!function_exists('tlms_parseDate')){
 	function tlms_parseDate($format, $date){
 		$isPM = (stripos($date, 'PM') !== false);
-		$date = str_replace(array('AM', 'PM'), '', $date);
-		$date = DateTime::createFromFormat(trim($format), trim($date));
+		$parsedDate = str_replace(array('AM', 'PM'), '', $date);
+		$is12hourFormat = ($parsedDate !== $date);
+		$parsedDate = DateTime::createFromFormat(trim($format), trim($parsedDate));
 
-		if($isPM && $date->format('H') !== '12'){
-			$date->modify('+12 hours');
-		}
-		else if(!$isPM && $date->format('H') === '12'){
-			$date->modify('-12 hours');
+		if($is12hourFormat){
+			if($isPM && $parsedDate->format('H') !== '12'){
+				$parsedDate->modify('+12 hours');
+			}
+			else if(!$isPM && $parsedDate->format('H') === '12'){
+				$parsedDate->modify('-12 hours');
+			}
 		}
 
-		return $date;
+		return $parsedDate;
 	}
 }
 
