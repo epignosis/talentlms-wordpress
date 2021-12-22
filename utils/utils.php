@@ -618,13 +618,8 @@ if(!function_exists('tlms_recordLog')){
 if(!function_exists('tlms_passgen')){
     function tlms_passgen($length = 8){
 
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, strlen($characters) - 1)];
-        }
-
-        return $randomString;
+		$length = max($length,8);
+        return wp_generate_password($length) . 'aA1'; //aA1 ensures that password has one uppercase letter, one lowercase and one digit
     }
 }
 
