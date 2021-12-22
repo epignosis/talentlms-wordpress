@@ -619,6 +619,7 @@ if(!function_exists('tlms_passgen')){
     function tlms_passgen($length = 8){
 
 		$length = max($length,8);
+
         return wp_generate_password($length) . 'aA1'; //aA1 ensures that password has one uppercase letter, one lowercase and one digit
     }
 }
