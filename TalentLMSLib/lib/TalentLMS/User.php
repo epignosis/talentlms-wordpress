@@ -17,7 +17,12 @@ class TalentLMS_User extends TalentLMS_ApiResource{
 		$class = get_class();
 		return self::_scopedAll($class);
 	}
-	
+
+	public static function delete($params){
+		$class = get_class();
+		return self::_scopedDeleteUser($class, $params);
+	}
+
 	public static function login($params){
 		$class = get_class();
 		return self::_scopedLogin($class, $params);
@@ -40,7 +45,7 @@ class TalentLMS_User extends TalentLMS_ApiResource{
 	
 	public static function setStatus($params){
 		$class = get_class();
-		return self::_scopedSetStatus($class, $params);
+		return self::_scopedSetUserStatus($class, $params);
 	}
 	
 	public static function forgotUsername($params){
