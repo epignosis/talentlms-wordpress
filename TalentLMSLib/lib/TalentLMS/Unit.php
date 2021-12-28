@@ -16,4 +16,9 @@ class TalentLMS_Unit extends TalentLMS_ApiResource{
 		$class = get_class();
 		return self::_scopedGetSurveyAnswers($class, $params);
 	}
+
+	public static function getIltSessions($params){
+		$class = get_class();
+		return self::_scopedGetIltSessions($class, $params);
+	}
 }
