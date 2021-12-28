@@ -16,7 +16,12 @@ class TalentLMS_Group extends TalentLMS_ApiResource{
 		$class = get_class();
 		return self::_scopedAll($class);
 	}
-	
+
+	public static function delete($params){
+		$class = get_class();
+		return self::_scopedDeleteGroup($class, $params);
+	}
+
 	public static function addUser($params){
 		$class = get_class();
 		return self::_scopedAddUserToGroup($class, $params);
