@@ -54,6 +54,13 @@ abstract class TalentLMS_ApiResource{
 	
 		return $response;
 	}
+
+	protected static function _scopedResetUserProgress($class, $params){
+		$url = self::_instanceUrlByParams('resetUserProgress', $params);
+		$response = TalentLMS_ApiRequestor::request('get', $url);
+
+		return $response;
+	}
 	
 	protected static function _scopedGotoCourse($class, $params){
 		$url = self::_instanceUrlByParams('gotoCourse', $params);
@@ -92,10 +99,17 @@ abstract class TalentLMS_ApiResource{
 		return $response;
 	}
 	
-	protected static function _scopedSetStatus($class, $params){
+	protected static function _scopedSetUserStatus($class, $params){
 		$url = self::_instanceUrlByParams('userSetStatus', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
 		
+		return $response;
+	}
+
+	protected static function _scopedSetBranchStatus($class, $params){
+		$url = self::_instanceUrlByParams('branchSetStatus', $params);
+		$response = TalentLMS_ApiRequestor::request('get', $url);
+
 		return $response;
 	}
 	
@@ -124,6 +138,13 @@ abstract class TalentLMS_ApiResource{
 		$url = self::_instanceUrlByParams('addUserToBranch', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
 	
+		return $response;
+	}
+
+	protected static function _scopedRemoveUserFromBranch($class, $params){
+		$url = self::_instanceUrlByParams('removeUserFromBranch', $params);
+		$response = TalentLMS_ApiRequestor::request('get', $url);
+
 		return $response;
 	}
 	
@@ -182,6 +203,13 @@ abstract class TalentLMS_ApiResource{
 	
 		return $response;
 	}
+
+	protected static function _scopedGetIltSessions($class, $params){
+		$url = self::_instanceUrlByParams('getIltSessions', $params);
+		$response = TalentLMS_ApiRequestor::request('get', $url);
+
+		return $response;
+	}
 	
 	protected static function _scopedCreateCourse($class, $params){
 		self::_validateCall('create', $class, $params);
@@ -228,11 +256,57 @@ abstract class TalentLMS_ApiResource{
 	
 		return $response;
 	}
+
+	protected static function _scopedGetCustomCourseFields($class){
+		$url = self::_classUrlByMethodName('customCourseFields');
+		$response = TalentLMS_ApiRequestor::request('get', $url);
+
+		return $response;
+	}
+
+	protected static function _scopedGetCoursesByCustomField($class, $params){
+		$url = self::_instanceUrlByParams('getCoursesByCustomField', $params);
+		$response = TalentLMS_ApiRequestor::request('get', $url);
+
+		return $response;
+	}
 	
 	protected static function _scopedGetTimeline($class, $params){
 		$url = self::_instanceUrlByParams('getTimeline', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
 	
+		return $response;
+	}
+
+	protected static function _scopedDeleteGroup($class, $params){
+		self::_validateCall('delete', $class, $params);
+		$url = self::_postUrl('deleteGroup');
+		$response = TalentLMS_ApiRequestor::request('post', $url, $params);
+
+		return $response;
+	}
+
+	protected static function _scopedDeleteBranch($class, $params){
+		self::_validateCall('delete', $class, $params);
+		$url = self::_postUrl('deleteBranch');
+		$response = TalentLMS_ApiRequestor::request('post', $url, $params);
+
+		return $response;
+	}
+
+	protected static function _scopedDeleteCourse($class, $params){
+		self::_validateCall('delete', $class, $params);
+		$url = self::_postUrl('deleteCourse');
+		$response = TalentLMS_ApiRequestor::request('post', $url, $params);
+
+		return $response;
+	}
+
+	protected static function _scopedDeleteUser($class, $params){
+		self::_validateCall('delete', $class, $params);
+		$url = self::_postUrl('deleteUser');
+		$response = TalentLMS_ApiRequestor::request('post', $url, $params);
+
 		return $response;
 	}
 	
@@ -302,6 +376,9 @@ abstract class TalentLMS_ApiResource{
 		else if($method == 'userSetStatus'){
 			return "/usersetstatus";
 		}
+		else if($method == 'branchSetStatus'){
+			return "/branchsetstatus";
+		}
 		else if($method == 'gotoCourse'){
 			return "/gotocourse";
 		}
@@ -316,6 +393,9 @@ abstract class TalentLMS_ApiResource{
 		}
 		else if($method == 'addUserToBranch'){
 			return "/addusertobranch";
+		}
+		else if($method == 'removeUserFromBranch'){
+			return "/removeuserfrombranch";
 		}
 		else if($method == 'addCourseToBranch'){
 			return "/addcoursetobranch";
@@ -341,14 +421,26 @@ abstract class TalentLMS_ApiResource{
 		else if($method == 'getSurveyAnswers'){
 			return "/getsurveyanswers";
 		}
+		else if($method == 'getIltSessions'){
+			return "/getiltsessions";
+		}
 		else if($method == 'getUserStatusInCourse'){
 			return "/getuserstatusincourse";
+		}
+		else if($method == 'customCourseFields'){
+			return "/getcustomcoursefields";
+		}
+		else if($method == 'getCoursesByCustomField'){
+			return "/getcoursesbycustomfield";
 		}
 		else if($method == 'getTimeline'){
 			return "/gettimeline";
 		}
 		else if($method == 'removeUserFromCourse'){
 			return "/removeuserfromcourse";
+		}
+		else if($method == 'resetUserProgress'){
+			return "/resetuserprogress";
 		}
 		else if($method == 'getUsersByCustomField'){
 			return "/getusersbycustomfield";
@@ -385,6 +477,18 @@ abstract class TalentLMS_ApiResource{
 		}
 		else if($method == 'editUser'){
 			return "/edituser";
+		}
+		else if($method == 'deleteGroup'){
+			return "/deletegroup";
+		}
+		else if($method == 'deleteBranch'){
+			return "/deletebranch";
+		}
+		else if($method == 'deleteCourse'){
+			return "/deletecourse";
+		}
+		else if($method == 'deleteUser'){
+			return "/deleteuser";
 		}
 	}
 	
