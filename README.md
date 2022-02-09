@@ -55,6 +55,9 @@ If you have a question or any feedback you want to share send us an email at [su
 
 == Changelog ==
 
+= 6.6.9.5 =
+* Fix category's filter in shortcode
+
 = 6.6.9.4 =
 * Added support for Wordpress 5.8 and PHP 7.4
 * Fix bug about the 12-hour format.
