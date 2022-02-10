@@ -617,10 +617,15 @@ if(!function_exists('tlms_recordLog')){
 
 if(!function_exists('tlms_passgen')){
     function tlms_passgen($length = 8){
+		$uppercases = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		$lowercases = "abcdefghijklmnopqrstuvwxyz";
+		$digits = "1234567890";
 
         $length = max($length, 8);
-        return wp_generate_password($length) . 'aA1'; // aA1 ensures that password has one uppercase letter, one lowercase and one digit
-    }
+        $password = wp_generate_password($length) . $uppercases[rand(0, strlen($uppercases - 1))] . $lowercases[rand(0, strlen($lowercases - 1))] . $digits[rand(0, strlen($digits - 1))];
+
+		return str_shuffle($password);
+	}
 }
 
 if(!function_exists('tlms_getCourseIdByProduct')){
