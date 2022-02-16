@@ -1,12 +1,19 @@
 jQuery( document ).ready(function() {
 
+    if(jQuery('.tlms-products').length === jQuery('.tlms-products:checked').length){
+        jQuery('#tlms-integrate-all').html(translations.unselect_all_message);
+    }
+
     // toggle check/uncheck all courses for integration
-    jQuery('#tlms-integrate-all').toggle(function () {
-        jQuery('.tlms-products').attr('checked','checked');
-        jQuery(this).html(translations.unselect_all_message);
-    }, function () {
-        jQuery('.tlms-products').removeAttr('checked');
-        jQuery(this).html(translations.select_all_message);
+    jQuery('#tlms-integrate-all').on('click', function () {
+        if(jQuery(this).html() === translations.unselect_all_message){
+            jQuery('.tlms-products').prop('checked', false);
+            jQuery(this).html(translations.select_all_message);
+        }
+        else{
+            jQuery('.tlms-products').prop('checked', true);
+            jQuery(this).html(translations.unselect_all_message);
+        }
     });
 
 
