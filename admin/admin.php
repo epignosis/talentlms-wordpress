@@ -35,11 +35,12 @@ function tlms_enqueueAdminScripts() {
 add_action("admin_enqueue_scripts", 'tlms_enqueueAdminScripts');
 
 // add contextual help
-function tlms_contextualHelp($contextual_help, $screen_id, $screen) {
+function tlms_contextualHelp() {
 	global $tlms_menu, $tlms_dashboard, $tlms_setup, $tlms_integrations;
+	$screen_id = get_current_screen()->id;
 	include 'menu-pages/help.php';
 }
-add_filter('contextual_help', 'tlms_contextualHelp', 10, 3);
+add_filter('admin_head', 'tlms_contextualHelp', 10, 0);
 
 /*
  * Pages
@@ -78,7 +79,7 @@ function tlms_setupPage () {
 				$action_status = "updated";
 				$action_message = __('Details edited successfully', 'talentlms');
 			}
-			
+
 		} else {
 			$action_status = "error";
 
@@ -101,7 +102,7 @@ function tlms_setupPage () {
 
 function tlms_integrationsPage () {
 
-	
+
 	$courses = tlms_selectCourses();
 
 	if(isset($_POST['tlms_products']) && $_POST['tlms_products']) {
@@ -159,27 +160,56 @@ function cssPage() {
 
 }
 
+$talentlmsAdminErrors = []; // Stores all the errors that need to be displayed to the admin.
 
-if ((!get_option('tlms-domain') && !get_option('tlms-apikey')) && (empty($_POST['tlms-domain']) && empty($_POST['tlms-apikey']))) {
-	function talentlms_warning() {
-		echo "<div id='talentlms-warning' class='error fade'><p><strong>" . __('You need to specify a TalentLMS domain and a TalentLMS API key.', 'talentlms') . "</strong> " . sprintf(__('You must <a href="%1$s">enter your domain and API key</a> for it to work.', 'talentlms'), "admin.php?page=talentlms-setup") . "</p></div>";
+/**
+ * Logs the error and stores it so it can be displayed to the admin.
+ *
+ * @param string $message
+ */
+function tlms_logError($message){
+	global $talentlmsAdminErrors;
+
+	if(empty($talentlmsAdminErrors)){
+		add_action('admin_notices', 'tlms_showWarnings');
 	}
 
-	add_action('admin_notices', 'talentlms_warning');
-} else {
+	$talentlmsAdminErrors[] = $message;
+	tlms_recordLog($message);
+}
+
+/**
+ * Used to display the stored errors to the admin.
+ *
+ * @return false|void
+ */
+function tlms_showWarnings(){
+	global $talentlmsAdminErrors;
+
+	if(!is_admin() || (defined('DOING_AJAX') && DOING_AJAX)){
+		return false;
+	}
+
+	foreach($talentlmsAdminErrors as $message){
+		echo '<div class="error notice">'.$message.'</div>';
+	}
+}
+
+if((!get_option('tlms-domain') && !get_option('tlms-apikey')) && (empty($_POST['tlms-domain']) && empty($_POST['tlms-apikey']))){
+	tlms_logError('<p><strong>'.__('You need to specify a TalentLMS domain and a TalentLMS API key.', 'talentlms').'</strong>'
+		.sprintf(__('You must <a href="%1$s">enter your domain and API key</a> for it to work.', 'talentlms'), 'admin.php?page=talentlms-setup').'</p>');
+}
+else{
 	try{
 		TalentLMS::setDomain(get_option('tlms-domain'));
 		TalentLMS::setApiKey(get_option('tlms-apikey'));
 
 		tlms_getCourses();
 		tlms_getCategories();
-
-	} catch(Exception $e) {
+	}
+	catch(Exception $e){
 		if ($e instanceof TalentLMS_ApiError) {
-			echo "<div class='alert alert-error'>";
-			echo $e -> getMessage();
-			echo "</div>";
-			tlms_recordLog($e -> getMessage());
+			tlms_logError($e->getMessage());
 		}
 	}
 }

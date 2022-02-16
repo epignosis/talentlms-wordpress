@@ -61,10 +61,31 @@ if(!function_exists('tlms_isApiKey')){
 	}
 }
 
+if(!function_exists('tlms_parseDate')){
+	function tlms_parseDate($format, $date){
+		$isPM = (stripos($date, 'PM') !== false);
+		$parsedDate = str_replace(array('AM', 'PM'), '', $date);
+		$is12hourFormat = ($parsedDate !== $date);
+		$parsedDate = DateTime::createFromFormat(trim($format), trim($parsedDate));
+
+		if($is12hourFormat){
+			if($isPM && $parsedDate->format('H') !== '12'){
+				$parsedDate->modify('+12 hours');
+			}
+			else if(!$isPM && $parsedDate->format('H') === '12'){
+				$parsedDate->modify('-12 hours');
+			}
+		}
+
+		return $parsedDate;
+	}
+}
+
 if(!function_exists('tlms_getDateFormat')){
 	function tlms_getDateFormat($no_sec = false){
+		// TODO: Store the site info in the database instead of hitting the API everytime we want to get it.
 		$site_info = tlms_getTalentLMSSiteInfo();
-		$date_format = $site_info['date_format'];
+		$date_format = $site_info instanceof Exception ? '' : $site_info['date_format'];
 
 		switch($date_format){
 			case 'DDMMYYYY':
@@ -84,6 +105,7 @@ if(!function_exists('tlms_getDateFormat')){
 				}
 				break;
 			case 'YYYYMMDD':
+			default:
 				if($no_sec){
 					$format = 'Y/m/d';
 				}
@@ -107,6 +129,7 @@ if(!function_exists('tlms_getCourses')){
 		$result = $wpdb->get_results("SELECT * FROM ".TLMS_COURSES_TABLE);
 		if(empty($result)){
 			$apiCourses = TalentLMS_Course::all();
+			$format = tlms_getDateFormat();
 
 			foreach($apiCourses as $course){
 				$wpdb->insert(TLMS_COURSES_TABLE, array(
@@ -117,8 +140,8 @@ if(!function_exists('tlms_getCourses')){
 					'description' => $course['description'],
 					'price' => esc_sql(filter_var(html_entity_decode($course['price']), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)),
 					'status' => $course['status'],
-					'creation_date' => DateTime::createFromFormat(tlms_getDateFormat(), $course['creation_date'])->getTimestamp(),
-					'last_update_on' => DateTime::createFromFormat(tlms_getDateFormat(), $course['last_update_on'])->getTimestamp(),
+					'creation_date' => tlms_parseDate($format, $course['creation_date'])->getTimestamp(),
+					'last_update_on' => tlms_parseDate($format, $course['last_update_on'])->getTimestamp(),
 					'hide_catalog' => $course['hide_from_catalog'],
 					'shared' => $course['shared'],
 					'shared_url' => $course['shared_url'],
@@ -166,6 +189,8 @@ if(!function_exists('tlms_getCategories')){
 if(!function_exists('tlms_selectCourses')){
 	function tlms_selectCourses(){
 		global $wpdb;
+
+		$courses = [];
 		// snom 5
 		$sql = "SELECT c.*, cat.name as category_name FROM ".TLMS_COURSES_TABLE." c LEFT JOIN ".TLMS_CATEGORIES_TABLE
 			." cat ON c.category_id=cat.id WHERE c.status = 'active' AND c.hide_catalog = '0'";
@@ -260,22 +285,26 @@ if(!function_exists('tlms_addProduct')){
 		$tmp = download_url($thumbs_url);
 
 		preg_match('/[^\?]+\.(jpg|JPG|jpe|JPE|jpeg|JPEG|gif|GIF|png|PNG)/', $thumbs_url, $matches);
-		$file_array['name'] = basename($matches[0]);
-		$file_array['tmp_name'] = $tmp;
+		$file_array = [];
 
-		if(is_wp_error($tmp)){
-			@unlink($file_array['tmp_name']);
-			$file_array['tmp_name'] = '';
-			//$logtxt .= "Error: download_url error - $tmp\n";
-		}
-		else{
-			//$logtxt .= "download_url: $tmp\n";
-		}
+		if(count($matches)){
+			$file_array['name'] = basename($matches[0]);
+			$file_array['tmp_name'] = $tmp;
 
-		$thumbid = media_handle_sideload($file_array, $product_id, $courses[$course_id]->name);
-		if(is_wp_error($thumbid)){
-			@unlink($file_array['tmp_name']);
-			$file_array['tmp_name'] = '';
+			if(is_wp_error($tmp)){
+				@unlink($file_array['tmp_name']);
+				$file_array['tmp_name'] = '';
+				//$logtxt .= "Error: download_url error - $tmp\n";
+			}
+			else{
+				//$logtxt .= "download_url: $tmp\n";
+			}
+
+			$thumbid = media_handle_sideload($file_array, $product_id, $courses[$course_id]->name);
+			if(is_wp_error($thumbid)){
+				@unlink($file_array['tmp_name']);
+				$file_array['tmp_name'] = '';
+			}
 		}
 
 		set_post_thumbnail($product_id, $thumbid);

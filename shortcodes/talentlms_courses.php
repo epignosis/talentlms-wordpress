@@ -62,7 +62,7 @@
             if(id=='all'){
                 courseTable.search('').columns().search('').draw();
             }else{
-                courseTable.column(3).search(id, true, true).draw();
+                courseTable.column(6).search(id, true, true).draw();
             }
             jQuery(this).siblings('input:checkbox').not(this).removeAttr('checked');
         });
