@@ -18,6 +18,7 @@ function talentlms_course_list($atts) {
 
 	$categories = tlms_selectCategories();
 	$courses = tlms_selectCourses();
+	$dateFormat = tlms_getDateFormat(true);
 
 	ob_start();
 	include(_TLMS_BASEPATH_.'/shortcodes/talentlms_courses.php');
