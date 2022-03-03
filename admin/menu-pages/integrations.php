@@ -48,7 +48,7 @@
 
                         </td>
                         <td class="check-column" style="text-align: center">
-                            <input type='checkbox' class="tlms-products" name="tlms_products[]" value="<?php echo $course->id; ?>" <?php echo (tlms_productExists($course->id)) ? 'checked' : ''; ?>/>
+                            <input type='checkbox' class="tlms-products" name="tlms_products[]" autocomplete="off" value="<?php echo $course->id; ?>" <?php echo (tlms_productExists($course->id)) ? 'checked' : ''; ?>/>
                         </td>
                     </tr>
                     <?php endif;?>
