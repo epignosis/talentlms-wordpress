@@ -126,7 +126,7 @@ if(!function_exists('tlms_getCourses')){
 			$wpdb->query('TRUNCATE TABLE '.TLMS_COURSES_TABLE);
 		}
 
-		$result = $wpdb->get_results("SELECT * FROM ".TLMS_COURSES_TABLE);
+		$result = $wpdb->get_var("SELECT COUNT(*) FROM ".TLMS_COURSES_TABLE);
 		if(empty($result)){
 			$apiCourses = TalentLMS_Course::all();
 			$format = tlms_getDateFormat();
@@ -171,7 +171,7 @@ if(!function_exists('tlms_getCategories')){
 			$wpdb->query("TRUNCATE TABLE ".TLMS_CATEGORIES_TABLE);
 		}
 
-		$result = $wpdb->get_results("SELECT * FROM ".TLMS_CATEGORIES_TABLE);
+		$result = $wpdb->get_var("SELECT COUNT(*) FROM ".TLMS_CATEGORIES_TABLE);
 		if(empty($result)){
 			$apiCategories = TalentLMS_Category::all();
 			foreach($apiCategories as $category){

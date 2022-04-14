@@ -194,7 +194,7 @@ function tlms_showWarnings(){
 		echo '<div class="error notice">'.$message.'</div>';
 	}
 }
-
+tlms_getCourses();
 if(is_admin() && !wp_doing_ajax()){
 	if((!get_option('tlms-domain') && !get_option('tlms-apikey')) && (empty($_POST['tlms-domain']) && empty($_POST['tlms-apikey']))){
 		tlms_logError('<p><strong>'.__('You need to specify a TalentLMS domain and a TalentLMS API key.', 'talentlms').'</strong>'
