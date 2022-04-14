@@ -11,9 +11,11 @@ add_action('init', 'app_output_buffer');
 function talentlms_course_list($atts) {
 
 	wp_enqueue_style('tlms-font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css');
-	wp_enqueue_style( 'tlms-datatables-css', _TLMS_BASEURL_ . '/resources/DataTables-1.10.15/media/css/jquery.dataTables.css');
-	wp_enqueue_script( 'tlms-datatables-js', _TLMS_BASEURL_. '/resources/DataTables-1.10.15/media/js/jquery.dataTables.js');
+	wp_enqueue_style('tlms-datatables-css', _TLMS_BASEURL_ . '/resources/DataTables-1.10.15/media/css/jquery.dataTables.css');
 	wp_enqueue_style('talentlms', _TLMS_BASEURL_ . 'css/talentlms.css', false, '1.0');
+
+	wp_enqueue_script('jquery');
+	wp_enqueue_script('tlms-datatables-js', _TLMS_BASEURL_. '/resources/DataTables-1.10.15/media/js/jquery.dataTables.js');
 
 
 	$categories = tlms_selectCategories();
