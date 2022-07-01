@@ -2,7 +2,7 @@
 Contributors: panagop, m13raptis, V., papagel75, simosnomikos
 Tags: TalentLMS, elearning, lms, lcms, hcm, learning management system
 Requires at least: 2.0
-Tested up to: 5.5.1
+Tested up to: 6.0
 Requires PHP: 5.2.4
 Stable tag: trunk
 License: GPLv2 or later
@@ -55,12 +55,14 @@ If you have a question or any feedback you want to share send us an email at [su
 
 == Changelog ==
 
-= 6.6.9.5 =
-* Fix category's filter in shortcode
-
 = 6.6.9.4 =
+
 * Added support for Wordpress 5.8 and PHP 7.4
-* Fix bug about the 12-hour format.
+* Fix category's filter in shortcode
+* Fix a bug when the 12-hour format is used
+* Improve password generation
+* Fix checkbox filter on courses page
+* Use the latest TalentLMS PHP wrapper 
 
 = 6.6.9.3 =
 
