@@ -1,5 +1,5 @@
 === TalentLMS WordPress plugin ===
-Contributors: panagop, m13raptis, V., papagel75, simosnomikos
+Contributors: panagop, papagel75, simosnomikos
 Tags: TalentLMS, elearning, lms, lcms, hcm, learning management system
 Requires at least: 2.0
 Tested up to: 6.0
