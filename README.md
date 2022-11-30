@@ -55,6 +55,10 @@ If you have a question or any feedback you want to share send us an email at [su
 
 == Changelog ==
 
+= 6.6.9.5 =
+
+* Updated the readme file
+
 = 6.6.9.4 =
 
 * Added support for Wordpress 5.8 and PHP 7.4
