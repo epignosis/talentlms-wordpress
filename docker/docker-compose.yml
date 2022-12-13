@@ -18,8 +18,7 @@ services:
     wordpress:
         image: wordpress:latest
         volumes:
-            - ../wordpress:/var/www/html
-            - ../plugins:/var/www/html/wp-content/plugins
+            - ../.:/var/www/html/wp-content/plugins/talentlms
         ports:
             - 8080:80
         restart: always
