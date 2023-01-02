@@ -1,0 +1,38 @@
+{
+    "name": "epignosis/talentlms-wordpress",
+    "description": "This plugin integrates Talentlms with Wordpress. Promote your TalentLMS content through your WordPress site.",
+    "type": "wordpress-plugin",
+    "keywords": [
+        "wordpress",
+        "plugin",
+        "talentlms"
+    ],
+    "homepage": "https://www.talentlms.com",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "@ypanagopoulos"
+        }
+    ],
+    "require": {
+        "php": ">=7.3",
+        "composer/installers": "v2.2.0"
+    },
+    "require-dev": {
+        "wp-coding-standards/wpcs": "^2.3",
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
+        "roave/security-advisories": "dev-latest"
+    },
+    "autoload": {
+        "psr-4": {
+            "TalentlmsIntegration\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "config": {
+        "allow-plugins": {
+            "composer/installers": false,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}
