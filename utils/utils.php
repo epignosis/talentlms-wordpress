@@ -633,7 +633,7 @@ if(!function_exists('tlms_getUserByOrder')){
 
 if(!function_exists('tlms_recordLog')){
 	function tlms_recordLog($message){
-		$logFile = _TLMS_BASEPATH_.'/errorLog.txt';
+		$logFile = TLMS_BASEPATH.'/errorLog.txt';
 
 		$time = date("F jS Y, H:i", time() + 25200);
 		$logOutput = "#$time: $message\r\n";
