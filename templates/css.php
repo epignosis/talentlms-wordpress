@@ -1,7 +1,7 @@
 <div class="container-fluid">
 	<h2><i class="fa fa-check-square-o"></i>&nbsp;<?php _e('Edit CSS', 'talentlms'); ?></h2>
 	
-	<div id='action-message' class='<?php echo $action_status; ?> tl-admin-edit-css-message-container'>
+	<div id='action-message' class='<?php echo $action_status; ?> tl-admin-edit-css-message-container fade'>
 		<p><?php echo $action_message ?></p>
 	</div>		
 	
