@@ -7,9 +7,6 @@
 
 namespace TalentlmsIntegration;
 
-/**
- * Class Plugin.
- */
 final class Plugin {
 
 	/**
