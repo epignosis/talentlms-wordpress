@@ -11,8 +11,8 @@ function tlms_registerAdministrationPages() {
 add_action('admin_menu', 'tlms_registerAdministrationPages');
 
 function tlms_enqueueAdminScripts() {
-	wp_register_script('tlms-admin', _TLMS_BASEURL_ . 'admin/js/tlms-admin.js', false, _TLMS_VERSION_);
-	wp_register_style('tlms-admin', _TLMS_BASEURL_. 'admin/css/tlms-admin.css', false, _TLMS_VERSION_);
+	wp_register_script('tlms-admin', TLMS_BASEURL . '/admin/js/tlms-admin.js', false, TLMS_VERSION);
+	wp_register_style('tlms-admin', TLMS_BASEURL. '/admin/css/tlms-admin.css', false, TLMS_VERSION);
 	wp_register_style('tlms-font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css');
 
 	$translations_array = array(
@@ -27,8 +27,8 @@ function tlms_enqueueAdminScripts() {
 	wp_enqueue_style('tlms-admin');
 	wp_enqueue_style('tlms-font-awesome');
 
-	wp_enqueue_style( 'tlms-datatables-css', _TLMS_BASEURL_ . '/resources/DataTables-1.10.15/media/css/jquery.dataTables.css');
-	wp_enqueue_script( 'tlms-datatables-js', _TLMS_BASEURL_. '/resources/DataTables-1.10.15/media/js/jquery.dataTables.js');
+	wp_enqueue_style( 'tlms-datatables-css', TLMS_BASEURL . '/resources/DataTables-1.10.15/media/css/jquery.dataTables.css');
+	wp_enqueue_script( 'tlms-datatables-js', TLMS_BASEURL. '/resources/DataTables-1.10.15/media/js/jquery.dataTables.js');
 
 
 }
@@ -178,13 +178,13 @@ function cssPage() {
 		$action_message = __('Details edited successfully', 'talentlms');
 	}
 
-	include(_TLMS_BASEPATH_.'/admin/menu-pages/css.php');
+	include(TLMS_BASEPATH.'/admin/menu-pages/css.php');
 }
 
 $talentlmsAdminErrors = []; // Stores all the errors that need to be displayed to the admin.
 
 /**
- * Logs the error and stores it so it can be displayed to the admin.
+ * Logs the error and stores it, so it can be displayed to the admin.
  *
  * @param string $message
  */
