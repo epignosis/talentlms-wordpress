@@ -18,7 +18,8 @@ final class Plugin {
 			Pages\Admin::class,
 			Pages\Help::class,
 //			Pages\Errors::class,
-			Enqueue::class
+			Enqueue::class,
+			Widget::class
 		];
 	}
 
