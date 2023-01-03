@@ -14,7 +14,7 @@ class Enqueue {
 		add_action('tlms_enqueue_styles', array($this, 'tlms_enqueueStyles'));
 	}
 
-	protected function tlms_enqueueAdminScripts() {
+	public function tlms_enqueueAdminScripts() {
 
 		//Register styles
 		wp_register_style('tlms-admin', TLMS_BASEURL. 'assets/css/tlms-admin.css', false, TLMS_VERSION);
@@ -48,7 +48,7 @@ class Enqueue {
 	}
 
 
-	protected function tlms_enqueueStyles() {
+	public function tlms_enqueueStyles() {
 		wp_register_style('tlms-custom-css', Admin::getCustomCssFilePath(), false, TLMS_VERSION);
 		wp_enqueue_style('tlms-custom-css');
 	}
