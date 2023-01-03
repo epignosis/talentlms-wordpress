@@ -1,7 +1,7 @@
-<div class="wrap">
+<div class="container">
 	<h2><i class="fa fa-check-square-o"></i>&nbsp;<?php _e('Edit CSS', 'talentlms'); ?></h2>
 	
-	<div id='action-message' class='<?php echo $action_status; ?> fade'>
+	<div id='action-message' class='<?php echo $action_status; ?>'>
 		<p><?php echo $action_message ?></p>
 	</div>		
 	
