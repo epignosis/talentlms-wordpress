@@ -51,7 +51,7 @@ require_once (TLMS_BASEPATH . '/utils/utils.php');
 //require_once (TLMS_BASEPATH . '/admin/admin.php');
 require_once (TLMS_BASEPATH . '/shortcodes/reg_shortcodes.php');
 require_once (TLMS_BASEPATH . '/integrations/woocommerce.php');
-require_once (TLMS_BASEPATH . '/widgets/reg_widgets.php');
+//require_once (TLMS_BASEPATH . '/widgets/reg_widgets.php');
 
 function tlms_isWoocommerceActive() {
 	if ( is_plugin_active('woocommerce/woocommerce.php') ) {
