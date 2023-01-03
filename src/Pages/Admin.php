@@ -125,7 +125,7 @@ class Admin{
 			}
 
 			// Save file and set permission to 0644
-			$wp_filesystem->put_contents($customCssFileName, stripslashes($_POST['tl-edit-css']), 0644);
+			$wp_filesystem->put_contents($customCssFileName, stripslashes(strip_tags($_POST['tl-edit-css'])), 0644);
 
 			$action_status = "updated";
 			$action_message = __('Details edited successfully', 'talentlms');
