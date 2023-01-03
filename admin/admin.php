@@ -151,13 +151,34 @@ function tlms_resyncCourse() {
 add_action('wp_ajax_tlms_resynch', 'tlms_resyncCourse');
 
 function cssPage() {
-	if ($_POST['action'] == 'edit-css') {
-		file_put_contents(_TLMS_BASEPATH_ . '/css/talentlms-style.css', stripslashes($_POST['tl-edit-css']));
+	global $wp_filesystem;
+	require_once(ABSPATH.'/wp-admin/includes/file.php');
+
+	if($_POST['action'] == 'edit-css'){
+		WP_Filesystem();
+
+		$upload_dir = wp_upload_dir();
+		$dir = trailingslashit($upload_dir['basedir'])._TLMS_UPLOAD_DIR_.'/';
+
+		// Create main folder within upload if not exist
+		if(!$wp_filesystem->is_dir($dir)){
+			$wp_filesystem->mkdir($dir);
+		}
+
+		// Create a subfolder in my new folder if not exist
+		if(!$wp_filesystem->is_dir($dir."/css")){
+			$wp_filesystem->mkdir($dir."/css");
+		}
+
+		unlink($dir."/css/talentlms-style.css");
+		// Save file and set permission to 0644
+		$wp_filesystem->put_contents($dir."/css/talentlms-style.css", stripslashes($_POST['tl-edit-css']), 0644);
+
 		$action_status = "updated";
 		$action_message = __('Details edited successfully', 'talentlms');
 	}
-	include( _TLMS_BASEPATH_ . '/admin/menu-pages/css.php' );
 
+	include(_TLMS_BASEPATH_.'/admin/menu-pages/css.php');
 }
 
 $talentlmsAdminErrors = []; // Stores all the errors that need to be displayed to the admin.

@@ -12,6 +12,7 @@
 define("_TLMS_VERSION_", "6.6.9.5");
 define("_TLMS_BASEPATH_", dirname(__FILE__));
 define("_TLMS_BASEURL_", plugin_dir_url(__FILE__));
+define("_TLMS_UPLOAD_DIR_", 'talentlmswpplugin');
 
 require_once (_TLMS_BASEPATH_ . '/TalentLMSLib/lib/TalentLMS.php');
 
