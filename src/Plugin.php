@@ -17,7 +17,8 @@ final class Plugin {
 		return [
 			Pages\Admin::class,
 			Pages\Help::class,
-//			Pages\Errors::class,
+			Pages\Errors::class,
+			Ajax::class,
 			Enqueue::class,
 			Widget::class
 		];
@@ -43,9 +44,6 @@ final class Plugin {
 	 */
 	private static function init($class) {
 		return new $class();
-
-//		register_activation_hook(__FILE__, 'activate');
-//		register_deactivation_hook(__FILE__, 'deactivate');
 	}
 }
 
