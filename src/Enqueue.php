@@ -15,7 +15,7 @@ class Enqueue {
 
 		//Register styles
 		wp_register_style('tlms-admin', TLMS_BASEURL. '/assets/css/tlms-admin.css', false, TLMS_VERSION);
-		wp_register_style('bootstrap-css', TLMS_BASEURL. '/assets/css/bootstrap.min.css', false);
+//		wp_register_style('bootstrap-css', TLMS_BASEURL. '/assets/css/bootstrap.min.css', false);
 //		wp_register_style('tlms-font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css');
 
 		//Register scripts
