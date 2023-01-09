@@ -5,6 +5,8 @@
 
 namespace TalentlmsIntegration\Pages;
 
+use TalentlmsIntegration\Utils;
+
 class Admin {
 
 	public function register(){
@@ -73,14 +75,14 @@ class Admin {
 
 	public function tlms_integrationsPage () {
 
-		$courses = tlms_selectCourses();
+		$courses = Utils::tlms_selectCourses();
 
 		if(isset($_POST['tlms_products']) && $_POST['tlms_products']) {
-			tlms_addProductCategories();
+			Utils::tlms_addProductCategories();
 
 			foreach ($_POST['tlms_products'] as $course_id) {
-				if(! tlms_productExists($course_id)) {
-					tlms_addProduct($course_id, $courses);
+				if(! Utils::tlms_productExists($course_id)) {
+					Utils::tlms_addProduct($course_id, $courses);
 				}
 			}
 
@@ -89,9 +91,10 @@ class Admin {
 		}
 
 		if(isset($_POST['action']) && $_POST['action'] == 'tlms-fetch-courses'){//refresh courses
-			tlms_getCourses(true );
+			Utils::tlms_getCourses(true );
 			wp_redirect(admin_url('admin.php?page=talentlms-integrations'));
 		}
+
 		require_once TLMS_BASEPATH . '/templates/integrations.php';
 	}
 }
