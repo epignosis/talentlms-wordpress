@@ -600,7 +600,7 @@ class Utils {
 		$digits = "1234567890";
 
 		$length = max($length, 8);
-		$password = wp_generate_password($length) . $uppercases[rand(0, strlen($uppercases - 1))] . $lowercases[rand(0, strlen($lowercases - 1))] . $digits[rand(0, strlen($digits - 1))];
+		$password = wp_generate_password($length) . $uppercases[rand(0, strlen($uppercases) - 1)] . $lowercases[rand(0, strlen($lowercases) - 1)] . $digits[rand(0, strlen($digits) - 1)];
 
 		return str_shuffle($password);
 	}
