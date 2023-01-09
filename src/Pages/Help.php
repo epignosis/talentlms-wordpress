@@ -16,21 +16,23 @@ class Help {
 		$screen = get_current_screen();
 		$screen_id = get_current_screen()->id;
 
-		$screen->add_help_tab(
-			array(
-				'id'      => 'about',
-				'title'   => __('About TalentLMS', 'talentlms'),
-				'content' =>
-					'<p>' . '<strong>' . __('TalentLMS', 'talentlms') . '</strong>' . __(' a super-easy, cloud-based learning platform to train your people and customers', 'talentlms') . '</p>' .
-					'<p>' . '<strong>' . __('ShortCodes', 'talentlms') . '</strong>' . '</p>' .
-					'<ul>' .
-					'<li>' . '<strong>[talentlms-courses]</strong> ' . __('Shortcode for listing your TalentLMS courses.', 'talentlms') . '</li>' .
-					//'<li>' . '<strong>[talentlms-signup]</strong> ' . __('Shortcode for a signup to TalentLMS form.', 'talentlms') . '</li>' .
-					//'<li>' . '<strong>[talentlms-forgot-credentials]</strong> ' . __('Shortcode for a forgot your TalentLMS username/password form', 'talentlms') . '</li>' .
-					//'<li>' . '<strong>[talentlms-login]</strong> ' . __('Shortcode for a login to TalentLMS form', 'talentlms') . '</li>' .
-					'</ul>'
-			)
-		);
+		if($screen_id == 'toplevel_page_talentlms' || $screen_id == 'talentlms_page_talentlms-setup' || $screen_id == 'talentlms_page_talentlms-integrations') {
+			$screen->add_help_tab(
+				array(
+					'id'      => 'about',
+					'title'   => __('About TalentLMS', 'talentlms'),
+					'content' =>
+						'<p>' . '<strong>' . __('TalentLMS', 'talentlms') . '</strong>' . __(' a super-easy, cloud-based learning platform to train your people and customers', 'talentlms') . '</p>' .
+						'<p>' . '<strong>' . __('ShortCodes', 'talentlms') . '</strong>' . '</p>' .
+						'<ul>' .
+						'<li>' . '<strong>[talentlms-courses]</strong> ' . __('Shortcode for listing your TalentLMS courses.', 'talentlms') . '</li>' .
+						//'<li>' . '<strong>[talentlms-signup]</strong> ' . __('Shortcode for a signup to TalentLMS form.', 'talentlms') . '</li>' .
+						//'<li>' . '<strong>[talentlms-forgot-credentials]</strong> ' . __('Shortcode for a forgot your TalentLMS username/password form', 'talentlms') . '</li>' .
+						//'<li>' . '<strong>[talentlms-login]</strong> ' . __('Shortcode for a login to TalentLMS form', 'talentlms') . '</li>' .
+						'</ul>'
+				)
+			);
+		}
 		
 		if($screen_id == 'toplevel_page_talentlms') {
 			$screen->add_help_tab(
@@ -80,11 +82,12 @@ class Help {
 			);
 		}
 
-		$screen->set_help_sidebar(
-			'<p><strong>' . __('For more information', 'talentlms') . ':</strong></p>' .
-			'<p>' . __('<a href="http://www.talentlms.com/" target="_blank">TalentLMS</a>') . '</p>' .
-			'<p>' . __('<a href="http://support.talentlms.com/" target="_blank">Support</a>') . '</p>'
-		);
-
+		if($screen_id == 'toplevel_page_talentlms' || $screen_id == 'talentlms_page_talentlms-setup' || $screen_id == 'talentlms_page_talentlms-integrations') {
+			$screen->set_help_sidebar(
+				'<p><strong>'.__('For more information', 'talentlms').':</strong></p>'.
+				'<p>'.__('<a href="http://www.talentlms.com/" target="_blank">TalentLMS</a>').'</p>'.
+				'<p>'.__('<a href="http://support.talentlms.com/" target="_blank">Support</a>').'</p>'
+			);
+		}
 	}
 }
