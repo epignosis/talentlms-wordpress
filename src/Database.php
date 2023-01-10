@@ -6,13 +6,17 @@ namespace TalentlmsIntegration;
 
 class Database {
 
-	public static function tlms_createDB() {
+	public function register(){
 		global $wpdb;
 
 		define("TLMS_COURSES_TABLE", $wpdb -> prefix . "talentlms_courses");
 		define("TLMS_CATEGORIES_TABLE", $wpdb -> prefix . "talentlms_categories");
 		define("TLMS_PRODUCTS_TABLE", $wpdb -> prefix . "talentlms_products");
 		define("TLMS_PRODUCTS_CATEGORIES_TABLE", $wpdb -> prefix . "talentlms_products_categories");
+	}
+
+	public static function tlms_createDB() {
+		global $wpdb;
 
 		$charset_collate = $wpdb->get_charset_collate();
 
