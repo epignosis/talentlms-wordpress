@@ -16,11 +16,13 @@ final class Plugin {
 	public static function get_services(): array{
 		return [
 			Pages\Admin::class,
-			Pages\Help::class,
 			Pages\Errors::class,
+			Pages\Help::class,
 			Ajax::class,
+			Database::class,
 			Enqueue::class,
-			Widget::class
+//			Widget::class,
+//			Woocommerce::class
 		];
 	}
 
