@@ -5,6 +5,7 @@
 
 namespace TalentlmsIntegration;
 use TalentLMS_Siteinfo;
+use TalentlmsIntegration\Utils;
 
 class Ajax {
 
@@ -25,9 +26,9 @@ class Ajax {
 				$wpdb->query("DELETE FROM " . TLMS_COURSES_TABLE . " WHERE id = " . $_POST['course_id']);
 				$wpdb->query("DELETE FROM " . WP_POSTS_TABLE . " WHERE ID = ".$product_ID);
 
-				tlms_getCourses($force = true);
-				tlms_getCategories(true);
-				tlms_addProduct($_POST['course_id'], tlms_selectCourses());
+				Utils::tlms_getCourses(true);
+				Utils::tlms_getCategories(true);
+				Utils::tlms_addProduct($_POST['course_id'], Utils::tlms_selectCourses());
 			}
 			echo json_encode(array('api_limitation' => 'none'));
 		}

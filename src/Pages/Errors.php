@@ -7,6 +7,7 @@ namespace TalentlmsIntegration\Pages;
 use Exception;
 use TalentLMS;
 use TalentLMS_ApiError;
+use TalentlmsIntegration\Utils;
 
 class Errors {
 
@@ -24,7 +25,7 @@ class Errors {
 	 */
 	function tlms_logError(string $message){
 		$this->talentlmsAdminErrors[] = $message;
-		tlms_recordLog($message);
+		Utils::tlms_recordLog($message);
 	}
 
 	/**
@@ -60,13 +61,13 @@ class Errors {
 				TalentLMS::setApiKey(get_option('tlms-apikey'));
 
 				if(is_admin() && !wp_doing_ajax()){
-					tlms_getCourses();
-					tlms_getCategories();
+					Utils::tlms_getCourses();
+					Utils::tlms_getCategories();
 				}
 			}
 			catch(Exception $e){
 				if ($e instanceof TalentLMS_ApiError) {
-					tlms_logError($e->getMessage());
+					$this->tlms_logError($e->getMessage());
 				}
 			}
 		}
