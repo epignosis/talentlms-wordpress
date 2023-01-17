@@ -21,8 +21,8 @@ final class Plugin {
 			Ajax::class,
 			Database::class,
 			Enqueue::class,
+			Woocommerce::class,
 //			Widget::class,
-//			Woocommerce::class
 		];
 	}
 
