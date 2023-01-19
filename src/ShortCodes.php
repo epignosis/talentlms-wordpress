@@ -11,14 +11,12 @@ class ShortCodes implements Services\PluginService{
 
 	function talentlms_course_list(){
 
-		$categories = tlms_selectCategories();
-		$courses = tlms_selectCourses();
-		$dateFormat = tlms_getDateFormat(true);
+		$categories = Utils::tlms_selectCategories();
+		$courses = Utils::tlms_selectCourses();
+		$dateFormat = Utils::tlms_getDateFormat(true);
 
 		ob_start();
 		require_once TLMS_BASEPATH . '/templates/talentlms_courses.php';
-		$output = ob_get_clean();
-
-		return $output;
+		return ob_get_clean();
 	}
 }
