@@ -12,14 +12,14 @@ class Woocommerce implements PluginService{
 
 	public function register(): void{
 		if(get_option('tlms-woocommerce-active')){
-			add_action('woocommerce_checkout_order_processed',  array($this, 'tlms_processExistingCustomer', 1, 1));
-			add_action('woocommerce_payment_complete',  array($this, 'tlms_woocommerce_payment_complete') );
-			add_action('woocommerce_order_status_completed',  array($this, 'tlms_processWooComOrder', 10, 1));
-			add_action('woocommerce_save_account_details',  array($this, 'tmls_customerChangedPassword', 10, 1));
-			add_action('password_reset',  array($this, 'tmls_customerResetPassword', 10, 2));
+			add_action('woocommerce_checkout_order_processed',  array($this, 'tlms_processExistingCustomer'), 1, 1);
+			add_action('woocommerce_payment_complete',  array($this, 'tlms_woocommerce_payment_complete'));
+			add_action('woocommerce_order_status_completed',  array($this, 'tlms_processWooComOrder'), 10, 1);
+			add_action('woocommerce_save_account_details',  array($this, 'tmls_customerChangedPassword'), 10, 1);
+			add_action('password_reset',  array($this, 'tmls_customerResetPassword'), 10, 2);
 			add_action('before_delete_post',  array($this, 'tlms_wooCommerceProductDeleted'));
-			add_action('woocommerce_order_item_meta_end',  array($this, 'action_woocommerce_order_item_meta_end', 10, 4));
-			add_filter('woocommerce_is_sold_individually',  array($this, 'filter_woocommerce_is_sold_individually', 10, 2));
+			add_action('woocommerce_order_item_meta_end',  array($this, 'action_woocommerce_order_item_meta_end'), 10, 4);
+			add_filter('woocommerce_is_sold_individually',  array($this, 'filter_woocommerce_is_sold_individually'), 10, 2);
 		}
 	}
 
