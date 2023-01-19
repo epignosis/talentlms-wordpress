@@ -85,16 +85,5 @@
     <h3><?php _e('Description', 'talentlms');?>:</h3>
     <p><?php echo $course['description']; ?></p>
 
-<!--    <h3>--><?php //_e('Content', 'talentlms');?><!--:</h3>-->
-<!--    <ul>-->
-<!--	    --><?php //foreach ($course['units'] as $unit): ?>
-<!--            <li>-->
-<!--                <i class="--><?php //echo tlms_getUnitIconClass($unit['type']); ?><!--"></i>-->
-<!--                <span>--><?php //echo $unit['name'];?><!--</span>-->
-<!--            </li>-->
-<!--	    --><?php //endforeach; ?>
-<!---->
-<!--    </ul>-->
-
 
 <?php endif; ?>
