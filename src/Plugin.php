@@ -19,6 +19,8 @@ final class Plugin {
 			Database::class,
 			Enqueue::class,
 			Woocommerce::class,
+			ShortCodes::class,
+			TLMSWidget::class
 	];
 
 	/**
