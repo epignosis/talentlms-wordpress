@@ -30,32 +30,16 @@ class TLMSWidget extends WP_Widget implements PluginService{
 		if(!empty($instance['title'])){
 			echo $args['before_title'].apply_filters('widget_title', $instance['title']).$args['after_title'];
 		}
-		$courses = Utils::tlms_selectCourses(); ?>
-		<div class="tlms-widget-container">
-			<?php foreach($courses as $course): ?>
-				<div class="tlms-widget-item">
-					<a href="<?php echo get_site_url(); ?>/courses/?tlms-course=<?php echo $course->id; ?>"><img src="<?php echo $course->big_avatar; ?>"
-																												 alt="<?php echo $course->name; ?>"/><?php echo $course->name;
-						echo ($course->course_code) ? "(".$course->course_code.")" : ''; ?></a>
-				</div>
-			<?php endforeach; ?>
-		</div>
-		<?php
+		$courses = Utils::tlms_selectCourses();
+		require_once TLMS_BASEPATH.'/templates/widget/tlmswidget.php';
 		echo $args['after_widget'];
 	}
 
 	public function form($instance){
 		$title = !empty($instance['title']) ? $instance['title'] : esc_html__('Our Courses', 'talentlms');
-		?>
-		<p>
-			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>"><?php esc_attr_e('Title:', 'talentlms'); ?></label>
-			<input class="widefat"
-				   id="<?php echo esc_attr($this->get_field_id('title')); ?>"
-				   name="<?php echo esc_attr($this->get_field_name('title')); ?>"
-				   type="text"
-				   value="<?php echo esc_attr($title); ?>">
-		</p>
-		<?php
+		$titleId = strtolower($this->get_field_id('title'));
+		$titleName = strtolower($this->get_field_name('title'));
+		require_once TLMS_BASEPATH.'/templates/widget/form/tlmswidgetform.php';
 	}
 
 	public function update($new_instance, $old_instance){
