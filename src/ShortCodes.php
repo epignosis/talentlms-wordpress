@@ -4,12 +4,12 @@ namespace TalentlmsIntegration;
 
 class ShortCodes implements Services\PluginService{
 
-	public function register(){
+	public function register(): void{
 		ob_start();
-		add_shortcode('talentlms-courses', array($this, 'talentlms_course_list'));
+		add_shortcode('talentlms-courses', array($this, 'tlms_courseList'));
 	}
 
-	function talentlms_course_list(){
+	public function tlms_courseList(){
 
 		$categories = Utils::tlms_selectCategories();
 		$courses = Utils::tlms_selectCourses();
