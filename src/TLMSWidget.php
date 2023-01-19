@@ -8,36 +8,21 @@ namespace TalentlmsIntegration;
 use TalentlmsIntegration\Services\PluginService;
 use WP_Widget;
 
-class Widget extends WP_Widget implements PluginService{
+class TLMSWidget extends WP_Widget implements PluginService{
 
-	public string $widget_ID;
-	public string $version;
-	public string $widget_name;
-	public array $widget_options = array();
+	protected string $_version = '1.0.0';
 
-	function __construct(){
-
-		$this->widget_ID = 'tlms_widget';
-		$this->version = '1.0.0';
-		$this->widget_name = 'TalentLMS Widget';
-
-		$this->widget_options = array(
-			'classname' => $this->widget_ID,
-			'description' => $this->widget_name,
-			'customize_selective_refresh' => true,
-		);
-	}
-
-	public function register(): void{
-		parent::__construct($this->widget_ID, $this->widget_name, $this->widget_options);
-
-		add_action('widgets_init', array($this, 'widgetsInit'));
-
+	public function __construct(){
+		parent::__construct(
+            'Tlms_widget', // Base ID
+            'TalentLMS Widget', // Name
+            array( 'description' => __( 'A TalentLMS Widget', 'talentlms' ) ) // Args
+        );
 		$this->enqueue_widget_assets();
 	}
 
-	public function widgetsInit(){
-		register_widget($this);
+	public function register(): void{
+		add_action( 'widgets_init', static function() { register_widget(TLMSWidget::class); } );
 	}
 
 	public function widget($args, $instance){
@@ -45,7 +30,7 @@ class Widget extends WP_Widget implements PluginService{
 		if(!empty($instance['title'])){
 			echo $args['before_title'].apply_filters('widget_title', $instance['title']).$args['after_title'];
 		}
-		$courses = tlms_selectCourses(); ?>
+		$courses = Utils::tlms_selectCourses(); ?>
 		<div class="tlms-widget-container">
 			<?php foreach($courses as $course): ?>
 				<div class="tlms-widget-item">
