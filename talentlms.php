@@ -33,20 +33,20 @@ register_activation_hook(__FILE__, 'activate');
 
 register_uninstall_hook(__FILE__, 'tlms_uninstall');
 
-if(class_exists('TalentlmsIntegration\Plugin')){
-	TalentlmsIntegration\Plugin::init();
-}
-
-if(class_exists('TalentlmsIntegration\Utils')){
-	new \TalentlmsIntegration\Utils();
-}
-
 if(file_exists(TLMS_BASEPATH . '/TalentLMSLib/lib/TalentLMS.php')){
 	require_once TLMS_BASEPATH . '/TalentLMSLib/lib/TalentLMS.php';
 }
 
 if(file_exists(TLMS_BASEPATH . '/src/Utils.php')){
 	require_once TLMS_BASEPATH . '/src/Utils.php';
+}
+
+if(class_exists('TalentlmsIntegration\Utils')){
+	new \TalentlmsIntegration\Utils();
+}
+
+if(class_exists('TalentlmsIntegration\Plugin')){
+	TalentlmsIntegration\Plugin::init();
 }
 
 //register_activation_hook(__FILE__, 'tlms_install');
