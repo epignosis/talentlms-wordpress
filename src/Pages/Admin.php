@@ -10,7 +10,7 @@ use TalentlmsIntegration\Utils;
 
 class Admin implements PluginService{
 
-	public function register(){
+	public function register(): void{
 		add_action('admin_menu', array($this, 'tlms_registerAdministrationPages'));
 	}
 

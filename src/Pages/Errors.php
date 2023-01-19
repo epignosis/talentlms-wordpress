@@ -15,7 +15,7 @@ class Errors implements PluginService{
 	public array $talentlmsAdminErrors = array();  // Stores all the errors that need to be displayed to the admin.
 	public string $screen_id;
 
-	public function register(){
+	public function register(): void{
 		add_action( 'admin_notices', array($this, 'tlms_showWarnings'));
 	}
 

@@ -10,7 +10,7 @@ use TalentlmsIntegration\Services\PluginService;
 
 class Woocommerce implements PluginService{
 
-	public function register(){
+	public function register(): void{
 		if(get_option('tlms-woocommerce-active')){
 			add_action('woocommerce_checkout_order_processed',  array($this, 'tlms_processExistingCustomer', 1, 1));
 			add_action('woocommerce_payment_complete',  array($this, 'tlms_woocommerce_payment_complete') );

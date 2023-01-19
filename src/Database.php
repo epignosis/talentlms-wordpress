@@ -8,7 +8,7 @@ use TalentlmsIntegration\Services\PluginService;
 
 class Database implements PluginService{
 
-	public function register(){
+	public function register(): void{
 		global $wpdb;
 
 		define("TLMS_COURSES_TABLE", $wpdb -> prefix . "talentlms_courses");

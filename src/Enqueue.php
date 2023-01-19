@@ -9,7 +9,7 @@ use TalentlmsIntegration\Services\PluginService;
 
 class Enqueue implements PluginService{
 
-	public function register(){
+	public function register(): void{
 		add_action('admin_enqueue_scripts', array($this, 'tlms_enqueueAdminScripts'));
 		add_action('wp_enqueue_scripts', array($this, 'tlms_enqueueFrontScripts'));
 	}
