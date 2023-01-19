@@ -7,14 +7,11 @@
 
 namespace TalentlmsIntegration;
 
+use TalentlmsIntegration\Services\PluginService;
+
 final class Plugin {
 
-	/**
-	 * Store all the classes inside an array
-	 * @return array Full list of classes
-	 */
-	public static function get_services(): array{
-		return [
+	private array $services = [
 			Pages\Admin::class,
 			Pages\Errors::class,
 			Pages\Help::class,
@@ -22,8 +19,14 @@ final class Plugin {
 			Database::class,
 			Enqueue::class,
 			Woocommerce::class,
-//			Widget::class,
-		];
+	];
+
+	/**
+	 * Store all the classes inside an array
+	 * @return array Full list of classes
+	 */
+	public function get_services(): array{
+		return $this->services;
 	}
 
 	/**
@@ -31,21 +34,20 @@ final class Plugin {
 	 * and call the register() method if it exists
 	 * @return void
 	 */
-	public static function register_services(){
-		foreach(self::get_services() as $class){
-			$service = self::init($class);
-			if(method_exists($service, 'register')){
-				$service->register();
+	public function register_services(): self{
+		foreach($this->get_services() as $class){
+			$service = new $class;
+			if(!$service instanceof PluginService){
+				throw new \RuntimeException("A plugin must conform PluginService contract");
 			}
+			$service->register();
 		}
+
+		return $this;
 	}
 
-	/**
-	 * Initialize the class
-	 * @param $class
-	 */
-	private static function init($class) {
-		return new $class();
+	public static function init(): self {
+		return (new self())->register_services();
 	}
 }
 

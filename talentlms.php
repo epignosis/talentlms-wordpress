@@ -34,7 +34,7 @@ register_activation_hook(__FILE__, 'activate');
 register_uninstall_hook(__FILE__, 'tlms_uninstall');
 
 if(class_exists('TalentlmsIntegration\Plugin')){
-	TalentlmsIntegration\Plugin::register_services();
+	TalentlmsIntegration\Plugin::init();
 }
 
 if(class_exists('TalentlmsIntegration\Utils')){
