@@ -23,14 +23,6 @@
 					</div>
 				</a>
 
-				<!--                <a href="--><?php //echo admin_url('admin.php?page=talentlms-css'); ?><!--">-->
-				<!--				<div class="tl-admin-option">-->
-				<!--					<i class="fa fa-check-square-o fa-3x"></i>-->
-				<!--					<h3>--><?php //_e('CSS', 'talentlms'); ?><!--</h3>-->
-				<!--					<p>--><?php //_e('Customize the plugin appearance', 'talentlms'); ?><!--</p>-->
-				<!--				</div>-->
-				<!--				</a>-->
-
 				<a href="javascript:void(0);">
 					<div class="tl-admin-option" data-toggle="modal" data-target="#shortcodesModal">
 						<i class="fa fa-code fa-3x"></i>
@@ -72,15 +64,6 @@
 						<li>
 							<p><strong>[talentlms-courses]</strong>&nbsp;<?php _e('Shortcode for listing your TalentLMS courses.', 'talentlms'); ?></p>
 						</li>
-						<!--    					<li>-->
-						<!--    						<p><strong>[talentlms-signup]</strong>&nbsp;--><?php //_e('Shortcode for outputing a signup to TalentLMS form.', 'talentlms'); ?><!--</p>-->
-						<!--    					</li>-->
-						<!--    					<li>-->
-						<!--    						<p><strong>[talentlms-forgot-credentials]</strong>&nbsp;--><?php //_e('Shortcode for a forgot your TalentLMS username/password form', 'talentlms'); ?><!--</p>-->
-						<!--    					</li>-->
-						<!--    					<li>-->
-						<!--    						<p><strong>[talentlms-login]</strong>&nbsp;--><?php //_e('Shortcode for a login to TalentLMS form', 'talentlms'); ?><!--</p>-->
-						<!--    					</li>-->
 					</ul>
 
 				</div>
