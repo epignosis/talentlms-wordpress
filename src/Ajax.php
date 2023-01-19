@@ -5,9 +5,10 @@
 
 namespace TalentlmsIntegration;
 use TalentLMS_Siteinfo;
+use TalentlmsIntegration\Services\PluginService;
 use TalentlmsIntegration\Utils;
 
-class Ajax {
+class Ajax implements PluginService{
 
 	public function register(){
 		add_action('wp_ajax_tlms_resynch', 'tlms_resyncCourse');

@@ -4,9 +4,10 @@
  */
 
 namespace TalentlmsIntegration;
+use TalentlmsIntegration\Services\PluginService;
 use WP_Widget;
 
-class Widget extends WP_Widget{
+class Widget extends WP_Widget implements PluginService{
 	public string $widget_ID;
 
 	public string $version;

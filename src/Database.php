@@ -4,7 +4,9 @@
  */
 namespace TalentlmsIntegration;
 
-class Database {
+use TalentlmsIntegration\Services\PluginService;
+
+class Database implements PluginService{
 
 	public function register(){
 		global $wpdb;

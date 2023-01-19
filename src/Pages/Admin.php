@@ -5,9 +5,10 @@
 
 namespace TalentlmsIntegration\Pages;
 
+use TalentlmsIntegration\Services\PluginService;
 use TalentlmsIntegration\Utils;
 
-class Admin {
+class Admin implements PluginService{
 
 	public function register(){
 		add_action('admin_menu', array($this, 'tlms_registerAdministrationPages'));

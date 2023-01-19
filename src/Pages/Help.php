@@ -5,7 +5,9 @@
 
 namespace TalentlmsIntegration\Pages;
 
-class Help {
+use TalentlmsIntegration\Services\PluginService;
+
+class Help implements PluginService{
 
 	public function register(){
 		add_filter('admin_head',  array($this, 'tlms_contextualHelp'), 10, 0);

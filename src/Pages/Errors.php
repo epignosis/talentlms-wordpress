@@ -7,9 +7,10 @@ namespace TalentlmsIntegration\Pages;
 use Exception;
 use TalentLMS;
 use TalentLMS_ApiError;
+use TalentlmsIntegration\Services\PluginService;
 use TalentlmsIntegration\Utils;
 
-class Errors {
+class Errors implements PluginService{
 
 	public array $talentlmsAdminErrors = array();  // Stores all the errors that need to be displayed to the admin.
 	public string $screen_id;

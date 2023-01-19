@@ -6,8 +6,9 @@
 namespace TalentlmsIntegration;
 
 use TalentLMS_User;
+use TalentlmsIntegration\Services\PluginService;
 
-class Woocommerce {
+class Woocommerce implements PluginService{
 
 	public function register(){
 		if(get_option('tlms-woocommerce-active')){
