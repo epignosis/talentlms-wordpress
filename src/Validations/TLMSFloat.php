@@ -9,6 +9,6 @@ class TLMSFloat extends Rule{
 	}
 
 	public function getValue(): float{
-		return $this->value;
+		return filter_var($this->value, FILTER_VALIDATE_FLOAT);
 	}
 }

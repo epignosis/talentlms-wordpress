@@ -2,6 +2,9 @@
 
 use TalentlmsIntegration\Validations\TLMSEmail;
 
+/**
+ * @covers TalentlmsIntegration\Validations\TLMSEmail
+ */
 class EmailTest extends \PHPUnit\Framework\TestCase{
 
 	public function testEmailHappyPath(): void

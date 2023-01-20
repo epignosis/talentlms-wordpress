@@ -10,6 +10,6 @@ class TLMSPositiveInteger extends Rule{
 	}
 
 	public function getValue(): int{
-		return $this->value;
+		return filter_var($this->value, FILTER_VALIDATE_INT);
 	}
 }

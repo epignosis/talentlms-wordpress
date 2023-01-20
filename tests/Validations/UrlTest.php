@@ -2,6 +2,9 @@
 
 use TalentlmsIntegration\Validations\TLMSUrl;
 
+/**
+ * @covers TalentlmsIntegration\Validations\TLMSUrl
+ */
 class UrlTest extends \PHPUnit\Framework\TestCase{
 
 	public function testUrlHappyPath(): void

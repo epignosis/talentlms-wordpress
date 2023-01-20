@@ -2,6 +2,9 @@
 
 use TalentlmsIntegration\Validations\TLMSInteger;
 
+/**
+ * @covers TalentlmsIntegration\Validations\TLMSInteger
+ */
 class IntegerTest extends \PHPUnit\Framework\TestCase{
 
 	public function testIntegerHappyPath(): void
@@ -23,6 +26,12 @@ class IntegerTest extends \PHPUnit\Framework\TestCase{
         $integer = (new TLMSInteger(0))->getValue();
 		$this->assertIsInt($integer);
 		$this->assertEquals(0, $integer);
+    }
+
+	public function testIntegerZeroAsString(): void
+    {
+		$this->expectException(InvalidArgumentException::class);
+        $integer = (new TLMSInteger('0'))->getValue();
     }
 
 	public function testIntegerHappyPathPassingNegative(): void

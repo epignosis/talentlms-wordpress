@@ -2,6 +2,9 @@
 
 use TalentlmsIntegration\Validations\TLMSPositiveInteger;
 
+/**
+ * @covers TalentlmsIntegration\Validations\TLMSPositiveInteger
+ */
 class PositiveIntegerTest extends \PHPUnit\Framework\TestCase{
 
 	public function testPositiveIntegerHappyPath(): void

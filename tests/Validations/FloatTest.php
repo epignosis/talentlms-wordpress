@@ -2,6 +2,9 @@
 
 use TalentlmsIntegration\Validations\TLMSFloat;
 
+/**
+ * @covers TalentlmsIntegration\Validations\TLMSFloat
+ */
 class FloatTest extends \PHPUnit\Framework\TestCase{
 
 	public function testFloatHappyPath(): void

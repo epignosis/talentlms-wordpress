@@ -11,6 +11,6 @@ class TLMSEmail extends Rule{
 	}
 
 	public function getValue(): string{
-		return $this->value;
+		return filter_var($this->value, FILTER_VALIDATE_EMAIL);
 	}
 }
