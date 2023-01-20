@@ -7,6 +7,8 @@ namespace TalentlmsIntegration;
 
 use TalentLMS_User;
 use TalentlmsIntegration\Services\PluginService;
+use TalentlmsIntegration\Validations\TLMSEmail;
+use TalentlmsIntegration\Validations\TLMSPositiveInteger;
 
 class Woocommerce implements PluginService{
 
@@ -24,7 +26,7 @@ class Woocommerce implements PluginService{
 	}
 
 	function tlms_processExistingCustomer($order_id){ //tlms_recordLog('enter_woocommerce_checkout_order_processed');
-
+		$order_id = (new TLMSPositiveInteger($order_id))->getValue();
 		$enroll_user_to_courses = get_option('tlms-enroll-user-to-courses');
 		if(!Utils::tlms_isOrderCompletedInPast($order_id) && Utils::tlms_orderHasTalentLMSCourseItem($order_id) && Utils::tlms_orderHasLatePaymentMethod($order_id) && !empty($enroll_user_to_courses) && $enroll_user_to_courses == 'submission') { //tlms_recordLog('execute_woocommerce_checkout_order_processed');
 
@@ -34,7 +36,7 @@ class Woocommerce implements PluginService{
 
 	// enroll user to courses: setup is "upon submission" and order's payment option is "payment gateway (stripe, paypal, etc)" and transaction returned "success"
 	function tlms_woocommerce_payment_complete($order_id){ //tlms_recordLog('enter_woocommerce_payment_complete');
-
+		$order_id = (new TLMSPositiveInteger($order_id))->getValue();
 		$enroll_user_to_courses = get_option('tlms-enroll-user-to-courses');
 		if(!Utils::tlms_isOrderCompletedInPast($order_id) && Utils::tlms_orderHasTalentLMSCourseItem($order_id) && !empty($enroll_user_to_courses) && $enroll_user_to_courses == 'submission') { //tlms_recordLog('excecute_woocommerce_payment_complete');
 
@@ -44,7 +46,7 @@ class Woocommerce implements PluginService{
 
 	// enroll user to courses: setup is "upon completion" and order's status changed to "completed" (in most cases manually by eshop manager)
 	function tlms_processWooComOrder($order_id){ //tlms_recordLog('enter_woocommerce_order_status_completed');
-
+		$order_id = (new TLMSPositiveInteger($order_id))->getValue();
 		$enroll_user_to_courses = get_option('tlms-enroll-user-to-courses');
 		if(!Utils::tlms_isOrderCompletedInPast($order_id) && Utils::tlms_orderHasTalentLMSCourseItem($order_id) && !empty($enroll_user_to_courses) && $enroll_user_to_courses == 'completion') { //tlms_recordLog('execute_woocommerce_order_status_completed');
 
@@ -56,8 +58,10 @@ class Woocommerce implements PluginService{
 	function tmls_customerChangedPassword($user){
 		//die(print_r($_POST, true));
 		try{
-			$tlmsUser = TalentLMS_User::retrieve(array('email' => $_POST['account_email']));
-			TalentLMS_User::edit(array('user_id' => $tlmsUser['id'], 'password' => $_POST['password_1']));
+			$userEmail = (new TLMSEmail($_POST['account_email']))->getValue();
+			$tlmsUser = TalentLMS_User::retrieve(array('email' => $userEmail));
+			$userId = (new TLMSPositiveInteger($tlmsUser['id']))->getValue();
+			TalentLMS_User::edit(array('user_id' => $userId, 'password' => esc_sql($_POST['password_1'])));
 		}
 		catch(Exception $e){
 			Utils::tlms_recordLog($e->getMessage());
@@ -68,8 +72,10 @@ class Woocommerce implements PluginService{
 	function tmls_customerResetPassword($user, $pass){
 		//die(print_r($_POST, true));
 		try{
-			$tlmsUser = TalentLMS_User::retrieve(array('email' => $user->data->user_email));
-			TalentLMS_User::edit(array('user_id' => $tlmsUser['id'], 'password' => $_POST['password_1']));
+			$userEmail = (new TLMSEmail($user->data->user_email))->getValue();
+			$tlmsUser = TalentLMS_User::retrieve(array('email' => $userEmail));
+			$userId = (new TLMSPositiveInteger($tlmsUser['id']))->getValue();
+			TalentLMS_User::edit(array('user_id' => $userId, 'password' => esc_sql($_POST['password_1'])));
 		}
 		catch(Exception $e){
 			Utils::tlms_recordLog($e->getMessage());
@@ -84,6 +90,7 @@ class Woocommerce implements PluginService{
 			return;
 		}
 
+		$post_id = (new TLMSPositiveInteger($post_id))->getValue();
 		Utils::tlms_deleteProduct($post_id);
 	}
 

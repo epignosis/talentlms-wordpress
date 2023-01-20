@@ -6,10 +6,16 @@ namespace TalentlmsIntegration;
 
 use DateTime;
 use Exception;
+use http\Exception\InvalidArgumentException;
 use TalentLMS_Category;
 use TalentLMS_Course;
 use TalentLMS_Siteinfo;
 use TalentLMS_User;
+use TalentlmsIntegration\Validations\TLMSEmail;
+use TalentlmsIntegration\Validations\TLMSFloat;
+use TalentlmsIntegration\Validations\TLMSInteger;
+use TalentlmsIntegration\Validations\TLMSPositiveInteger;
+use TalentlmsIntegration\Validations\TLMSUrl;
 
 class Utils {
 
@@ -128,29 +134,29 @@ class Utils {
 
 			foreach($apiCourses as $course){
 				$wpdb->insert(TLMS_COURSES_TABLE, array(
-					'id' => $course['id'],
-					'name' => $course['name'],
-					'course_code' => $course['code'],
-					'category_id' => $course['category_id'],
-					'description' => $course['description'],
+					'id' => (new TLMSPositiveInteger($course['id']))->getValue(),
+					'name' => esc_sql($course['name']),
+					'course_code' => esc_sql($course['code']),
+					'category_id' => (new TLMSPositiveInteger($course['category_id']))->getValue(),
+					'description' => esc_sql($course['description']),
 					'price' => esc_sql(filter_var(html_entity_decode($course['price']), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)),
-					'status' => $course['status'],
+					'status' => esc_sql($course['status']),
 					'creation_date' => self::tlms_parseDate($format, $course['creation_date'])->getTimestamp(),
 					'last_update_on' => self::tlms_parseDate($format, $course['last_update_on'])->getTimestamp(),
-					'hide_catalog' => $course['hide_from_catalog'],
-					'shared' => $course['shared'],
-					'shared_url' => $course['shared_url'],
-					'avatar' => $course['avatar'],
-					'big_avatar' => $course['big_avatar'],
-					'certification' => $course['certification'],
-					'certification_duration' => $course['certification_duration']
+					'hide_catalog' => (new TLMSInteger($course['hide_from_catalog']))->getValue(),
+					'shared' => (new TLMSInteger($course['shared']))->getValue(),
+					'shared_url' => (new TLMSUrl($course['shared_url']))->getValue(),
+					'avatar' => esc_sql($course['avatar']),
+					'big_avatar' => esc_sql($course['big_avatar']),
+					'certification' => esc_sql($course['certification']),
+					'certification_duration' => esc_sql($course['certification_duration'])
 				));
 			}
 		}
 	}
 
 	public static function tlms_getCourse($course_id){
-		$apiCourse = TalentLMS_Course::retrieve($course_id);
+		$apiCourse = TalentLMS_Course::retrieve((new TLMSPositiveInteger($course_id))->getValue());
 
 		return $apiCourse;
 	}
@@ -167,10 +173,10 @@ class Utils {
 			$apiCategories = TalentLMS_Category::all();
 			foreach($apiCategories as $category){
 				$wpdb->insert(TLMS_CATEGORIES_TABLE, array(
-					'id' => $category['id'],
-					'name' => $category['name'],
-					'price' => $category['price'],
-					'parent_id' => (!empty($category['parent_id'])) ? $category['parent_id'] : ''
+					'id' => (new TLMSPositiveInteger($category['id']))->getValue(),
+					'name' => esc_sql($category['name']),
+					'price' => (new TLMSFloat($category['price']))->getValue(),
+					'parent_id' => (!empty($category['parent_id'])) ? (new TLMSPositiveInteger($category['parent_id']))->getValue() : ''
 				));
 			}
 		}
@@ -193,7 +199,7 @@ class Utils {
 
 	public static function tlms_selectCourse($course_id){
 		global $wpdb;
-		$results = $wpdb->get_row("SELECT * FROM ".TLMS_COURSES_TABLE." WHERE id = ".$course_id);
+		$results = $wpdb->get_row("SELECT * FROM ".TLMS_COURSES_TABLE." WHERE id = ".(new TLMSPositiveInteger($course_id))->getValue());
 
 		return $results;
 	}
@@ -215,20 +221,26 @@ class Utils {
 	public static function tlms_addProduct($course_id, $courses){
 		global $wpdb;
 
+		if(!is_array($courses)){
+			throw new InvalidArgumentException('$courses is not an array');
+		}
+
+		$course_id = (new TLMSPositiveInteger($course_id))->getValue();
+
 		$categories = self::tlms_selectProductCategories();
 
 		$post = array(
 			'post_author' => wp_get_current_user()->ID,
-			'post_content' => $courses[$course_id]->description,
+			'post_content' => esc_sql($courses[$course_id]->description),
 			'post_status' => "publish",
-			'post_title' => $courses[$course_id]->name,
+			'post_title' => esc_sql($courses[$course_id]->name),
 			'post_parent' => '',
 			'post_type' => "product",
 		);
 
 		$product_id = wp_insert_post($post);
 
-		wp_set_object_terms($product_id, $courses[$course_id]->category_name, 'product_cat');
+		wp_set_object_terms($product_id, esc_sql($courses[$course_id]->category_name), 'product_cat');
 		wp_set_object_terms($product_id, 'simple', 'product_type');
 
 		$price = filter_var(html_entity_decode($courses[$course_id]->price), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
@@ -261,7 +273,7 @@ class Utils {
 		require_once(ABSPATH.'wp-admin/includes/media.php');
 		require_once(ABSPATH.'wp-admin/includes/image.php');
 
-		$thumbs_url = $courses[$course_id]->big_avatar;
+		$thumbs_url = esc_sql($courses[$course_id]->big_avatar);
 
 		$tmp = download_url($thumbs_url);
 
@@ -281,7 +293,7 @@ class Utils {
 				//$logtxt .= "download_url: $tmp\n";
 			}
 
-			$thumbid = media_handle_sideload($file_array, $product_id, $courses[$course_id]->name);
+			$thumbid = media_handle_sideload($file_array, $product_id, esc_sql($courses[$course_id]->name));
 			if(is_wp_error($thumbid)){
 				@unlink($file_array['tmp_name']);
 				$file_array['tmp_name'] = '';
@@ -298,12 +310,12 @@ class Utils {
 
 	public static function tlms_deleteProduct($product_id){
 		global $wpdb;
-		$wpdb->delete(TLMS_PRODUCTS_TABLE, array('product_id' => $product_id));
+		$wpdb->delete(TLMS_PRODUCTS_TABLE, array('product_id' => (new TLMSPositiveInteger($product_id))->getValue()));
 	}
 
 	public static function tlms_productExists($course_id){
 		global $wpdb;
-		$result = $wpdb->get_row("SELECT * FROM ".TLMS_PRODUCTS_TABLE." WHERE course_id = ".$course_id);
+		$result = $wpdb->get_row("SELECT * FROM ".TLMS_PRODUCTS_TABLE." WHERE course_id = ".(new TLMSPositiveInteger($course_id))->getValue());
 		if(!empty($result)){
 			return true;
 		}
@@ -319,12 +331,12 @@ class Utils {
 		foreach($categories as $category){
 			if(!self::tlms_productCategoryExists($category->id)){
 				$wp_category_id = wp_insert_category(array(
-														 'cat_name' => $category->name,
-														 'category_nicename' => strtolower($category->name),
+														 'cat_name' => esc_sql($category->name),
+														 'category_nicename' => strtolower(esc_sql($category->name)),
 														 'taxonomy' => 'product_cat'));
 
 				$wpdb->insert(TLMS_PRODUCTS_CATEGORIES_TABLE, array(
-					'tlms_categories_ID' => $category->id,
+					'tlms_categories_ID' => (new TLMSPositiveInteger($category->id))->getValue(),
 					'woo_categories_ID' => $wp_category_id
 				));
 			}
@@ -333,7 +345,7 @@ class Utils {
 
 	public static function tlms_productCategoryExists($category_id){
 		global $wpdb;
-		$result = $wpdb->get_row("SELECT * FROM ".TLMS_PRODUCTS_CATEGORIES_TABLE." WHERE tlms_categories_ID = ".$category_id);
+		$result = $wpdb->get_row("SELECT * FROM ".TLMS_PRODUCTS_CATEGORIES_TABLE." WHERE tlms_categories_ID = ".(new TLMSPositiveInteger($category_id))->getValue());
 		if(!empty($result)){
 			return true;
 		}
@@ -451,14 +463,14 @@ class Utils {
 
 	public static function tlms_orderHasLatePaymentMethod($order_id){
 
-		$order = wc_get_order($order_id); //tlms_recordLog('payment_method: ' . $order->get_payment_method());
+		$order = wc_get_order((new TLMSPositiveInteger($order_id))->getValue()); //tlms_recordLog('payment_method: ' . $order->get_payment_method());
 
 		return in_array($order->get_payment_method(), array('bacs', 'cheque', 'cod'));
 	}
 
 	public static function tlms_orderHasTalentLMSCourseItem($order_id){
 
-		$order = wc_get_order($order_id);
+		$order = wc_get_order((new TLMSPositiveInteger($order_id))->getValue());
 		$order_items = $order->get_items();
 		if($order_items){
 			foreach($order_items as $item){
@@ -489,11 +501,11 @@ class Utils {
 
 	public static function tlms_enrollUserToCoursesByOrderId($order_id){
 
-		$order = wc_get_order($order_id);
+		$order = wc_get_order((new TLMSPositiveInteger($order_id))->getValue());
 		$user = self::tlms_getUserByOrder($order);
 
 		try{
-			$retrieved_user = TalentLMS_User::retrieve(array('email' => $user->user_email));
+			$retrieved_user = TalentLMS_User::retrieve(array('email' => (new TLMSEmail($user->user_email))->getValue()));
 			$retrieved_user_exists = true;
 		}
 		catch(Exception $e){
@@ -677,6 +689,7 @@ class Utils {
 	}
 
 	public static function tlms_deleteWoocomerceProduct($id, $force = FALSE){
+		$id = (new TLMSPositiveInteger($id))->getValue();
 
 		$product = wc_get_product($id);
 

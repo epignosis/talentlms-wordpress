@@ -7,18 +7,10 @@ abstract class Rule{
 	protected $value;
 
 	public function __construct($value){
-		if(empty($value)){
-			throw new \InvalidArgumentException('Value cannot be null');
-		}
-
 		$this->value = $value;
 		$this->validate();
 	}
-	protected function validate(): void{
-		throw new \InvalidArgumentException("Value is not valid");
-	}
+	abstract protected function validate(): void;
 
-	public function getValue(){
-		return $this->value;
-	}
+	abstract public function getValue();
 }

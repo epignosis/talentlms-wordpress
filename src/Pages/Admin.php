@@ -9,6 +9,7 @@ use TalentLMS_ApiError;
 use TalentlmsIntegration\Helpers\TalentLMSApiIntegrationHelper;
 use TalentlmsIntegration\Services\PluginService;
 use TalentlmsIntegration\Utils;
+use TalentlmsIntegration\Validations\TLMSPositiveInteger;
 
 class Admin implements PluginService{
 
@@ -53,12 +54,14 @@ class Admin implements PluginService{
 					$action_message = __('Invalid TalentLMS API key', 'talentlms')."<br />";
 				}
 				else{
-					update_option('tlms-domain', $_POST['tlms-domain']);
-					update_option('tlms-apikey', $_POST['tlms-apikey']);
-					update_option('tlms-enroll-user-to-courses', $_POST['tlms-enroll-user-to-courses']);
+					update_option('tlms-domain', esc_sql($_POST['tlms-domain']));
+					update_option('tlms-apikey', esc_sql($_POST['tlms-apikey']));
+					update_option('tlms-enroll-user-to-courses', esc_sql($_POST['tlms-enroll-user-to-courses']));
+
 					if(isset($_POST['tlms-automtically-complete-orders'])){
-						update_option('tlms-automtically-complete-orders', $_POST['tlms-automtically-complete-orders']);
+						update_option('tlms-automtically-complete-orders', esc_sql($_POST['tlms-automtically-complete-orders']));
 					}
+
 					$action_status = "updated";
 					$action_message = __('Details edited successfully', 'talentlms');
 				}
@@ -91,6 +94,7 @@ class Admin implements PluginService{
 			Utils::tlms_addProductCategories();
 
 			foreach($_POST['tlms_products'] as $course_id){
+				$course_id = (new TLMSPositiveInteger($course_id))->getValue();
 				if(!Utils::tlms_productExists($course_id)){
 					Utils::tlms_addProduct($course_id, $courses);
 				}

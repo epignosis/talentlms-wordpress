@@ -28,7 +28,7 @@ class TLMSWidget extends WP_Widget implements PluginService{
 	public function widget($args, $instance){
 		echo $args['before_widget'];
 		if(!empty($instance['title'])){
-			echo $args['before_title'].apply_filters('widget_title', $instance['title']).$args['after_title'];
+			echo $args['before_title'].apply_filters('widget_title', esc_html($instance['title'])).$args['after_title'];
 		}
 		$courses = Utils::tlms_selectCourses();
 		require_once TLMS_BASEPATH.'/templates/widget/tlmswidget.php';
