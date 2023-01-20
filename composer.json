@@ -21,11 +21,13 @@
     "require-dev": {
         "wp-coding-standards/wpcs": "^2.3",
         "phpcompatibility/phpcompatibility-wp": "^2.1",
-        "roave/security-advisories": "dev-latest"
+        "roave/security-advisories": "dev-latest",
+        "phpunit/phpunit": "^9"
     },
     "autoload": {
         "psr-4": {
-            "TalentlmsIntegration\\": "src/"
+            "TalentlmsIntegration\\": "src/",
+            "TalentlmsIntegrationTests\\": "tests/"
         }
     },
     "minimum-stability": "stable",
