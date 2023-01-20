@@ -1,31 +1,38 @@
 <?php
-if(!function_exists('tlms_pr')){
-	function tlms_pr($var){
+/**
+ * @package talentlms-wordpress
+ */
+namespace TalentlmsIntegration;
+
+use DateTime;
+use Exception;
+use TalentLMS_Category;
+use TalentLMS_Course;
+use TalentLMS_Siteinfo;
+use TalentLMS_User;
+
+class Utils {
+
+	public static function tlms_pr($var) {
 		echo "<pre>";
 		print_r($var);
 		echo "</pre>";
 	}
-}
 
-if(!function_exists('tlms_pre')){
-	function tlms_pre($var){
+	public static function tlms_pre($var) {
 		echo "<pre>";
 		print_r($var);
 		echo "</pre>";
 		exit;
 	}
-}
 
-if(!function_exists('tlms_vd')){
-	function tlms_vd($var){
+	public static function tlms_vd($var) {
 		echo "<pre>";
 		var_dump($var);
 		echo "</pre>";
 	}
-}
 
-if(!function_exists('tlms_limitWords')){
-	function tlms_limitWords($string, $limit){
+	public static function tlms_limitWords($string, $limit) {
 		if($limit){
 			$words = explode(" ", $string);
 
@@ -35,34 +42,26 @@ if(!function_exists('tlms_limitWords')){
 			return $string;
 		}
 	}
-}
 
-if(!function_exists('tlms_limitSentence')){
-	function tlms_limitSentence($string, $limit){
+	public static function tlms_limitSentence($string, $limit){
 		$sentences = explode(".", $string);
 
 		return implode(".", array_splice($sentences, 0, $limit));
 	}
-}
 
-if(!function_exists('tlms_isValidDomain')){
-	function tlms_isValidDomain($domain){
+	public static function tlms_isValidDomain($domain){
 		return preg_match("/^[a-z0-9-\.]{1,100}\w+$/", $domain) AND (strpos($domain, 'talentlms.com') !== false);
 	}
-}
 
-if(!function_exists('tlms_isApiKey')){
-	function tlms_isApiKey($apiKey){
+	public static function tlms_isApiKey($apiKey){
 		if(strlen($apiKey) == 30){
 			return true;
 		}
 
 		return false;
 	}
-}
 
-if(!function_exists('tlms_parseDate')){
-	function tlms_parseDate($format, $date){
+	public static function tlms_parseDate($format, $date){
 		$isPM = (stripos($date, 'PM') !== false);
 		$parsedDate = str_replace(array('AM', 'PM'), '', $date);
 		$is12hourFormat = ($parsedDate !== $date);
@@ -79,12 +78,10 @@ if(!function_exists('tlms_parseDate')){
 
 		return $parsedDate;
 	}
-}
 
-if(!function_exists('tlms_getDateFormat')){
-	function tlms_getDateFormat($no_sec = false){
+	public static function tlms_getDateFormat($no_sec = false){ // used in reg_shortcodes
 		// TODO: Store the site info in the database instead of hitting the API everytime we want to get it.
-		$site_info = tlms_getTalentLMSSiteInfo();
+		$site_info = self::tlms_getTalentLMSSiteInfo();
 		$date_format = $site_info instanceof Exception ? '' : $site_info['date_format'];
 
 		switch($date_format){
@@ -117,10 +114,8 @@ if(!function_exists('tlms_getDateFormat')){
 
 		return $format;
 	}
-}
 
-if(!function_exists('tlms_getCourses')){
-	function tlms_getCourses($force = false){
+	public static function tlms_getCourses($force = false){
 		global $wpdb;
 		if($force){
 			$wpdb->query('TRUNCATE TABLE '.TLMS_COURSES_TABLE);
@@ -129,7 +124,7 @@ if(!function_exists('tlms_getCourses')){
 		$result = $wpdb->get_var("SELECT COUNT(*) FROM ".TLMS_COURSES_TABLE);
 		if(empty($result)){
 			$apiCourses = TalentLMS_Course::all();
-			$format = tlms_getDateFormat();
+			$format = self::tlms_getDateFormat();
 
 			foreach($apiCourses as $course){
 				$wpdb->insert(TLMS_COURSES_TABLE, array(
@@ -140,8 +135,8 @@ if(!function_exists('tlms_getCourses')){
 					'description' => $course['description'],
 					'price' => esc_sql(filter_var(html_entity_decode($course['price']), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)),
 					'status' => $course['status'],
-					'creation_date' => tlms_parseDate($format, $course['creation_date'])->getTimestamp(),
-					'last_update_on' => tlms_parseDate($format, $course['last_update_on'])->getTimestamp(),
+					'creation_date' => self::tlms_parseDate($format, $course['creation_date'])->getTimestamp(),
+					'last_update_on' => self::tlms_parseDate($format, $course['last_update_on'])->getTimestamp(),
 					'hide_catalog' => $course['hide_from_catalog'],
 					'shared' => $course['shared'],
 					'shared_url' => $course['shared_url'],
@@ -153,18 +148,14 @@ if(!function_exists('tlms_getCourses')){
 			}
 		}
 	}
-}
 
-if(!function_exists('tlms_getCourse')){
-	function tlms_getCourse($course_id){
+	public static function tlms_getCourse($course_id){
 		$apiCourse = TalentLMS_Course::retrieve($course_id);
 
 		return $apiCourse;
 	}
-}
 
-if(!function_exists('tlms_getCategories')){
-	function tlms_getCategories($force = false){
+	public static function tlms_getCategories($force = false){
 		global $wpdb;
 
 		if($force){
@@ -184,10 +175,8 @@ if(!function_exists('tlms_getCategories')){
 			}
 		}
 	}
-}
 
-if(!function_exists('tlms_selectCourses')){
-	function tlms_selectCourses(){
+	public static function tlms_selectCourses(){
 		global $wpdb;
 
 		$courses = [];
@@ -201,40 +190,32 @@ if(!function_exists('tlms_selectCourses')){
 
 		return $courses;
 	}
-}
 
-if(!function_exists('tlms_selectCourse')){
-	function tlms_selectCourse($course_id){
+	public static function tlms_selectCourse($course_id){
 		global $wpdb;
 		$results = $wpdb->get_row("SELECT * FROM ".TLMS_COURSES_TABLE." WHERE id = ".$course_id);
 
 		return $results;
 	}
-}
 
-if(!function_exists('tlms_selectCategories')){
-	function tlms_selectCategories($where = false, $order = false){
+	public static function tlms_selectCategories($where = false, $order = false){
 		global $wpdb;
 		$results = $wpdb->get_results("SELECT * FROM ".TLMS_CATEGORIES_TABLE);
 
 		return $results;
 	}
-}
 
-if(!function_exists('tlms_selectProductCategories')){
-	function tlms_selectProductCategories(){
+	public static function tlms_selectProductCategories(){
 		global $wpdb;
 		$results = $wpdb->get_results("SELECT * FROM ".TLMS_PRODUCTS_CATEGORIES_TABLE);
 
 		return $results;
 	}
-}
 
-if(!function_exists('tlms_addProduct')){
-	function tlms_addProduct($course_id, $courses){
+	public static function tlms_addProduct($course_id, $courses){
 		global $wpdb;
 
-		$categories = tlms_selectProductCategories();
+		$categories = self::tlms_selectProductCategories();
 
 		$post = array(
 			'post_author' => wp_get_current_user()->ID,
@@ -314,17 +295,13 @@ if(!function_exists('tlms_addProduct')){
 			'course_id' => $course_id
 		));
 	}
-}
 
-if(!function_exists('tlms_deleteProduct')){
-	function tlms_deleteProduct($product_id){
+	public static function tlms_deleteProduct($product_id){
 		global $wpdb;
 		$wpdb->delete(TLMS_PRODUCTS_TABLE, array('product_id' => $product_id));
 	}
-}
 
-if(!function_exists('tlms_productExists')){
-	function tlms_productExists($course_id){
+	public static function tlms_productExists($course_id){
 		global $wpdb;
 		$result = $wpdb->get_row("SELECT * FROM ".TLMS_PRODUCTS_TABLE." WHERE course_id = ".$course_id);
 		if(!empty($result)){
@@ -333,16 +310,14 @@ if(!function_exists('tlms_productExists')){
 
 		return false;
 	}
-}
 
-if(!function_exists('tlms_addProductCategories')){
-	function tlms_addProductCategories(){
+	public static function tlms_addProductCategories(){
 		global $wpdb;
 
-		$categories = tlms_selectCategories();
+		$categories = self::tlms_selectCategories();
 
 		foreach($categories as $category){
-			if(!tlms_productCategoryExists($category->id)){
+			if(!self::tlms_productCategoryExists($category->id)){
 				$wp_category_id = wp_insert_category(array(
 														 'cat_name' => $category->name,
 														 'category_nicename' => strtolower($category->name),
@@ -355,10 +330,8 @@ if(!function_exists('tlms_addProductCategories')){
 			}
 		}
 	}
-}
 
-if(!function_exists('tlms_productCategoryExists')){
-	function tlms_productCategoryExists($category_id){
+	public static function tlms_productCategoryExists($category_id){
 		global $wpdb;
 		$result = $wpdb->get_row("SELECT * FROM ".TLMS_PRODUCTS_CATEGORIES_TABLE." WHERE tlms_categories_ID = ".$category_id);
 		if(!empty($result)){
@@ -367,40 +340,34 @@ if(!function_exists('tlms_productCategoryExists')){
 
 		return false;
 	}
-}
 
-if(!function_exists('tlms_getTalentLMSSiteInfo')){
-	function tlms_getTalentLMSSiteInfo(){
+	public static function tlms_getTalentLMSSiteInfo(){
 		try{
 			$site_info = TalentLMS_Siteinfo::get();
 		}
 		catch(Exception $e){
-			tlms_recordLog($e->getMessage());
+			self::tlms_recordLog($e->getMessage());
 
 			return $e;
 		}
 
 		return $site_info;
 	}
-}
 
-if(!function_exists('tlms_getCustomFields')){
-	function tlms_getCustomFields(){
+	public static function tlms_getCustomFields(){
 		try{
 			$custom_fields = TalentLMS_User::getCustomRegistrationFields();
 		}
 		catch(Exception $e){
-			tlms_recordLog($e->getMessage());
+			self::tlms_recordLog($e->getMessage());
 
 			return $e;
 		}
 
 		return $custom_fields;
 	}
-}
 
-if(!function_exists('tlms_getTalentLMSURL')){
-	function tlms_getTalentLMSURL($url){
+	public static function tlms_getTalentLMSURL($url){
 		if(get_option('tlms-domain-map')){
 			return str_replace(get_option('tlms-domain'), get_option('tlms-domain-map'), $url);
 		}
@@ -408,19 +375,15 @@ if(!function_exists('tlms_getTalentLMSURL')){
 			return $url;
 		}
 	}
-}
 
-if(!function_exists('tlms_getLoginKey')){
-	function tlms_getLoginKey($url){
+	public static function tlms_getLoginKey($url){
 		$arr = explode('key:', $url);
 		$login_key = ',key:'.$arr[1];
 
 		return $login_key;
 	}
-}
 
-if(!function_exists('tlms_currentPageURL')){
-	function tlms_currentPageURL(){
+	public static function tlms_currentPageURL(){
 		$pageURL = 'http';
 		if(isset($_SERVER["HTTPS"])){
 			if($_SERVER["HTTPS"] == "on"){
@@ -437,10 +400,8 @@ if(!function_exists('tlms_currentPageURL')){
 
 		return $pageURL;
 	}
-}
 
-if(!function_exists('tlms_getUnitIconClass')){
-	function tlms_getUnitIconClass($unit_type){
+	public static function tlms_getUnitIconClass($unit_type){
 		$iconClass = '';
 		switch($unit_type){
 			case 'Unit':
@@ -487,34 +448,31 @@ if(!function_exists('tlms_getUnitIconClass')){
 
 		return $iconClass;
 	}
-}
-if(!function_exists('tlms_orderHasLatePaymentMethod')){
-    function tlms_orderHasLatePaymentMethod($order_id){
 
-        $order = wc_get_order($order_id); //tlms_recordLog('payment_method: ' . $order->get_payment_method());
+	public static function tlms_orderHasLatePaymentMethod($order_id){
 
-        return in_array($order->get_payment_method(), array('bacs', 'cheque', 'cod'));
-    }
-}
-if(!function_exists('tlms_orderHasTalentLMSCourseItem')){
-    function tlms_orderHasTalentLMSCourseItem($order_id){
+		$order = wc_get_order($order_id); //tlms_recordLog('payment_method: ' . $order->get_payment_method());
 
-        $order = wc_get_order($order_id);
-        $order_items = $order->get_items();
-        if($order_items){
-            foreach($order_items as $item){
-                if(!empty(get_post_meta($item['product_id'], '_talentlms_course_id'))){
+		return in_array($order->get_payment_method(), array('bacs', 'cheque', 'cod'));
+	}
 
-                    return true;
-                }
-            }
-        }
+	public static function tlms_orderHasTalentLMSCourseItem($order_id){
 
-        return false;
-    }
-}
-if(!function_exists('tlms_isTalentLMSCourseInCart')){
-	function tlms_isTalentLMSCourseInCart(){
+		$order = wc_get_order($order_id);
+		$order_items = $order->get_items();
+		if($order_items){
+			foreach($order_items as $item){
+				if(!empty(get_post_meta($item['product_id'], '_talentlms_course_id'))){
+
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	public static function tlms_isTalentLMSCourseInCart(){
 		global $woocommerce;
 
 		$items = $woocommerce->cart->get_cart();
@@ -528,111 +486,104 @@ if(!function_exists('tlms_isTalentLMSCourseInCart')){
 
 		return (empty($tmls_courses)) ? false : true;
 	}
-}
 
-if(!function_exists('tlms_enrollUserToCoursesByOrderId')){
-    function tlms_enrollUserToCoursesByOrderId($order_id){
+	public static function tlms_enrollUserToCoursesByOrderId($order_id){
 
-        $order = wc_get_order($order_id);
-        $user = tlms_getUserByOrder($order);
+		$order = wc_get_order($order_id);
+		$user = self::tlms_getUserByOrder($order);
 
-        try{
-            $retrieved_user = TalentLMS_User::retrieve(array('email' => $user->user_email));
-            $retrieved_user_exists = true;
-        }
-        catch(Exception $e){
-            tlms_recordLog($e->getMessage());
-            $retrieved_user_exists = false;
-        }
+		try{
+			$retrieved_user = TalentLMS_User::retrieve(array('email' => $user->user_email));
+			$retrieved_user_exists = true;
+		}
+		catch(Exception $e){
+			self::tlms_recordLog($e->getMessage());
+			$retrieved_user_exists = false;
+		}
 
-        if(!$retrieved_user_exists){
-            try{
-                TalentLMS_User::signup(tlms_buildSignUpArgumentsByUser($user));
-            }
-            catch (Exception $e) {
-                tlms_recordLog($e->getMessage());
-            }
-        }
+		if(!$retrieved_user_exists){
+			try{
+				TalentLMS_User::signup(self::tlms_buildSignUpArgumentsByUser($user));
+			}
+			catch (Exception $e) {
+				self::tlms_recordLog($e->getMessage());
+			}
+		}
 
-        try{
-            foreach($order->get_items() as $item){
+		try{
+			foreach($order->get_items() as $item){
 
-                if(!empty($product_tlms_course = get_post_meta($item['product_id'], '_talentlms_course_id'))){ // isTalentLMSCourseInCart
+				if(!empty($product_tlms_course = get_post_meta($item['product_id'], '_talentlms_course_id'))){ // isTalentLMSCourseInCart
 
-                    $enrolled_course = TalentLMS_Course::addUser(array('course_id' => $product_tlms_course[0], 'user_email' => $user->user_email));
-                    wc_add_order_item_meta($item->get_id(), 'tlms_go-to-course', TalentLMS_Course::gotoCourse(array('course_id' => $product_tlms_course[0], 'user_id' => $enrolled_course[0]['user_id'])));
-                }
-            }
-        }
-        catch(Exception $e){
-            tlms_recordLog($e->getMessage());
-        }
-    }
-}
-if(!function_exists('tlms_buildSignUpArgumentsByUser')){
-    function tlms_buildSignUpArgumentsByUser($user){
+					$enrolled_course = TalentLMS_Course::addUser(array('course_id' => $product_tlms_course[0], 'user_email' => $user->user_email));
+					wc_add_order_item_meta($item->get_id(), 'tlms_go-to-course', TalentLMS_Course::gotoCourse(array('course_id' => $product_tlms_course[0], 'user_id' => $enrolled_course[0]['user_id'])));
+				}
+			}
+		}
+		catch(Exception $e){
+			self::tlms_recordLog($e->getMessage());
+		}
+	}
 
-        $signup_arguments = array();
-        $signup_arguments['first_name'] = sanitize_text_field($user->user_firstname);
-        $signup_arguments['last_name'] = sanitize_text_field($user->user_lastname);
-        $signup_arguments['email'] = sanitize_email($user->user_email);
-        $signup_arguments['login'] = sanitize_user(preg_replace('/\s+/', '', $user->user_login));
-        $signup_arguments['password'] = $user->user_password;
+	public static function tlms_buildSignUpArgumentsByUser($user){
 
-        try{
-            if(!empty($custom_fields = TalentLMS_User::getCustomRegistrationFields())){
-                foreach($custom_fields as $custom_field){
-                    if($custom_field['mandatory'] == 'yes'){
-                        switch($custom_field['type']){
-                            case 'text':
-                                $signup_arguments[$custom_field['key']] = " ";
-                                break;
-                            case 'dropdown':
-                                $options = explode(';', $custom_field['dropdown_values']);
-                                $signup_arguments[$custom_field['key']] = $options[0];
-                                break;
-                            case 'date':
-                                $signup_arguments[$custom_field['key']] = " ";
-                                break;
-                        }
-                    }
-                }
-            }
-        }
-        catch(Exception $e){
-            tlms_recordLog($e->getMessage());
-        }
+		$signup_arguments = array();
+		$signup_arguments['first_name'] = sanitize_text_field($user->user_firstname);
+		$signup_arguments['last_name'] = sanitize_text_field($user->user_lastname);
+		$signup_arguments['email'] = sanitize_email($user->user_email);
+		$signup_arguments['login'] = sanitize_user(preg_replace('/\s+/', '', $user->user_login));
+		$signup_arguments['password'] = $user->user_password;
 
-        return $signup_arguments;
-    }
-}
+		try{
+			if(!empty($custom_fields = TalentLMS_User::getCustomRegistrationFields())){
+				foreach($custom_fields as $custom_field){
+					if($custom_field['mandatory'] == 'yes'){
+						switch($custom_field['type']){
+							case 'text':
+								$signup_arguments[$custom_field['key']] = " ";
+								break;
+							case 'dropdown':
+								$options = explode(';', $custom_field['dropdown_values']);
+								$signup_arguments[$custom_field['key']] = $options[0];
+								break;
+							case 'date':
+								$signup_arguments[$custom_field['key']] = " ";
+								break;
+						}
+					}
+				}
+			}
+		}
+		catch(Exception $e){
+			self::tlms_recordLog($e->getMessage());
+		}
 
-if(!function_exists('tlms_getUserByOrder')){
-    function tlms_getUserByOrder($order){
+		return $signup_arguments;
+	}
 
-        $user = new stdClass();
-        $user->user_firstname = $order->get_billing_first_name();
-        $user->user_lastname = $order->get_billing_last_name();
+	public static function tlms_getUserByOrder($order){
 
-        if( $existing_user = $order->get_user() ){ //existing or just created
+		$user = new stdClass();
+		$user->user_firstname = $order->get_billing_first_name();
+		$user->user_lastname = $order->get_billing_last_name();
 
-            $user->user_email = $existing_user->data->user_email;
-            $user->user_login = $existing_user->data->user_login;
-            $user->user_password = !empty($_POST['account_password']) ? substr($_POST['account_password'], 0, 20) : tlms_passgen();
-        }
-        else { //guest user
+		if( $existing_user = $order->get_user() ){ //existing or just created
 
-            $user->user_email = $order->get_billing_email();
-            $user->user_login = $user->user_firstname.'.'.$user->user_lastname;
-            $user->user_password = tlms_passgen();
-        }
+			$user->user_email = $existing_user->data->user_email;
+			$user->user_login = $existing_user->data->user_login;
+			$user->user_password = !empty($_POST['account_password']) ? substr($_POST['account_password'], 0, 20) : self::tlms_passgen();
+		}
+		else { //guest user
 
-        return $user;
-    }
-}
+			$user->user_email = $order->get_billing_email();
+			$user->user_login = $user->user_firstname.'.'.$user->user_lastname;
+			$user->user_password = self::tlms_passgen();
+		}
 
-if(!function_exists('tlms_recordLog')){
-	function tlms_recordLog($message){
+		return $user;
+	}
+
+	public static function tlms_recordLog($message){
 		$logFile = TLMS_BASEPATH.'/errorLog.txt';
 
 		$time = date("F jS Y, H:i", time() + 25200);
@@ -642,23 +593,19 @@ if(!function_exists('tlms_recordLog')){
 		$write = fputs($fp, $logOutput);
 		fclose($fp);
 	}
-}
 
-if(!function_exists('tlms_passgen')){
-    function tlms_passgen($length = 8){
+	public static function tlms_passgen($length = 8){
 		$uppercases = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		$lowercases = "abcdefghijklmnopqrstuvwxyz";
 		$digits = "1234567890";
 
-        $length = max($length, 8);
-        $password = wp_generate_password($length) . $uppercases[rand(0, strlen($uppercases - 1))] . $lowercases[rand(0, strlen($lowercases - 1))] . $digits[rand(0, strlen($digits - 1))];
+		$length = max($length, 8);
+		$password = wp_generate_password($length) . $uppercases[rand(0, strlen($uppercases) - 1)] . $lowercases[rand(0, strlen($lowercases) - 1)] . $digits[rand(0, strlen($digits) - 1)];
 
 		return str_shuffle($password);
 	}
-}
 
-if(!function_exists('tlms_getCourseIdByProduct')){
-	function tlms_getCourseIdByProduct($product_id){
+	public static function tlms_getCourseIdByProduct($product_id){
 
 		if(empty($product_id)){
 			return;
@@ -679,9 +626,8 @@ if(!function_exists('tlms_getCourseIdByProduct')){
 
 		return $products_courses[0]['course_id'];
 	}
-}
-if(!function_exists('tlms_isOrderCompletedInPast')){
-	function tlms_isOrderCompletedInPast($order_id){
+
+	public static function tlms_isOrderCompletedInPast($order_id){
 
 		if(empty($order_id)){
 			return;
@@ -704,9 +650,8 @@ if(!function_exists('tlms_isOrderCompletedInPast')){
 
 		return (empty($completed_statuses_in_past)) ? false : true;
 	}
-}
-if(!function_exists('tlms_getCourseUrl')){
-	function tlms_getCourseUrl($course_id){
+
+	public static function tlms_getCourseUrl($course_id){
 
 		$course_url = '';
 		$tlms_domain = get_option('tlms-domain');
@@ -717,24 +662,21 @@ if(!function_exists('tlms_getCourseUrl')){
 
 		return $course_url;
 	}
-}
-if(!function_exists('tlms_deleteWoocomerceProducts')){
-	function tlms_deleteWoocomerceProducts(){
+
+	public static function tlms_deleteWoocomerceProducts(){
 
 		global $wpdb;
 		$products = $wpdb->get_results("SELECT * FROM ".TLMS_PRODUCTS_TABLE);
 		if(!empty($products)){
 			foreach($products as $product){
-				tlms_deleteWoocomerceProduct($product->product_id, false);
+				self::tlms_deleteWoocomerceProduct($product->product_id, false);
 			}
 		}
 
 		return false;
 	}
-}
-if(!function_exists('tlms_deleteWoocomerceProduct')){
 
-	function tlms_deleteWoocomerceProduct($id, $force = FALSE){
+	public static function tlms_deleteWoocomerceProduct($id, $force = FALSE){
 
 		$product = wc_get_product($id);
 
@@ -777,4 +719,3 @@ if(!function_exists('tlms_deleteWoocomerceProduct')){
 		return true;
 	}
 }
-

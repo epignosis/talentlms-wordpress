@@ -2,30 +2,63 @@
 /*
  Plugin Name: TalentLMS
  Plugin URI: http://wordpress.org/extend/plugins/talentlms/
- Description: This plugin integrates Talentlms with Wordpress. Promote your TalentLMS content through your WordPress site.
+ Description: This plugin integrates TalentLMS with WordPress. Promote your TalentLMS content through your WordPress site.
  Version: 6.6.9.5
  Author: Epignosis LLC
  Author URI: www.epignosishq.com
  License: GPL2
  */
 
-define("_TLMS_VERSION_", "6.6.9.5");
-define("_TLMS_BASEPATH_", dirname(__FILE__));
-define("_TLMS_BASEURL_", plugin_dir_url(__FILE__));
+/**
+ * Require once the Composer Autoload
+ */
+if(file_exists(plugin_dir_path( __FILE__ ) . 'vendor/autoload.php')){
+	require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+}
 
-require_once (_TLMS_BASEPATH_ . '/TalentLMSLib/lib/TalentLMS.php');
+/**
+ * Define constants
+ */
+define('TLMS_BASEPATH', dirname(__FILE__));
+define('TLMS_BASEURL', plugin_dir_url(__FILE__));
+define('TLMS_VERSION', '6.6.9.5');
 
-require_once (_TLMS_BASEPATH_ . '/utils/utils.php');
-require_once (_TLMS_BASEPATH_ . '/utils/db.php');
-require_once (_TLMS_BASEPATH_ . '/utils/install.php');
-require_once (_TLMS_BASEPATH_ . '/admin/admin.php');
-require_once (_TLMS_BASEPATH_ . '/shortcodes/reg_shortcodes.php');
-require_once (_TLMS_BASEPATH_ . '/integrations/woocommerce.php');
-require_once (_TLMS_BASEPATH_ . '/widgets/reg_widgets.php');
+/**
+ * The code that runs during plugin activation
+ */
+function activate(): void{
+	TalentlmsIntegration\Activate::tlms_activate();
+}
+register_activation_hook(__FILE__, 'activate');
 
-
-register_activation_hook(__FILE__, 'tlms_install');
 register_uninstall_hook(__FILE__, 'tlms_uninstall');
+
+if(class_exists('TalentlmsIntegration\Plugin')){
+	TalentlmsIntegration\Plugin::register_services();
+}
+
+if(class_exists('TalentlmsIntegration\Utils')){
+	new \TalentlmsIntegration\Utils();
+}
+
+if(file_exists(TLMS_BASEPATH . '/TalentLMSLib/lib/TalentLMS.php')){
+	require_once TLMS_BASEPATH . '/TalentLMSLib/lib/TalentLMS.php';
+}
+
+if(file_exists(TLMS_BASEPATH . '/src/Utils.php')){
+	require_once TLMS_BASEPATH . '/src/Utils.php';
+}
+
+//register_activation_hook(__FILE__, 'tlms_install');
+//register_uninstall_hook(__FILE__, 'tlms_uninstall');
+//require_once (TLMS_BASEPATH . '/TalentLMSLib/lib/TalentLMS.php');
+//require_once (TLMS_BASEPATH . '/utils/utils.php');
+//require_once (TLMS_BASEPATH . '/utils/db.php');
+//require_once (TLMS_BASEPATH . '/utils/install.php');
+//require_once (TLMS_BASEPATH . '/admin/admin.php');
+//require_once (TLMS_BASEPATH . '/widgets/reg_widgets.php');
+//require_once (TLMS_BASEPATH . '/shortcodes/reg_shortcodes.php');
+//require_once (TLMS_BASEPATH . '/integrations/woocommerce.php');
 
 function tlms_isWoocommerceActive() {
 	if ( is_plugin_active('woocommerce/woocommerce.php') ) {
