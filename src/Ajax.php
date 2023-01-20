@@ -7,7 +7,7 @@ namespace TalentlmsIntegration;
 
 use TalentLMS_Siteinfo;
 use TalentlmsIntegration\Services\PluginService;
-use TalentlmsIntegration\Validations\PositiveInteger;
+use TalentlmsIntegration\Validations\TLMSPositiveInteger;
 
 class Ajax implements PluginService{
 
@@ -18,7 +18,7 @@ class Ajax implements PluginService{
 	public function tlms_resyncCourse(): void{
 		global $wpdb;
 		try{
-			$courseId = (new PositiveInteger($_POST['course_id']))->getValue();
+			$courseId = (new TLMSPositiveInteger($_POST['course_id']))->getValue();
 			$limit = TalentLMS_Siteinfo::getRateLimit();
 
 			if(!empty($courseId) && (empty($limit['remaining']) || $limit['remaining'] > 4)){ // we are gonna make at least 3 api calls, so we have to be prepared.

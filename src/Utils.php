@@ -6,7 +6,7 @@ namespace TalentlmsIntegration;
 
 use DateTime;
 use Exception;
-use http\Exception\InvalidArgumentException;
+use InvalidArgumentException;
 use TalentLMS_Category;
 use TalentLMS_Course;
 use TalentLMS_Siteinfo;
