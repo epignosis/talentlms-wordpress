@@ -11,7 +11,7 @@
 		<table class="form-table">
 			<tr>
 				<th scope="row" class="form-field form-required <?php echo esc_attr($domain_validation); ?>">
-					<label for="tlms-domain"><?php _e("TalentLMS Domain", 'talentlms'); ?> <span class="description">(<?php _e("Required", 'talentlms'); ?>)</span>:</label>
+					<label for="tlms-domain"><?php esc_html_e("TalentLMS Domain", 'talentlms'); ?> <span class="description">(<?php esc_html_e("Required", 'talentlms'); ?>)</span>:</label>
 				</th>
 				<td class="form-field form-required <?php echo esc_attr($domain_validation); ?>">
 					<input id="tlms-domain" name="tlms-domain" style="width: 25em;" value="<?php echo get_option('tlms-domain'); ?>"/>
