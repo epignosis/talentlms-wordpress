@@ -19,7 +19,7 @@
 			</tr>
 			<tr>
 				<th scope="row" class="form-field form-required <?php echo esc_attr($api_validation); ?>">
-					<label for="tlms-apikey"><?php _e("API Key", 'talentlms'); ?> <span class="description"><?php _e("(Required)", 'talentlms'); ?></span>:</label>
+					<label for="tlms-apikey"><?php esc_html_e("API Key", 'talentlms'); ?> <span class="description"><?php esc_html_e("Required", 'talentlms'); ?></span>:</label>
 				</th>
 				<td class="form-field form-required <?php echo esc_attr($api_validation); ?>">
 					<input id="tlms-apikey" name="tlms-apikey" style="width: 25em;" value="<?php echo get_option('tlms-apikey'); ?>"/>
