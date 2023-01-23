@@ -4,6 +4,8 @@
  * @package talentlms-wordpress
  */
 
+use TalentlmsIntegration\Utils;
+
 if (!defined('WP_UNINSTALL_PLUGIN')) {
 	die;
 }
@@ -11,7 +13,7 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 function tlms_uninstall() {
 	tlms_deleteOptions();
 	tlms_deleteWPPages();
-	tlms_deleteWoocomerceProducts();
+	Utils::tlms_deleteWoocomerceProducts();
 	tlms_dropDB();
 }
 

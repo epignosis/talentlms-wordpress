@@ -16,10 +16,13 @@ final class Plugin {
 	public static function get_services(): array{
 		return [
 			Pages\Admin::class,
+			Pages\Errors::class,
 			Pages\Help::class,
-//			Pages\Errors::class,
+			Ajax::class,
+			Database::class,
 			Enqueue::class,
-			Widget::class
+			Woocommerce::class,
+//			Widget::class,
 		];
 	}
 
@@ -43,9 +46,6 @@ final class Plugin {
 	 */
 	private static function init($class) {
 		return new $class();
-
-//		register_activation_hook(__FILE__, 'activate');
-//		register_deactivation_hook(__FILE__, 'deactivate');
 	}
 }
 

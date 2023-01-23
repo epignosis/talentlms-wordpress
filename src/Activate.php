@@ -9,9 +9,9 @@ class Activate {
 
 	public static function tlms_activate() {
 		Database::tlms_createDB();
-		Activate::tlms_addOptions();
-		Activate::tlms_installAndUpdateOptions();
-		Activate::tlms_setupWPPages();
+		self::tlms_addOptions();
+		self::tlms_installAndUpdateOptions();
+		self::tlms_setupWPPages();
 	}
 
 	public static function tlms_addOptions() {
@@ -19,15 +19,15 @@ class Activate {
 		update_option('tlms-apikey', '');
 		update_option('tlms-woocommerce-active', 0);
 	}
-	public static function tlms_installAndUpdateOptions() {
 
+	public static function tlms_installAndUpdateOptions() {
 		update_option('tlms-enroll-user-to-courses', 'submission');
 	}
 
 
 	public static function tlms_setupWPPages() {
-		Activate::tlms_addCoursesPage();
-		//Activate::tlms_addSignupPage(); //deprecated
+		self::tlms_addCoursesPage();
+		//self::tlms_addSignupPage(); //deprecated
 	}
 
 	public static function tlms_addCoursesPage() {

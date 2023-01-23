@@ -7,13 +7,13 @@ namespace TalentlmsIntegration;
 use WP_Widget;
 
 class Widget extends WP_Widget{
-	public $widget_ID;
+	public string $widget_ID;
 
-	public $version;
+	public string $version;
 
-	public $widget_name;
+	public string $widget_name;
 
-	public $widget_options = array();
+	public array $widget_options = array();
 
 	function __construct() {
 
