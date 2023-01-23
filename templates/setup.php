@@ -31,7 +31,7 @@
 				</th>
 				<td class="form-field form-required <?php echo esc_attr($enroll_user_validation); ?>">
 					<select name="tlms-enroll-user-to-courses">
-						<option value="submission" <?php echo (get_option('tlms-enroll-user-to-courses') == 'submission')? 'selected="Selected"': ''; ?> ><?php _e("Upon order submission", 'talentlms'); ?></option>
+						<option value="submission" <?php echo (get_option('tlms-enroll-user-to-courses') == 'submission')? 'selected="Selected"': ''; ?> ><?php esc_html_e("Upon order submission", 'talentlms'); ?></option>
 						<option value="completion" <?php echo (get_option('tlms-enroll-user-to-courses') == 'completion')? 'selected="Selected"': ''; ?> ><?php _e("Upon order completion", 'talentlms'); ?></option>
 					</select>
 				</td>
