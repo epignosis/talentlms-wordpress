@@ -141,7 +141,7 @@ class Admin{
 
 	public static function getCustomCssFilePath(): string{
 		$upload_dir = wp_upload_dir();
-		$dir = trailingslashit($upload_dir['basedir']).TLMS_UPLOAD_DIR;
+		$dir = trailingslashit($upload_dir['baseurl']).TLMS_UPLOAD_DIR;
 
 		return $dir."/css/talentlms-style.css";
 	}

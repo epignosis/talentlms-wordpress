@@ -11,7 +11,7 @@ class Enqueue {
 
 	public function register(){
 		add_action('admin_enqueue_scripts', array($this, 'tlms_enqueueAdminScripts'));
-		add_action('tlms_enqueue_styles', array($this, 'tlms_enqueueStyles'));
+		add_action('wp_enqueue_scripts', array($this, 'tlms_enqueueStyles'));
 	}
 
 	public function tlms_enqueueAdminScripts() {
