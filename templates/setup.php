@@ -27,7 +27,7 @@
 			</tr>
 			<tr style="border-top: 1px dashed #c9c9c9">
 				<th scope="row" class="form-field form-required <?php echo esc_attr($enroll_user_validation); ?>">
-					<label for="tlms-enroll-user-to-courses"><?php _e("Enroll user to courses", 'talentlms'); ?> <span class="description"><?php _e("(Required)", 'talentlms'); ?></span>:</label>
+					<label for="tlms-enroll-user-to-courses"><?php esc_html_e("Enroll user to courses", 'talentlms'); ?> <span class="description"><?php esc_html_e("(Required)", 'talentlms'); ?></span>:</label>
 				</th>
 				<td class="form-field form-required <?php echo esc_attr($enroll_user_validation); ?>">
 					<select name="tlms-enroll-user-to-courses">
