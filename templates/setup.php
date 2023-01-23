@@ -5,7 +5,7 @@
 		<p><?php echo (isset($action_message)) ? esc_html($action_message) : ''; ?></p>
 	</div>
 
-	<form name="talentlms-setup-form" method="post" action="<?php echo admin_url('admin.php?page=talentlms-setup'); ?>">
+	<form name="talentlms-setup-form" method="post" action="<?php echo esc_url(admin_url('admin.php?page=talentlms-setup')); ?>">
 		<input type="hidden" name="action" value="tlms-setup">
 
 		<table class="form-table">
