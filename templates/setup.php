@@ -1,5 +1,5 @@
 <div class="wrap">
-	<h1><?php _e('Setup', 'talentlms'); ?></h1>
+	<h1><?php esc_html_e('Setup', 'talentlms'); ?></h1>
 
 	<div id='action-message' class='<?php echo (isset($action_status)) ? esc_attr($action_status) : ''; ?> fade'>
 		<p><?php echo (isset($action_message)) ? esc_html($action_message) : ''; ?></p>
