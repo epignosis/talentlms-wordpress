@@ -1,3 +1,5 @@
 errorLog.txt
 .env
-/vendor/
+/csfix.report
+vendor
+.idea
