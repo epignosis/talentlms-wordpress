@@ -1,7 +1,7 @@
 <div class="wrap">
 	<h1><?php _e('Setup', 'talentlms'); ?></h1>
 
-	<div id='action-message' class='<?php echo (isset($action_status)) ? esc_html($action_status) : ''; ?> fade'>
+	<div id='action-message' class='<?php echo (isset($action_status)) ? esc_attr($action_status) : ''; ?> fade'>
 		<p><?php echo (isset($action_message)) ? esc_html($action_message) : '' ?></p>
 	</div>
 
