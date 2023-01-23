@@ -5,8 +5,8 @@
 
 		<h1><?php _e('Integrations', 'talentlms'); ?></h1>
 
-		<div id='action-message' class='<?php echo (isset($action_status))? $action_status : ''; ?> fade'>
-			<p><?php echo (isset($action_message)) ? $action_message : '' ?></p>
+		<div id='action-message' class='<?php echo (isset($action_status))? esc_html($action_status) : ''; ?> fade'>
+			<p><?php echo (isset($action_message)) ? esc_html($action_message) : '' ?></p>
 		</div>
 
 
@@ -38,17 +38,17 @@
 					<?php if(!$course->hide_catalog && $course->status == 'active') : ?>
 						<tr>
 							<td class="column-title">
-								<?php echo $course->name?>
+								<?php echo esc_html($course->name)?>
 
 								<div class="row-actions">
                                 <span class="inline hide-if-no-js">
-                                    <a class="tlms-reset-course" data-course-id="<?php echo $course->id; ?>" href="#"><?php _e('Re-Sync', 'talentlms'); ?></a>
+                                    <a class="tlms-reset-course" data-course-id="<?php echo esc_attr($course->id); ?>" href="#"><?php _e('Re-Sync', 'talentlms'); ?></a>
                                 </span>
 								</div>
 
 							</td>
 							<td class="check-column" style="text-align: center">
-								<input type='checkbox' class="tlms-products" name="tlms_products[]" autocomplete="off" value="<?php echo $course->id; ?>" <?php echo (\TalentlmsIntegration\Utils::tlms_productExists($course->id)) ? 'checked' : ''; ?>/>
+								<input type='checkbox' class="tlms-products" name="tlms_products[]" autocomplete="off" value="<?php echo esc_attr($course->id); ?>" <?php echo (\TalentlmsIntegration\Utils::tlms_productExists($course->id)) ? 'checked' : ''; ?>/>
 							</td>
 						</tr>
 					<?php endif;?>
