@@ -2,7 +2,7 @@
 	<h1><?php _e('Setup', 'talentlms'); ?></h1>
 
 	<div id='action-message' class='<?php echo (isset($action_status)) ? esc_attr($action_status) : ''; ?> fade'>
-		<p><?php echo (isset($action_message)) ? esc_html($action_message) : '' ?></p>
+		<p><?php echo (isset($action_message)) ? esc_html($action_message) : ''; ?></p>
 	</div>
 
 	<form name="talentlms-setup-form" method="post" action="<?php echo admin_url('admin.php?page=talentlms-setup'); ?>">
