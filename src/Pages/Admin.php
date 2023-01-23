@@ -140,6 +140,6 @@ class Admin{
 	}
 
 	public static function getCustomCssFilePath(): string{
-		return TLMS_UPLOAD_DIR."/css/talentlms-style.css";
+		return TLMS_UPLOAD_DIR.'/css/talentlms-style.css';
 	}
 }
