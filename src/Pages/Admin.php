@@ -102,10 +102,7 @@ class Admin{
 		require_once(ABSPATH.'/wp-admin/includes/file.php');
 		WP_Filesystem();
 
-		$upload_dir = wp_upload_dir();
-		$dir = trailingslashit($upload_dir['basedir']).TLMS_UPLOAD_DIR;
-
-		$customCssFileName = $dir."/css/talentlms-style.css";
+		$customCssFileName = TLMS_UPLOAD_DIR."/css/talentlms-style.css";
 		$customCssFileContent = null;
 
 		if($_POST['action'] == 'edit-css'){
@@ -140,9 +137,6 @@ class Admin{
 	}
 
 	public static function getCustomCssFilePath(): string{
-		$upload_dir = wp_upload_dir();
-		$dir = trailingslashit($upload_dir['baseurl']).TLMS_UPLOAD_DIR;
-
-		return $dir."/css/talentlms-style.css";
+		return TLMS_UPLOAD_DIR."/css/talentlms-style.css";
 	}
 }
