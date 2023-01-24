@@ -42,12 +42,12 @@ if (file_exists(TLMS_BASEPATH . '/src/Utils.php')) {
     require_once TLMS_BASEPATH . '/src/Utils.php';
 }
 
-if (class_exists('TalentlmsIntegration\Utils')) {
-    new \TalentlmsIntegration\Utils();
+if(class_exists('TalentlmsIntegration\Utils')){
+	new \TalentlmsIntegration\Utils();
 }
 
-if (class_exists('TalentlmsIntegration\Plugin')) {
-    TalentlmsIntegration\Plugin::init();
+if(class_exists('TalentlmsIntegration\Plugin')){
+	TalentlmsIntegration\Plugin::init();
 }
 
 //register_activation_hook(__FILE__, 'tlms_install');

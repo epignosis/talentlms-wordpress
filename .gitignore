@@ -4,3 +4,4 @@ errorLog.txt
 .vscode
 /csfix.report
 vendor
+wpcs

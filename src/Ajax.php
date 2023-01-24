@@ -24,10 +24,10 @@ class Ajax implements PluginService
             $courseId = (new TLMSPositiveInteger($_POST['course_id']))->getValue();
             $limit = TalentLMS_Siteinfo::getRateLimit();
 
-            if (!empty($courseId) && (empty($limit['remaining']) || $limit['remaining'] > 4)) { // we are gonna make at least 3 api calls, so we have to be prepared.
+            if(!empty($courseId) && (empty($limit['remaining']) || $limit['remaining'] > 4)){ // we are gonna make at least 3 api calls, so we have to be prepared.
                 $product_ID = $wpdb->get_var("SELECT product_id FROM ".TLMS_PRODUCTS_TABLE." WHERE course_id = ".$courseId);
 
-                if ($product_ID) {
+                if ($product_ID){
                     $wpdb->query("DELETE FROM ".TLMS_PRODUCTS_TABLE." WHERE course_id = ".$courseId);
                     $wpdb->query("DELETE FROM ".TLMS_COURSES_TABLE." WHERE id = ".$courseId);
                     $wpdb->query("DELETE FROM ".WP_POSTS_TABLE." WHERE ID = ".$product_ID);
