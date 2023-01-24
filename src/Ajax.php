@@ -38,7 +38,7 @@ class Ajax implements PluginService
                     $wpdb->query("DELETE FROM ".TLMS_COURSES_TABLE." WHERE id = "
                                  .$courseId);
                     $wpdb->query("DELETE FROM ".WP_POSTS_TABLE." WHERE ID = "
-                                 .$product_ID);
+                                 .(int)$product_ID);
 
                     Utils::tlms_getCourses(true);
                     Utils::tlms_getCategories(true);
