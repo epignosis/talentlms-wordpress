@@ -19,8 +19,8 @@ class TLMSWidget extends WP_Widget implements PluginService
             'Tlms_widget', // Base ID
             'TalentLMS Widget', // Name
             array(
-				'description' => esc_html_e('A TalentLMS Widget', 'talentlms')
-			) // Args
+                'description' => esc_html_e('A TalentLMS Widget', 'talentlms')
+            ) // Args
         );
         $this->enqueue_widget_assets();
     }
@@ -37,8 +37,8 @@ class TLMSWidget extends WP_Widget implements PluginService
         echo $args['before_widget'];
         if (!empty($instance['title'])) {
             echo $args['before_title']
-				.apply_filters('widget_title', $instance['title'])
-				.$args['after_title'];
+                .apply_filters('widget_title', $instance['title'])
+                .$args['after_title'];
         }
         $courses = Utils::tlms_selectCourses();
         require_once TLMS_BASEPATH.'/templates/widget/tlmswidget.php';
@@ -64,10 +64,10 @@ class TLMSWidget extends WP_Widget implements PluginService
     public function enqueue_widget_assets(): void
     {
         wp_enqueue_style(
-			'tlms-widget',
-			TLMS_BASEURL.'assets/css/talentlms-widget.css',
-			'',
-			$this->_version
-		);
+            'tlms-widget',
+            TLMS_BASEURL.'assets/css/talentlms-widget.css',
+            '',
+            $this->_version
+        );
     }
 }
