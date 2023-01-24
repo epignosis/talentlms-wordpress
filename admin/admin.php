@@ -150,16 +150,6 @@ function tlms_resyncCourse() {
 }
 add_action('wp_ajax_tlms_resynch', 'tlms_resyncCourse');
 
-function cssPage() {
-	if ($_POST['action'] == 'edit-css') {
-		file_put_contents(TLMS_BASEPATH . '/css/talentlms-style.css', stripslashes($_POST['tl-edit-css']));
-		$action_status = "updated";
-		$action_message = __('Details edited successfully', 'talentlms');
-	}
-	include( TLMS_BASEPATH . '/admin/menu-pages/css.php' );
-
-}
-
 $talentlmsAdminErrors = []; // Stores all the errors that need to be displayed to the admin.
 
 /**

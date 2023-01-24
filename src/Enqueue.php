@@ -6,6 +6,7 @@
 namespace TalentlmsIntegration;
 
 use TalentlmsIntegration\Services\PluginService;
+use TalentlmsIntegration\Pages\Admin;
 
 class Enqueue implements PluginService{
 
@@ -24,6 +25,7 @@ class Enqueue implements PluginService{
 		wp_enqueue_script('bootstrap-js');
 		wp_enqueue_script('tlms-font-awesome');
 	}
+
 	function tlms_enqueueAdminScripts() {
 		$this->tlms_commonLibs();
 
@@ -59,5 +61,11 @@ class Enqueue implements PluginService{
 		wp_enqueue_style('tlms-front');
 		wp_enqueue_style('tlms-datatables-css', TLMS_BASEURL . 'resources/DataTables-1.10.15/media/css/jquery.dataTables.css');
 		wp_enqueue_script('tlms-datatables-js', TLMS_BASEURL . 'resources/DataTables-1.10.15/media/js/jquery.dataTables.js');
+	}
+
+
+	public function tlms_enqueueStyles() {
+		wp_register_style('tlms-custom-css', Admin::getCustomCssFilePath(), false, TLMS_VERSION);
+		wp_enqueue_style('tlms-custom-css');
 	}
 }

@@ -29,6 +29,7 @@ class Admin implements PluginService{
 		add_submenu_page('talentlms', __('Setup', 'talentlms'), __('Setup', 'talentlms'), 'manage_options', 'talentlms-setup', array($this, 'tlms_setupPage'));
 		add_submenu_page('talentlms', __('Integrations', 'talentlms'), __('Integrations', 'talentlms'), 'manage_options', 'talentlms-integrations', array($this,
 																																						  'tlms_integrationsPage'));
+		add_submenu_page('talentlms', __('CSS', 'talentlms'), __('CSS', 'talentlms'), 'manage_options', 'talentlms-css', array($this, 'tlms_cssPage'));
 	}
 
 	function tlms_adminPanel(){
@@ -38,20 +39,20 @@ class Admin implements PluginService{
 	public function tlms_setupPage(){
 
 		$action_status = $action_message = $enroll_user_validation = $automatically_complete_orders = $api_validation = $domain_validation = '';
-		if(isset($_POST['action']) && $_POST['action'] == "tlms-setup"){
+		if(isset($_POST['action']) && $_POST['action'] == 'tlms-setup'){
 
 			if($_POST['tlms-domain'] && $_POST['tlms-apikey'] && $_POST['tlms-enroll-user-to-courses']){
 
 				// we accept the domain only, without the protocol
-				if(strtolower(substr($_POST['tlms-domain'], 0, 4)) === "http"){
+				if(strtolower(substr($_POST['tlms-domain'], 0, 4)) === 'http'){
 					$action_status = "error";
 					$domain_validation = 'form-invalid';
-					$action_message = __('Invalid TalentLMS Domain', 'talentlms')."<br />";
+					$action_message = __('Invalid TalentLMS Domain', 'talentlms').'<br />';
 				}
 				else if(strlen($_POST['tlms-apikey']) != 30){ // TalentLMS API key is exactly 30 characters
 					$action_status = "error";
 					$api_validation = 'form-invalid';
-					$action_message = __('Invalid TalentLMS API key', 'talentlms')."<br />";
+					$action_message = __('Invalid TalentLMS API key', 'talentlms').'<br />';
 				}
 				else{
 					update_option('tlms-domain', esc_sql($_POST['tlms-domain']));
@@ -62,7 +63,7 @@ class Admin implements PluginService{
 						update_option('tlms-automtically-complete-orders', esc_sql($_POST['tlms-automtically-complete-orders']));
 					}
 
-					$action_status = "updated";
+					$action_status = 'updated';
 					$action_message = __('Details edited successfully', 'talentlms');
 				}
 			}
@@ -71,13 +72,13 @@ class Admin implements PluginService{
 
 				if(!$_POST['tlms-domain']){
 					$domain_validation = 'form-invalid';
-					$action_message = __('TalentLMS Domain required', 'talentlms')."<br />";
+					$action_message = __('TalentLMS Domain required', 'talentlms').'<br />';
 					update_option('tlms-domain', '');
 				}
 
 				if(!$_POST['tlms-apikey']){
 					$api_validation = 'form-invalid';
-					$action_message .= __('TalentLMS API key required', 'talentlms')."<br />";
+					$action_message .= __('TalentLMS API key required', 'talentlms').'<br />';
 					update_option('tlms-apikey', '');
 				}
 			}
@@ -100,7 +101,7 @@ class Admin implements PluginService{
 				}
 			}
 
-			$action_status = "updated";
+			$action_status = 'updated';
 			$action_message = __('Operation completed successfuly', 'talentlms');
 		}
 
@@ -110,5 +111,54 @@ class Admin implements PluginService{
 		}
 
 		require_once TLMS_BASEPATH.'/templates/integrations.php';
+	}
+
+	public function tlms_cssPage(): void{
+		global $wp_filesystem;
+		require_once(ABSPATH.'/wp-admin/includes/file.php');
+		WP_Filesystem();
+
+		$upload_dir = wp_upload_dir();
+		$dir = trailingslashit($upload_dir['basedir']).TLMS_UPLOAD_DIR;
+
+		$customCssFileName = $dir."/css/talentlms-style.css";
+		$customCssFileContent = null;
+
+		if($_POST['action'] == 'edit-css'){
+
+			// Create main folder within upload if not exist
+			if(!$wp_filesystem->is_dir($dir)){
+				$wp_filesystem->mkdir($dir);
+			}
+
+			// Create a subfolder in my new folder if not exist
+			if(!$wp_filesystem->is_dir($dir."/css")){
+				$wp_filesystem->mkdir($dir."/css");
+			}
+
+			if($wp_filesystem->exists($customCssFileName)){
+				unlink($customCssFileName);
+			}
+
+			// Save file and set permission to 0644
+			$wp_filesystem->put_contents($customCssFileName, stripslashes(strip_tags($_POST['tl-edit-css'])), 0644);
+
+			$action_status = 'updated';
+			$action_message = __('Details edited successfully', 'talentlms');
+		}
+
+		if($wp_filesystem->exists($customCssFileName)){
+			$customCssFileContent = $wp_filesystem->get_contents($customCssFileName);
+		}
+
+		$presentCssFileName = pathinfo($customCssFileName)['filename'];
+		require_once TLMS_BASEPATH.'/templates/css.php';
+	}
+
+	public static function getCustomCssFilePath(): string{
+		$upload_dir = wp_upload_dir();
+		$dir = trailingslashit($upload_dir['baseurl']).TLMS_UPLOAD_DIR;
+
+		return $dir.'/css/talentlms-style.css';
 	}
 }
