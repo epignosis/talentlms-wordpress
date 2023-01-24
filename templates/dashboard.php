@@ -72,15 +72,6 @@
 						<li>
 							<p><strong>[talentlms-courses]</strong>&nbsp;<?php _e('Shortcode for listing your TalentLMS courses.', 'talentlms'); ?></p>
 						</li>
-						<!--    					<li>-->
-						<!--    						<p><strong>[talentlms-signup]</strong>&nbsp;--><?php //_e('Shortcode for outputing a signup to TalentLMS form.', 'talentlms'); ?><!--</p>-->
-						<!--    					</li>-->
-						<!--    					<li>-->
-						<!--    						<p><strong>[talentlms-forgot-credentials]</strong>&nbsp;--><?php //_e('Shortcode for a forgot your TalentLMS username/password form', 'talentlms'); ?><!--</p>-->
-						<!--    					</li>-->
-						<!--    					<li>-->
-						<!--    						<p><strong>[talentlms-login]</strong>&nbsp;--><?php //_e('Shortcode for a login to TalentLMS form', 'talentlms'); ?><!--</p>-->
-						<!--    					</li>-->
 					</ul>
 
 				</div>

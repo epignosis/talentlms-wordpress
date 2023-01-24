@@ -5,12 +5,21 @@
 
 namespace TalentlmsIntegration\Pages;
 
+use TalentLMS_ApiError;
+use TalentlmsIntegration\Helpers\TalentLMSApiIntegrationHelper;
+use TalentlmsIntegration\Services\PluginService;
 use TalentlmsIntegration\Utils;
 
-class Admin{
+class Admin implements PluginService{
 
-	public function register(){
+	use TalentLMSApiIntegrationHelper;
+
+	/**
+	 * @throws TalentLMS_ApiError
+	 */
+	public function register(): void{
 		add_action('admin_menu', array($this, 'tlms_registerAdministrationPages'));
+		$this->enableTalentLMSLib();
 	}
 
 	public function tlms_registerAdministrationPages(){
