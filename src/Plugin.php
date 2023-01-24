@@ -12,6 +12,9 @@ use TalentlmsIntegration\Services\PluginService;
 final class Plugin
 {
 
+	/**
+	 * @var array<PluginService>
+	 */
     private array $services = [
             Pages\Admin::class,
             Pages\Errors::class,
@@ -24,10 +27,9 @@ final class Plugin
             TLMSWidget::class
     ];
 
-    /**
-     * Store all the classes inside an array
-     * @return array Full list of classes
-     */
+	/**
+	 * @return PluginService[]
+	 */
     public function get_services(): array
     {
         return $this->services;

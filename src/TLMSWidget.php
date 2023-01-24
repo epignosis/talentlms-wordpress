@@ -45,12 +45,12 @@ class TLMSWidget extends WP_Widget implements PluginService
         echo $args['after_widget'];
     }
 
-    public function form($instance): void
+    public function form($instance): string
     {
         $title = !empty($instance['title']) ? $instance['title'] : esc_html_e('Our Courses', 'talentlms');
         $titleId = strtolower($this->get_field_id('title'));
         $titleName = strtolower($this->get_field_name('title'));
-        require_once TLMS_BASEPATH.'/templates/widget/form/tlmswidgetform.php';
+        return TLMS_BASEPATH.'/templates/widget/form/tlmswidgetform.php';
     }
 
     public function update($new_instance, $old_instance): array
@@ -66,7 +66,7 @@ class TLMSWidget extends WP_Widget implements PluginService
         wp_enqueue_style(
             'tlms-widget',
             TLMS_BASEURL.'assets/css/talentlms-widget.css',
-            '',
+            array(''),
             $this->_version
         );
     }

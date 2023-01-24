@@ -1,6 +1,7 @@
 <?php
 namespace TalentlmsIntegrationTests\Validations;
 
+use InvalidArgumentException;
 use TalentlmsIntegration\Validations\TLMSEmail;
 
 /**

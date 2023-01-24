@@ -1,12 +1,14 @@
 <?php
 namespace TalentlmsIntegrationTests\Validations;
 
+use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 use TalentlmsIntegration\Validations\TLMSUrl;
 
 /**
  * @covers TalentlmsIntegration\Validations\TLMSUrl
  */
-class UrlTest extends \PHPUnit\Framework\TestCase
+class UrlTest extends TestCase
 {
 
     public function testUrlHappyPath(): void

@@ -64,7 +64,7 @@ class Woocommerce implements PluginService
         }
     }
 
-    public function tlms_processExistingCustomer($order_id): void
+    public function tlms_processExistingCustomer(int $order_id): void
     {
         $order_id = (new TLMSPositiveInteger($order_id))->getValue();
         $enroll_user_to_courses = get_option('tlms-enroll-user-to-courses');
@@ -81,7 +81,7 @@ class Woocommerce implements PluginService
     // enroll user to courses: setup is "upon submission"
     // and order's payment option is "payment gateway (stripe, paypal, etc)"
     // and transaction returned "success"
-    public function tlms_woocommerce_payment_complete($order_id): void
+    public function tlms_woocommerce_payment_complete(int $order_id): void
     {
         $order_id = (new TLMSPositiveInteger($order_id))->getValue();
         $enroll_user_to_courses = get_option('tlms-enroll-user-to-courses');
@@ -95,7 +95,7 @@ class Woocommerce implements PluginService
     }
 
     // enroll user to courses: setup is "upon completion" and order's status changed to "completed" (in most cases manually by eshop manager)
-    public function tlms_processWooComOrder($order_id): void
+    public function tlms_processWooComOrder(int $order_id): void
     {
         $order_id = (new TLMSPositiveInteger($order_id))->getValue();
         $enroll_user_to_courses = get_option('tlms-enroll-user-to-courses');
@@ -108,7 +108,7 @@ class Woocommerce implements PluginService
     }
 
     // for when a user changes his password
-    public function tmls_customerChangedPassword($user): void
+    public function tmls_customerChangedPassword(WP_User $user): void
     {
         try {
             $userEmail = (new TLMSEmail($_POST['account_email']))->getValue();
@@ -117,7 +117,7 @@ class Woocommerce implements PluginService
             TalentLMS_User::edit(
                 array(
                     'user_id' => $userId,
-                    'password' => sanitize_text_field($_POST['password_1'])
+                    'password' => $_POST['password_1']
                 )
             );
         } catch (Exception $e) {
@@ -126,7 +126,7 @@ class Woocommerce implements PluginService
         }
     }
 
-    public function tmls_customerResetPassword($user, $pass): void
+    public function tmls_customerResetPassword(WP_User $user, string $pass): void
     {
         try {
             $userEmail = (new TLMSEmail($user->data->user_email))->getValue();
@@ -145,7 +145,7 @@ class Woocommerce implements PluginService
     }
 
     // for when deleting a product from woocommerce
-    public function tlms_wooCommerceProductDeleted($post_id): void
+    public function tlms_wooCommerceProductDeleted(int $post_id): void
     {
         global $post_type;
         if ($post_type === 'product') {
@@ -154,12 +154,11 @@ class Woocommerce implements PluginService
         }
     }
 
-    public function action_woocommerce_order_item_meta_end($item_id, $item, $order, $flag): void
+    public function action_woocommerce_order_item_meta_end(int $item_id): void
     {
         $tlms_gotocourse = wc_get_order_item_meta(
             $item_id,
-            'tlms_go-to-course',
-            $single = true
+            'tlms_go-to-course'
         );
 
         if (!empty($tlms_gotocourse)) {
@@ -170,7 +169,7 @@ class Woocommerce implements PluginService
         }
     }
 
-    public function filter_woocommerce_is_sold_individually($sold_individually, $product): bool
+    public function filter_woocommerce_is_sold_individually(bool $sold_individually, WC_Product $product): bool
     {
         return !empty(
             get_post_meta($product->get_id(), '_talentlms_course_id')

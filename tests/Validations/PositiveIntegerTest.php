@@ -1,12 +1,14 @@
 <?php
 namespace TalentlmsIntegrationTests\Validations;
 
+use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 use TalentlmsIntegration\Validations\TLMSPositiveInteger;
 
 /**
  * @covers TalentlmsIntegration\Validations\TLMSPositiveInteger
  */
-class PositiveIntegerTest extends \PHPUnit\Framework\TestCase
+class PositiveIntegerTest extends TestCase
 {
 
     public function testPositiveIntegerHappyPath(): void

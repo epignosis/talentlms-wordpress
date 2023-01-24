@@ -16,7 +16,6 @@ use TalentlmsIntegration\Validations\TLMSEmail;
 use TalentlmsIntegration\Validations\TLMSFloat;
 use TalentlmsIntegration\Validations\TLMSInteger;
 use TalentlmsIntegration\Validations\TLMSPositiveInteger;
-use TalentlmsIntegration\Validations\TLMSUrl;
 
 class Utils
 {
@@ -43,7 +42,7 @@ class Utils
         echo "</pre>";
     }
 
-    public static function tlms_limitWords($string, $limit): string
+    public static function tlms_limitWords(string $string, int $limit): string
     {
         if ($limit) {
             $words = explode(" ", $string);
@@ -57,29 +56,29 @@ class Utils
         }
     }
 
-    public static function tlms_limitSentence($string, $limit): string
+    public static function tlms_limitSentence(string $string, int $limit): string
     {
         $sentences = explode(".", $string);
 
         return implode(".", array_splice($sentences, 0, $limit));
     }
 
-    public static function tlms_isValidDomain($domain): bool
+    public static function tlms_isValidDomain(string $domain): bool
     {
         return preg_match("/^[a-z0-9-\.]{1,100}\w+$/", $domain)
             and (strpos($domain, 'talentlms.com') !== false);
     }
 
-    public static function tlms_isApiKey($apiKey): bool
+    public static function tlms_isApiKey(string $apiKey): bool
     {
-        if (strlen($apiKey) == 30) {
+        if (strlen($apiKey) === 30) {
             return true;
         }
 
         return false;
     }
 
-    public static function tlms_parseDate($format, $date): DateTime
+    public static function tlms_parseDate(string $format, string $date): DateTime
     {
         $isPM = (stripos($date, 'PM') !== false);
         $parsedDate = str_replace(array('AM', 'PM'), '', $date);
@@ -97,7 +96,7 @@ class Utils
         return $parsedDate;
     }
 
-    public static function tlms_getDateFormat($no_sec = false): string
+    public static function tlms_getDateFormat(bool $no_sec = false): string
     {
         $site_info = self::tlms_getTalentLMSSiteInfo();
         $date_format = $site_info instanceof Exception ? '' : $site_info['date_format'];
@@ -130,7 +129,7 @@ class Utils
         return $format;
     }
 
-    public static function tlms_getCourses($force = false): void
+    public static function tlms_getCourses(bool $force = false): void
     {
         global $wpdb;
         if ($force) {
@@ -186,12 +185,14 @@ class Utils
         }
     }
 
-    public static function tlms_getCourse($course_id): array
+    public static function tlms_getCourse(int $course_id): array
     {
-        return TalentLMS_Course::retrieve((new TLMSPositiveInteger($course_id))->getValue());
+        return TalentLMS_Course::retrieve(
+			(new TLMSPositiveInteger($course_id))->getValue()
+		);
     }
 
-    public static function tlms_getCategories($force = false): void
+    public static function tlms_getCategories(bool $force = false): void
     {
         global $wpdb;
 
@@ -231,7 +232,7 @@ class Utils
         return $courses;
     }
 
-    public static function tlms_selectCourse($course_id): ?object
+    public static function tlms_selectCourse(int $course_id): ?object
     {
         global $wpdb;
 
@@ -239,7 +240,7 @@ class Utils
                               .(new TLMSPositiveInteger($course_id))->getValue());
     }
 
-    public static function tlms_selectCategories($where = false, $order = false): object
+    public static function tlms_selectCategories(bool $where = false, bool $order = false): object
     {
         global $wpdb;
 
@@ -253,7 +254,7 @@ class Utils
         return $wpdb->get_results("SELECT * FROM ".TLMS_PRODUCTS_CATEGORIES_TABLE);
     }
 
-    public static function tlms_addProduct($course_id, $courses): void
+    public static function tlms_addProduct(int $course_id, array $courses): void
     {
         global $wpdb;
 
@@ -339,7 +340,7 @@ class Utils
         ));
     }
 
-    public static function tlms_deleteProduct($product_id): void
+    public static function tlms_deleteProduct(int $product_id): void
     {
         global $wpdb;
         $wpdb->delete(
@@ -350,7 +351,7 @@ class Utils
         );
     }
 
-    public static function tlms_productExists($course_id): bool
+    public static function tlms_productExists(int $course_id): bool
     {
         global $wpdb;
         $result = $wpdb->get_row("SELECT * FROM ".TLMS_PRODUCTS_TABLE." WHERE course_id = "
@@ -391,7 +392,7 @@ class Utils
         }
     }
 
-    public static function tlms_productCategoryExists($category_id): bool
+    public static function tlms_productCategoryExists(int $category_id): bool
     {
         global $wpdb;
         $result = $wpdb->get_row("SELECT * FROM ".TLMS_PRODUCTS_CATEGORIES_TABLE." WHERE tlms_categories_ID = "
@@ -429,7 +430,7 @@ class Utils
         return $custom_fields;
     }
 
-    public static function tlms_getTalentLMSURL($url): string
+    public static function tlms_getTalentLMSURL(string $url): string
     {
         if (get_option('tlms-domain-map')) {
             return str_replace(
@@ -442,12 +443,11 @@ class Utils
         }
     }
 
-    public static function tlms_getLoginKey($url): string
+    public static function tlms_getLoginKey(string $url): string
     {
         $arr = explode('key:', $url);
-        $login_key = ',key:'.$arr[1];
 
-        return $login_key;
+		return ',key:'.$arr[1];
     }
 
     public static function tlms_currentPageURL(): string
@@ -471,7 +471,7 @@ class Utils
         return $pageURL;
     }
 
-    public static function tlms_getUnitIconClass($unit_type): string
+    public static function tlms_getUnitIconClass(string $unit_type): string
     {
         $iconClass = '';
         switch ($unit_type) {
@@ -515,7 +515,7 @@ class Utils
         return $iconClass;
     }
 
-    public static function tlms_orderHasLatePaymentMethod($order_id): bool
+    public static function tlms_orderHasLatePaymentMethod(int $order_id): bool
     {
 
         $order = wc_get_order((new TLMSPositiveInteger($order_id))->getValue()); //tlms_recordLog('payment_method: ' . $order->get_payment_method());
@@ -523,7 +523,7 @@ class Utils
         return in_array($order->get_payment_method(), array('bacs', 'cheque', 'cod'));
     }
 
-    public static function tlms_orderHasTalentLMSCourseItem($order_id): bool
+    public static function tlms_orderHasTalentLMSCourseItem(int $order_id): bool
     {
 
         $order = wc_get_order((new TLMSPositiveInteger($order_id))->getValue());
@@ -559,7 +559,7 @@ class Utils
         return !empty($tmls_courses);
     }
 
-    public static function tlms_enrollUserToCoursesByOrderId($order_id): void
+    public static function tlms_enrollUserToCoursesByOrderId(int $order_id): void
     {
 
         $order = wc_get_order((new TLMSPositiveInteger($order_id))->getValue());
@@ -618,7 +618,7 @@ class Utils
         }
     }
 
-    public static function tlms_buildSignUpArgumentsByUser($user): array
+    public static function tlms_buildSignUpArgumentsByUser(stdClass $user): array
     {
 
         $signup_arguments = array();
@@ -658,7 +658,7 @@ class Utils
         return $signup_arguments;
     }
 
-    public static function tlms_getUserByOrder($order): stdClass
+    public static function tlms_getUserByOrder(WC_Order $order): stdClass
     {
         $user = new stdClass();
         $user->user_firstname = $order->get_billing_first_name();
@@ -678,7 +678,7 @@ class Utils
         return $user;
     }
 
-    public static function tlms_recordLog($message): void
+    public static function tlms_recordLog(string $message): void
     {
         $logFile = TLMS_BASEPATH.'/errorLog.txt';
 
@@ -690,7 +690,7 @@ class Utils
         fclose($fp);
     }
 
-    public static function tlms_passgen($length = 8): string
+    public static function tlms_passgen(int $length = 8): string
     {
         $uppercases = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $lowercases = "abcdefghijklmnopqrstuvwxyz";
@@ -705,7 +705,7 @@ class Utils
         return str_shuffle($password);
     }
 
-    public static function tlms_getCourseIdByProduct($product_id): ?int
+    public static function tlms_getCourseIdByProduct(int $product_id): ?int
     {
         if (empty($product_id)) {
             return null;
@@ -727,11 +727,11 @@ class Utils
         return (int)$products_courses[0]['course_id'];
     }
 
-    public static function tlms_isOrderCompletedInPast($order_id): ?array
+    public static function tlms_isOrderCompletedInPast(int $order_id): bool
     {
 
         if (empty($order_id)) {
-            return null;
+            return false;
         }
 
         global $wpdb;
@@ -752,13 +752,13 @@ class Utils
         return !empty($completed_statuses_in_past);
     }
 
-    public static function tlms_getCourseUrl($course_id): string
+    public static function tlms_getCourseUrl(int $course_id): string
     {
 
         $course_url = '';
         $tlms_domain = get_option('tlms-domain');
         if (!empty($tlms_domain)) {
-            $course_url = '//'.esc_url($tlms_domain).'/learner/courseinfo/id:'.(int)$course_id;
+            $course_url = '//'.esc_url($tlms_domain).'/learner/courseinfo/id:'.$course_id;
         }
 
         return $course_url;
@@ -778,7 +778,7 @@ class Utils
         return false;
     }
 
-    public static function tlms_deleteWoocomerceProduct($id, $force = false): bool
+    public static function tlms_deleteWoocomerceProduct(int $id, bool $force = false): bool
     {
         $id = (new TLMSPositiveInteger($id))->getValue();
 

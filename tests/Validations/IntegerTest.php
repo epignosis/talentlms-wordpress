@@ -1,12 +1,14 @@
 <?php
 namespace TalentlmsIntegrationTests\Validations;
 
+use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 use TalentlmsIntegration\Validations\TLMSInteger;
 
 /**
  * @covers TalentlmsIntegration\Validations\TLMSInteger
  */
-class IntegerTest extends \PHPUnit\Framework\TestCase
+class IntegerTest extends TestCase
 {
 
     public function testIntegerHappyPath(): void

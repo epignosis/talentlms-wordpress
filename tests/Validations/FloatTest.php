@@ -1,12 +1,14 @@
 <?php
 namespace TalentlmsIntegrationTests\Validations;
 
+use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 use TalentlmsIntegration\Validations\TLMSFloat;
 
 /**
  * @covers TalentlmsIntegration\Validations\TLMSFloat
  */
-class FloatTest extends \PHPUnit\Framework\TestCase
+class FloatTest extends TestCase
 {
 
     public function testFloatHappyPath(): void
