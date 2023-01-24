@@ -1,14 +1,13 @@
-<?php if(!isset($_GET['tlms-course'])): ?>
-
+<?php if (!isset($_GET['tlms-course'])) : ?>
     <fieldset>
         <legend><?php _e('Options', 'talentlms'); ?></legend>
         <label><?php _e('All categories', 'talentlms');?></label>
         <input type="checkbox" class="ef-category" value="all" checked="true">
 
-		<?php foreach ($categories as $key => $category): ?>
+        <?php foreach ($categories as $key => $category) : ?>
             <label><?php echo $category->name;?></label>
             <input type="checkbox" class="ef-category" value="<?php echo $category->id; ?>">
-		<?php endforeach ?>
+        <?php endforeach ?>
     </fieldset>
 
 
@@ -26,17 +25,18 @@
         </tr>
         </thead>
         <tbody>
-		<?php foreach ($courses as $course) : ?>
+        <?php foreach ($courses as $course) : ?>
             <tr>
                 <td><img src="<?php echo $course->big_avatar; ?>"/></td>
-                <td><a href="?tlms-course=<?php echo $course->id; ?>"><?php echo $course->name; echo ($course->course_code) ? "(".$course->course_code.")":''; ?></a></td>
+                <td><a href="?tlms-course=<?php echo $course->id; ?>"><?php echo $course->name;
+                echo ($course->course_code) ? "(".$course->course_code.")":''; ?></a></td>
                 <td><?php echo $course->description; ?></td>
                 <td><?php echo $course->price; ?></td>
                 <td><?php echo date($dateFormat, $course->creation_date); ?></td>
                 <td><?php echo date($dateFormat, $course->last_update_on); ?></td>
                 <td style="display:none;"><?php echo $course->category_id; ?></td>
             </tr>
-		<?php endforeach; ?>
+        <?php endforeach; ?>
         </tbody>
     </table>
 
@@ -70,9 +70,8 @@
     </script>
 
 
-<?php else: ?>
-
-	<?php $course = tlms_getCourse($_GET['tlms-course']); ?>
+<?php else : ?>
+    <?php $course = tlms_getCourse($_GET['tlms-course']); ?>
 
     <div class="tlms-course-header">
         <img src="<?php echo $course['big_avatar']; ?>" alt="<?php echo $course['name']; ?>" />

@@ -5,41 +5,42 @@ use TalentlmsIntegration\Validations\TLMSUrl;
 /**
  * @covers TalentlmsIntegration\Validations\TLMSUrl
  */
-class UrlTest extends \PHPUnit\Framework\TestCase{
+class UrlTest extends \PHPUnit\Framework\TestCase
+{
 
-	public function testUrlHappyPath(): void
+    public function testUrlHappyPath(): void
     {
         $url = (new TLMSUrl('http://www.talentlms.com'))->getValue();
-		$this->assertEquals('http://www.talentlms.com', $url);
+        $this->assertEquals('http://www.talentlms.com', $url);
     }
 
-	public function testUrlHappyPathMissingWWW(): void
+    public function testUrlHappyPathMissingWWW(): void
     {
         $url = (new TLMSUrl('http://talentlms.com'))->getValue();
-		$this->assertEquals('http://talentlms.com', $url);
+        $this->assertEquals('http://talentlms.com', $url);
     }
 
-	public function testUrlMissingHttp(): void
+    public function testUrlMissingHttp(): void
     {
-		$this->expectException(InvalidArgumentException::class);
-		(new TLMSUrl('www.talentlms.com'))->getValue();
+        $this->expectException(InvalidArgumentException::class);
+        (new TLMSUrl('www.talentlms.com'))->getValue();
     }
 
-	public function testUrlMalformed(): void
+    public function testUrlMalformed(): void
     {
-		$this->expectException(InvalidArgumentException::class);
-		(new TLMSUrl('http//www.talentlms.com'))->getValue();
+        $this->expectException(InvalidArgumentException::class);
+        (new TLMSUrl('http//www.talentlms.com'))->getValue();
     }
 
-	public function testUrlMalformed1(): void
+    public function testUrlMalformed1(): void
     {
-		$this->expectException(InvalidArgumentException::class);
-		(new TLMSUrl('http:/www.talentlms.com'))->getValue();
+        $this->expectException(InvalidArgumentException::class);
+        (new TLMSUrl('http:/www.talentlms.com'))->getValue();
     }
 
-	public function testUrlMalformed2(): void
+    public function testUrlMalformed2(): void
     {
-		$this->expectException(InvalidArgumentException::class);
-		(new TLMSUrl('http:www.talentlms.com'))->getValue();
+        $this->expectException(InvalidArgumentException::class);
+        (new TLMSUrl('http:www.talentlms.com'))->getValue();
     }
 }

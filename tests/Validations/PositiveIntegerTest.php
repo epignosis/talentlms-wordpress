@@ -5,61 +5,62 @@ use TalentlmsIntegration\Validations\TLMSPositiveInteger;
 /**
  * @covers TalentlmsIntegration\Validations\TLMSPositiveInteger
  */
-class PositiveIntegerTest extends \PHPUnit\Framework\TestCase{
+class PositiveIntegerTest extends \PHPUnit\Framework\TestCase
+{
 
-	public function testPositiveIntegerHappyPath(): void
+    public function testPositiveIntegerHappyPath(): void
     {
         $positiveInteger = (new TLMSPositiveInteger(5))->getValue();
-		$this->assertIsInt($positiveInteger);
-		$this->assertEquals(5, $positiveInteger);
+        $this->assertIsInt($positiveInteger);
+        $this->assertEquals(5, $positiveInteger);
     }
 
-	public function testPositiveIntegerHappyPathBigInteger(): void
+    public function testPositiveIntegerHappyPathBigInteger(): void
     {
         $positiveInteger = (new TLMSPositiveInteger(555555555555555))->getValue();
-		$this->assertIsInt($positiveInteger);
-		$this->assertEquals(555555555555555, $positiveInteger);
+        $this->assertIsInt($positiveInteger);
+        $this->assertEquals(555555555555555, $positiveInteger);
     }
 
-	public function testPositiveIntegerPassingZero(): void
+    public function testPositiveIntegerPassingZero(): void
     {
-		$this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         (new TLMSPositiveInteger(0))->getValue();
     }
 
-	public function testPositiveIntegerPassingNegative(): void
+    public function testPositiveIntegerPassingNegative(): void
     {
-		$this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
          (new TLMSPositiveInteger(-1))->getValue();
     }
 
-	public function testPositiveIntegerPassingNumberAsString(): void
+    public function testPositiveIntegerPassingNumberAsString(): void
     {
-		$this->expectException(InvalidArgumentException::class);
-		(new TLMSPositiveInteger('-1'))->getValue();
+        $this->expectException(InvalidArgumentException::class);
+        (new TLMSPositiveInteger('-1'))->getValue();
     }
 
-	public function testPositiveIntegerPassingString(): void
+    public function testPositiveIntegerPassingString(): void
     {
-		$this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         (new TLMSPositiveInteger('ABCDEFG'))->getValue();
     }
 
-	public function testPositiveIntegerPassingNull(): void
+    public function testPositiveIntegerPassingNull(): void
     {
-		$this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         (new TLMSPositiveInteger(null))->getValue();
     }
 
-	public function testPositiveIntegerPassingEmptyString(): void
+    public function testPositiveIntegerPassingEmptyString(): void
     {
-		$this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         (new TLMSPositiveInteger(''))->getValue();
     }
 
-	public function testPositiveIntegerPassingEmptyFloat(): void
+    public function testPositiveIntegerPassingEmptyFloat(): void
     {
-		$this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         (new TLMSPositiveInteger(3.5))->getValue();
     }
 }

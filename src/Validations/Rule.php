@@ -2,15 +2,17 @@
 
 namespace TalentlmsIntegration\Validations;
 
-abstract class Rule{
+abstract class Rule
+{
 
-	protected $value;
+    protected $value;
 
-	public function __construct($value){
-		$this->value = $value;
-		$this->validate();
-	}
-	abstract protected function validate(): void;
+    public function __construct($value)
+    {
+        $this->value = $value;
+        $this->validate();
+    }
+    abstract protected function validate(): void;
 
-	abstract public function getValue();
+    abstract public function getValue();
 }

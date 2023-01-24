@@ -6,24 +6,27 @@ namespace TalentlmsIntegration;
 
 use TalentlmsIntegration\Services\PluginService;
 
-class Database implements PluginService{
+class Database implements PluginService
+{
 
-	public function register(): void{
-		global $wpdb;
+    public function register(): void
+    {
+        global $wpdb;
 
-		define("TLMS_COURSES_TABLE", $wpdb -> prefix . "talentlms_courses");
-		define("TLMS_CATEGORIES_TABLE", $wpdb -> prefix . "talentlms_categories");
-		define("TLMS_PRODUCTS_TABLE", $wpdb -> prefix . "talentlms_products");
-		define("TLMS_PRODUCTS_CATEGORIES_TABLE", $wpdb -> prefix . "talentlms_products_categories");
-		define("WP_POSTS_TABLE", $wpdb -> prefix . "posts");
-	}
+        define("TLMS_COURSES_TABLE", $wpdb -> prefix . "talentlms_courses");
+        define("TLMS_CATEGORIES_TABLE", $wpdb -> prefix . "talentlms_categories");
+        define("TLMS_PRODUCTS_TABLE", $wpdb -> prefix . "talentlms_products");
+        define("TLMS_PRODUCTS_CATEGORIES_TABLE", $wpdb -> prefix . "talentlms_products_categories");
+        define("WP_POSTS_TABLE", $wpdb -> prefix . "posts");
+    }
 
-	public static function tlms_createDB() {
-		global $wpdb;
+    public static function tlms_createDB()
+    {
+        global $wpdb;
 
-		$charset_collate = $wpdb->get_charset_collate();
+        $charset_collate = $wpdb->get_charset_collate();
 
-		$sql = "CREATE TABLE " .TLMS_COURSES_TABLE. " (
+        $sql = "CREATE TABLE " .TLMS_COURSES_TABLE. " (
 		id mediumint(9) unsigned NOT NULL AUTO_INCREMENT,
 		name varchar(150) NOT NULL,
 		course_code varchar(20),
@@ -43,10 +46,10 @@ class Database implements PluginService{
 		PRIMARY KEY  (id)
 		) $charset_collate;";
 
-		require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
-		dbDelta($sql);
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta($sql);
 
-		$sql = "CREATE TABLE " . TLMS_CATEGORIES_TABLE . " (
+        $sql = "CREATE TABLE " . TLMS_CATEGORIES_TABLE . " (
 		id mediumint(9) unsigned NOT NULL,
 		name varchar(150) NOT NULL,
 		price float DEFAULT '0',
@@ -54,26 +57,26 @@ class Database implements PluginService{
 		PRIMARY KEY  (id)
 		) $charset_collate;";
 
-		require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
-		dbDelta($sql);
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta($sql);
 
-		$sql = "CREATE TABLE ".TLMS_PRODUCTS_TABLE." (
+        $sql = "CREATE TABLE ".TLMS_PRODUCTS_TABLE." (
 			id mediumint(9) NOT NULL AUTO_INCREMENT,
 			product_id mediumint(9) NOT NULL,
 			course_id mediumint (9) NOT NULL,
 			PRIMARY KEY  (id)
 		) $charset_collate;";
 
-		require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
-		dbDelta($sql);
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta($sql);
 
-		$sql = "CREATE TABLE " . TLMS_PRODUCTS_CATEGORIES_TABLE . " (
+        $sql = "CREATE TABLE " . TLMS_PRODUCTS_CATEGORIES_TABLE . " (
 			id mediumint(9) unsigned NOT NULL AUTO_INCREMENT,
 			tlms_categories_ID mediumint (9),
 			woo_categories_ID mediumint (9),
 			PRIMARY KEY  (id)
 		) $charset_collate;";
-		require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
-		dbDelta($sql);
-	}
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta($sql);
+    }
 }

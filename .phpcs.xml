@@ -3,6 +3,7 @@
 	<config name="php_version" value="7030" />
 	<config name="installed_paths" value="wpcs" />
 
+	<exclude-pattern>/wpcs/*</exclude-pattern>
     <exclude-pattern>/vendor/*</exclude-pattern>
 	<exclude-pattern>/css/*</exclude-pattern>
 	<exclude-pattern>/resources/*</exclude-pattern>

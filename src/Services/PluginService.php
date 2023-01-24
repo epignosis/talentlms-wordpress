@@ -2,6 +2,7 @@
 
 namespace TalentlmsIntegration\Services;
 
-interface PluginService{
-	public function register(): void;
+interface PluginService
+{
+    public function register(): void;
 }
