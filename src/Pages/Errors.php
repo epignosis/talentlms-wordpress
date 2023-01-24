@@ -13,13 +13,15 @@ use TalentlmsIntegration\Utils;
 
 class Errors implements PluginService
 {
-
     public array $talentlmsAdminErrors = array();  // Stores all the errors that need to be displayed to the admin.
     public string $screen_id;
 
     public function register(): void
     {
-        add_action('admin_notices', array($this, 'tlms_showWarnings'));
+        add_action(
+            'admin_notices',
+            array($this, 'tlms_showWarnings')
+        );
     }
 
     /**
@@ -27,26 +29,31 @@ class Errors implements PluginService
      *
      * @param string $message
      */
-    function tlms_logError(string $message)
+    public function tlms_logError(string $message): void
     {
-        $this->talentlmsAdminErrors[] = $message;
+        $this->talentlmsAdminErrors[] = esc_html($message);
         Utils::tlms_recordLog($message);
     }
 
     /**
      * Used to display the stored errors to the admin.
      *
-     * @return false|void
+     * @return void
      */
-    function tlms_showWarnings()
+    public function tlms_showWarnings(): void
     {
-
-        if (!is_admin() || (defined('DOING_AJAX') && DOING_AJAX)) {
-            return false;
+        if ((defined('DOING_AJAX') && DOING_AJAX)
+            || !is_admin()
+        ) {
+            die();
         }
 
         $screen_id = get_current_screen()->id;
-        if ($screen_id === 'toplevel_page_talentlms' || $screen_id == 'talentlms_page_talentlms-setup' || $screen_id == 'talentlms_page_talentlms-integrations') {
+
+        if ($screen_id === 'toplevel_page_talentlms'
+            || $screen_id == 'talentlms_page_talentlms-setup'
+            || $screen_id == 'talentlms_page_talentlms-integrations'
+        ) {
             $this->tlms_displayErrors();
         }
 
@@ -57,14 +64,32 @@ class Errors implements PluginService
         }
     }
 
-    function tlms_displayErrors()
+    public function tlms_displayErrors(): void
     {
-        if ((!get_option('tlms-domain') && !get_option('tlms-apikey')) && (empty($_POST['tlms-domain']) && empty($_POST['tlms-apikey']))) {
-            $this->tlms_logError('<p><strong>'.__('You need to specify a TalentLMS domain and a TalentLMS API key.', 'talentlms').'</strong>'.sprintf(__('You must <a href="%1$s">enter your domain and API key</a> for it to work.', 'talentlms'), 'admin.php?page=talentlms-setup').'</p>');
+        if ((
+                empty($_POST['tlms-domain'])
+                && empty($_POST['tlms-apikey'])
+            )
+            &&
+            (
+                !get_option('tlms-domain')
+                && !get_option('tlms-apikey')
+            )
+        ) {
+            $this->tlms_logError(
+                '<p><strong>'
+                .esc_html_e('You need to specify a TalentLMS domain and a TalentLMS API key.', 'talentlms')
+                .'</strong>'
+                .sprintf(
+                    esc_html_e('You must <a href="%1$s">enter your domain and API key</a> for it to work.', 'talentlms'),
+                    admin_url('admin.php?page=talentlms-setup')
+                )
+                .'</p>'
+            );
         } else {
             try {
-                TalentLMS::setDomain(get_option('tlms-domain'));
-                TalentLMS::setApiKey(get_option('tlms-apikey'));
+                TalentLMS::setDomain(esc_html(get_option('tlms-domain')));
+                TalentLMS::setApiKey(esc_html(get_option('tlms-apikey')));
 
                 if (is_admin() && !wp_doing_ajax()) {
                     Utils::tlms_getCourses();
