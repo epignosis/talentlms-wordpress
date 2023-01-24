@@ -15,9 +15,10 @@ class Enqueue implements PluginService
     {
         add_action('admin_enqueue_scripts', array($this, 'tlms_enqueueAdminScripts'));
         add_action('wp_enqueue_scripts', array($this, 'tlms_enqueueFrontScripts'));
+		add_action('wp_enqueue_scripts', array($this, 'tlms_enqueueStyles'));
     }
 
-    private function tlms_commonLibs()
+    private function tlms_commonLibs(): void
     {
         wp_register_style('tlms-widget', TLMS_BASEURL . 'assets/css/talentlms-widget.css', false, TLMS_VERSION);
 
@@ -29,7 +30,7 @@ class Enqueue implements PluginService
         wp_enqueue_script('tlms-font-awesome');
     }
 
-    function tlms_enqueueAdminScripts()
+    function tlms_enqueueAdminScripts(): void
     {
         $this->tlms_commonLibs();
 
@@ -56,7 +57,7 @@ class Enqueue implements PluginService
         wp_enqueue_script('tlms-datatables-js', TLMS_BASEURL . 'resources/DataTables-1.10.15/media/js/jquery.dataTables.js');
     }
 
-    function tlms_enqueueFrontScripts()
+    function tlms_enqueueFrontScripts(): void
     {
         $this->tlms_commonLibs();
 
@@ -69,9 +70,10 @@ class Enqueue implements PluginService
     }
 
 
-    public function tlms_enqueueStyles()
+    public function tlms_enqueueStyles(): void
     {
         wp_register_style('tlms-custom-css', Admin::getCustomCssFilePath(), false, TLMS_VERSION);
         wp_enqueue_style('tlms-custom-css');
     }
 }
+
