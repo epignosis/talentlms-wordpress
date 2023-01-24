@@ -23,6 +23,14 @@
 					</div>
 				</a>
 
+				<a href="<?php echo admin_url('admin.php?page=talentlms-css'); ?>">
+					<div class="tl-admin-option">
+						<i class="fa fa-check-square-o fa-3x"></i>
+						<h3><?php _e('CSS', 'talentlms'); ?></h3>
+						<p><?php _e('Customize the plugin appearance', 'talentlms'); ?></p>
+					</div>
+				</a>
+
 				<a href="javascript:void(0);">
 					<div class="tl-admin-option" data-toggle="modal" data-target="#shortcodesModal">
 						<i class="fa fa-code fa-3x"></i>
