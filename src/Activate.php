@@ -7,7 +7,7 @@ namespace TalentlmsIntegration;
 class Activate
 {
 
-    public static function tlms_activate()
+    public static function tlms_activate(): void
     {
         Database::tlms_createDB();
         self::tlms_addOptions();
@@ -15,25 +15,25 @@ class Activate
         self::tlms_setupWPPages();
     }
 
-    public static function tlms_addOptions()
+    public static function tlms_addOptions(): void
     {
         update_option('tlms-domain', '');
         update_option('tlms-apikey', '');
         update_option('tlms-woocommerce-active', 0);
     }
 
-    public static function tlms_installAndUpdateOptions()
+    public static function tlms_installAndUpdateOptions(): void
     {
         update_option('tlms-enroll-user-to-courses', 'submission');
     }
 
 
-    public static function tlms_setupWPPages()
+    public static function tlms_setupWPPages(): void
     {
         self::tlms_addCoursesPage();
     }
 
-    public static function tlms_addCoursesPage()
+    public static function tlms_addCoursesPage(): void
     {
         $the_page_title = 'Courses';
         $the_page_name = 'courses';
@@ -50,7 +50,7 @@ class Activate
         if (!$the_page) {
             $_p = array();
             $_p['post_title'] = $the_page_title;
-            $_p['post_content'] = "[talentlms-courses]";
+            $_p['post_content'] = '[talentlms-courses]';
             $_p['post_status'] = 'publish';
             $_p['post_type'] = 'page';
             $_p['comment_status'] = 'closed';
