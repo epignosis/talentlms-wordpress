@@ -28,30 +28,44 @@ class Admin implements PluginService
     public function tlms_registerAdministrationPages(): void
     {
         add_menu_page(
-			esc_html_e('TalentLMS', 'talentlms'),
-			esc_html_e('TalentLMS', 'talentlms'),
-			'manage_options', 'talentlms', array($this, 'tlms_adminPanel')
-		);
+            esc_html_e('TalentLMS', 'talentlms'),
+            esc_html_e('TalentLMS', 'talentlms'),
+            'manage_options',
+            'talentlms',
+            array($this, 'tlms_adminPanel')
+        );
         add_submenu_page(
-			'talentlms',
-			esc_html_e('Dashboard', 'talentlms'),
-			esc_html_e('Dashboard', 'talentlms'),
-			'manage_options', 'talentlms', array($this, 'tlms_adminPanel'));
+            'talentlms',
+            esc_html_e('Dashboard', 'talentlms'),
+            esc_html_e('Dashboard', 'talentlms'),
+            'manage_options',
+            'talentlms',
+            array($this, 'tlms_adminPanel')
+        );
         add_submenu_page(
-			'talentlms',
-			esc_html_e('Setup', 'talentlms'),
-			esc_html_e('Setup', 'talentlms'),
-			'manage_options', 'talentlms-setup', array($this, 'tlms_setupPage'));
+            'talentlms',
+            esc_html_e('Setup', 'talentlms'),
+            esc_html_e('Setup', 'talentlms'),
+            'manage_options',
+            'talentlms-setup',
+            array($this, 'tlms_setupPage')
+        );
         add_submenu_page(
-			'talentlms',
-			esc_html_e('Integrations', 'talentlms'),
-			esc_html_e('Integrations', 'talentlms'),
-			'manage_options', 'talentlms-integrations', array($this,'tlms_integrationsPage'));
+            'talentlms',
+            esc_html_e('Integrations', 'talentlms'),
+            esc_html_e('Integrations', 'talentlms'),
+            'manage_options',
+            'talentlms-integrations',
+            array($this,'tlms_integrationsPage')
+        );
         add_submenu_page(
-			'talentlms',
-			esc_html_e('CSS', 'talentlms'),
-			esc_html_e('CSS', 'talentlms'),
-			'manage_options', 'talentlms-css', array($this, 'tlms_cssPage'));
+            'talentlms',
+            esc_html_e('CSS', 'talentlms'),
+            esc_html_e('CSS', 'talentlms'),
+            'manage_options',
+            'talentlms-css',
+            array($this, 'tlms_cssPage')
+        );
     }
 
     public function tlms_adminPanel(): void
@@ -63,14 +77,12 @@ class Admin implements PluginService
     {
         $action_status = $action_message = $api_validation = $domain_validation = '';
         if (isset($_POST['action']) && $_POST['action'] == 'tlms-setup') {
-            if (
-				isset($_POST['tlms-domain'], $_POST['tlms-apikey'], $_POST['tlms-enroll-user-to-courses'])
-			) {
+            if (isset($_POST['tlms-domain'], $_POST['tlms-apikey'], $_POST['tlms-enroll-user-to-courses'])
+            ) {
                 // we accept the domain only, without the protocol
-                if (
-					stripos(strtolower($_POST['tlms-domain']), 'http') === 0
-					|| stripos(strtolower($_POST['tlms-domain']), 'https') === 0
-				) {
+                if (stripos(strtolower($_POST['tlms-domain']), 'http') === 0
+                    || stripos(strtolower($_POST['tlms-domain']), 'https') === 0
+                ) {
                     $action_status = 'error';
                     $domain_validation = 'form-invalid';
                     $action_message = __('Invalid TalentLMS Domain', 'talentlms').'<br />';
@@ -82,16 +94,15 @@ class Admin implements PluginService
                     update_option('tlms-domain', esc_url_raw($_POST['tlms-domain']));
                     update_option('tlms-apikey', sanitize_text_field($_POST['tlms-apikey']));
                     update_option(
-						'tlms-enroll-user-to-courses',
-						sanitize_text_field($_POST['tlms-enroll-user-to-courses'])
-					);
+                        'tlms-enroll-user-to-courses',
+                        sanitize_text_field($_POST['tlms-enroll-user-to-courses'])
+                    );
 
                     if (isset($_POST['tlms-automtically-complete-orders'])) {
                         update_option(
-							'tlms-automtically-complete-orders',
-							sanitize_text_field($_POST['tlms-automtically-complete-orders']
-							)
-						);
+                            'tlms-automtically-complete-orders',
+                            sanitize_text_field($_POST['tlms-automtically-complete-orders'])
+                        );
                     }
 
                     $action_status = 'updated';
