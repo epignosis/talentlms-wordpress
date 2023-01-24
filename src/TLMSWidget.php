@@ -50,6 +50,6 @@ class TLMSWidget extends WP_Widget implements PluginService{
 	}
 
 	public function enqueue_widget_assets(){
-		wp_enqueue_style('tlms-widget', TLMS_BASEURL.'/assets/css/talentlms-widget.css', '', $this->version);
+		wp_enqueue_style('tlms-widget', TLMS_BASEURL.'assets/css/talentlms-widget.css', '', $this->_version);
 	}
 }
