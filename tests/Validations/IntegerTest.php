@@ -1,4 +1,5 @@
 <?php
+namespace TalentlmsIntegrationTests\Validations;
 
 use TalentlmsIntegration\Validations\TLMSInteger;
 

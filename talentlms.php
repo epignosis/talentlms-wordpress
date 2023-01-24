@@ -38,28 +38,13 @@ if (file_exists(TLMS_BASEPATH . '/TalentLMSLib/lib/TalentLMS.php')) {
     require_once TLMS_BASEPATH . '/TalentLMSLib/lib/TalentLMS.php';
 }
 
-if (file_exists(TLMS_BASEPATH . '/src/Utils.php')) {
-    require_once TLMS_BASEPATH . '/src/Utils.php';
+if (class_exists('TalentlmsIntegration\Utils')) {
+    new \TalentlmsIntegration\Utils();
 }
 
-if(class_exists('TalentlmsIntegration\Utils')){
-	new \TalentlmsIntegration\Utils();
+if (class_exists('TalentlmsIntegration\Plugin')) {
+    TalentlmsIntegration\Plugin::init();
 }
-
-if(class_exists('TalentlmsIntegration\Plugin')){
-	TalentlmsIntegration\Plugin::init();
-}
-
-//register_activation_hook(__FILE__, 'tlms_install');
-//register_uninstall_hook(__FILE__, 'tlms_uninstall');
-//require_once (TLMS_BASEPATH . '/TalentLMSLib/lib/TalentLMS.php');
-//require_once (TLMS_BASEPATH . '/utils/utils.php');
-//require_once (TLMS_BASEPATH . '/utils/db.php');
-//require_once (TLMS_BASEPATH . '/utils/install.php');
-//require_once (TLMS_BASEPATH . '/admin/admin.php');
-//require_once (TLMS_BASEPATH . '/widgets/reg_widgets.php');
-//require_once (TLMS_BASEPATH . '/shortcodes/reg_shortcodes.php');
-//require_once (TLMS_BASEPATH . '/integrations/woocommerce.php');
 
 function tlms_isWoocommerceActive()
 {
