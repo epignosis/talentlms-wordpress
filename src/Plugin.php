@@ -11,7 +11,7 @@ use TalentlmsIntegration\Services\PluginService;
 
 final class Plugin
 {
-	private $services = array(
+    private $services = array(
             Pages\Admin::class,
             Pages\Errors::class,
             Pages\Help::class,

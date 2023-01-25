@@ -13,7 +13,7 @@ use TalentlmsIntegration\Utils;
 
 class Errors implements PluginService
 {
-	public $talentlmsAdminErrors = array();  // Stores all the errors that need to be displayed to the admin.
+    public $talentlmsAdminErrors = array();  // Stores all the errors that need to be displayed to the admin.
     public $screen_id;
 
     public function register(): void

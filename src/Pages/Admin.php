@@ -13,7 +13,7 @@ use TalentlmsIntegration\Validations\TLMSPositiveInteger;
 
 class Admin implements PluginService
 {
-	use TalentLMSApiIntegrationHelper;
+    use TalentLMSApiIntegrationHelper;
 
     /**
      * @throws TalentLMS_ApiError
