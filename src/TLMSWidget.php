@@ -11,7 +11,7 @@ use WP_Widget;
 class TLMSWidget extends WP_Widget implements PluginService
 {
 
-    protected string $_version = '1.0.0';
+    protected $_version = '1.0.0';
 
     public function __construct()
     {
