@@ -1,0 +1,271 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to static method getRateLimit\\(\\) on an unknown class TalentLMS_Siteinfo\\.$#"
+			count: 1
+			path: src/Ajax.php
+
+		-
+			message: "#^Constant TLMS_COURSES_TABLE not found\\.$#"
+			count: 1
+			path: src/Ajax.php
+
+		-
+			message: "#^Constant TLMS_PRODUCTS_TABLE not found\\.$#"
+			count: 2
+			path: src/Ajax.php
+
+		-
+			message: "#^Constant WP_POSTS_TABLE not found\\.$#"
+			count: 1
+			path: src/Ajax.php
+
+		-
+			message: "#^Constant TLMS_CATEGORIES_TABLE not found\\.$#"
+			count: 1
+			path: src/Database.php
+
+		-
+			message: "#^Constant TLMS_COURSES_TABLE not found\\.$#"
+			count: 1
+			path: src/Database.php
+
+		-
+			message: "#^Constant TLMS_PRODUCTS_CATEGORIES_TABLE not found\\.$#"
+			count: 1
+			path: src/Database.php
+
+		-
+			message: "#^Constant TLMS_PRODUCTS_TABLE not found\\.$#"
+			count: 1
+			path: src/Database.php
+
+		-
+			message: "#^Constant TLMS_BASEURL not found\\.$#"
+			count: 10
+			path: src/Enqueue.php
+
+		-
+			message: "#^Constant TLMS_VERSION not found\\.$#"
+			count: 6
+			path: src/Enqueue.php
+
+		-
+			message: "#^Call to static method setApiKey\\(\\) on an unknown class TalentLMS\\.$#"
+			count: 1
+			path: src/Pages/Admin.php
+
+		-
+			message: "#^Call to static method setDomain\\(\\) on an unknown class TalentLMS\\.$#"
+			count: 1
+			path: src/Pages/Admin.php
+
+		-
+			message: "#^Constant TLMS_BASEPATH not found\\.$#"
+			count: 4
+			path: src/Pages/Admin.php
+
+		-
+			message: "#^Constant TLMS_UPLOAD_DIR not found\\.$#"
+			count: 2
+			path: src/Pages/Admin.php
+
+		-
+			message: "#^Instantiated class TalentLMS_ApiError not found\\.$#"
+			count: 1
+			path: src/Pages/Admin.php
+
+		-
+			message: "#^PHPDoc tag @throws with type TalentLMS_ApiError is not subtype of Throwable$#"
+			count: 2
+			path: src/Pages/Admin.php
+
+		-
+			message: "#^Throwing object of an unknown class TalentLMS_ApiError\\.$#"
+			count: 1
+			path: src/Pages/Admin.php
+
+		-
+			message: "#^Call to method getMessage\\(\\) on an unknown class TalentLMS_ApiError\\.$#"
+			count: 1
+			path: src/Pages/Errors.php
+
+		-
+			message: "#^Call to static method setApiKey\\(\\) on an unknown class TalentLMS\\.$#"
+			count: 1
+			path: src/Pages/Errors.php
+
+		-
+			message: "#^Call to static method setDomain\\(\\) on an unknown class TalentLMS\\.$#"
+			count: 1
+			path: src/Pages/Errors.php
+
+		-
+			message: "#^Class TalentLMS_ApiError not found\\.$#"
+			count: 1
+			path: src/Pages/Errors.php
+
+		-
+			message: "#^Filter callback return statement is missing\\.$#"
+			count: 1
+			path: src/Pages/Help.php
+
+		-
+			message: "#^Constant TLMS_BASEPATH not found\\.$#"
+			count: 1
+			path: src/ShortCodes.php
+
+		-
+			message: "#^Constant TLMS_BASEPATH not found\\.$#"
+			count: 2
+			path: src/TLMSWidget.php
+
+		-
+			message: "#^Constant TLMS_BASEURL not found\\.$#"
+			count: 1
+			path: src/TLMSWidget.php
+
+		-
+			message: "#^Call to method get_billing_email\\(\\) on an unknown class TalentlmsIntegration\\\\WC_Order\\.$#"
+			count: 1
+			path: src/Utils.php
+
+		-
+			message: "#^Call to method get_billing_first_name\\(\\) on an unknown class TalentlmsIntegration\\\\WC_Order\\.$#"
+			count: 1
+			path: src/Utils.php
+
+		-
+			message: "#^Call to method get_billing_last_name\\(\\) on an unknown class TalentlmsIntegration\\\\WC_Order\\.$#"
+			count: 1
+			path: src/Utils.php
+
+		-
+			message: "#^Call to method get_user\\(\\) on an unknown class TalentlmsIntegration\\\\WC_Order\\.$#"
+			count: 1
+			path: src/Utils.php
+
+		-
+			message: "#^Call to static method addUser\\(\\) on an unknown class TalentLMS_Course\\.$#"
+			count: 1
+			path: src/Utils.php
+
+		-
+			message: "#^Call to static method all\\(\\) on an unknown class TalentLMS_Category\\.$#"
+			count: 1
+			path: src/Utils.php
+
+		-
+			message: "#^Call to static method all\\(\\) on an unknown class TalentLMS_Course\\.$#"
+			count: 1
+			path: src/Utils.php
+
+		-
+			message: "#^Call to static method get\\(\\) on an unknown class TalentLMS_Siteinfo\\.$#"
+			count: 1
+			path: src/Utils.php
+
+		-
+			message: "#^Call to static method getCustomRegistrationFields\\(\\) on an unknown class TalentLMS_User\\.$#"
+			count: 2
+			path: src/Utils.php
+
+		-
+			message: "#^Call to static method gotoCourse\\(\\) on an unknown class TalentLMS_Course\\.$#"
+			count: 1
+			path: src/Utils.php
+
+		-
+			message: "#^Call to static method retrieve\\(\\) on an unknown class TalentLMS_Course\\.$#"
+			count: 1
+			path: src/Utils.php
+
+		-
+			message: "#^Call to static method retrieve\\(\\) on an unknown class TalentLMS_User\\.$#"
+			count: 1
+			path: src/Utils.php
+
+		-
+			message: "#^Call to static method signup\\(\\) on an unknown class TalentLMS_User\\.$#"
+			count: 1
+			path: src/Utils.php
+
+		-
+			message: "#^Constant TLMS_BASEPATH not found\\.$#"
+			count: 1
+			path: src/Utils.php
+
+		-
+			message: "#^Constant TLMS_CATEGORIES_TABLE not found\\.$#"
+			count: 5
+			path: src/Utils.php
+
+		-
+			message: "#^Constant TLMS_COURSES_TABLE not found\\.$#"
+			count: 5
+			path: src/Utils.php
+
+		-
+			message: "#^Constant TLMS_PRODUCTS_CATEGORIES_TABLE not found\\.$#"
+			count: 3
+			path: src/Utils.php
+
+		-
+			message: "#^Constant TLMS_PRODUCTS_TABLE not found\\.$#"
+			count: 5
+			path: src/Utils.php
+
+		-
+			message: "#^Instantiated class TalentlmsIntegration\\\\WP_Error not found\\.$#"
+			count: 2
+			path: src/Utils.php
+
+		-
+			message: "#^Parameter \\$order of method TalentlmsIntegration\\\\Utils\\:\\:tlms_getUserByOrder\\(\\) has invalid type TalentlmsIntegration\\\\WC_Order\\.$#"
+			count: 1
+			path: src/Utils.php
+
+		-
+			message: "#^Throwing object of an unknown class TalentlmsIntegration\\\\WP_Error\\.$#"
+			count: 2
+			path: src/Utils.php
+
+		-
+			message: "#^Access to property \\$data on an unknown class TalentlmsIntegration\\\\WP_User\\.$#"
+			count: 1
+			path: src/Woocommerce.php
+
+		-
+			message: "#^Call to method get_id\\(\\) on an unknown class TalentlmsIntegration\\\\WC_Product\\.$#"
+			count: 1
+			path: src/Woocommerce.php
+
+		-
+			message: "#^Call to static method edit\\(\\) on an unknown class TalentLMS_User\\.$#"
+			count: 2
+			path: src/Woocommerce.php
+
+		-
+			message: "#^Call to static method retrieve\\(\\) on an unknown class TalentLMS_User\\.$#"
+			count: 2
+			path: src/Woocommerce.php
+
+		-
+			message: "#^Callback expects 1 parameter, \\$accepted_args is set to 4\\.$#"
+			count: 1
+			path: src/Woocommerce.php
+
+		-
+			message: "#^Parameter \\$product of method TalentlmsIntegration\\\\Woocommerce\\:\\:filter_woocommerce_is_sold_individually\\(\\) has invalid type TalentlmsIntegration\\\\WC_Product\\.$#"
+			count: 1
+			path: src/Woocommerce.php
+
+		-
+			message: "#^Parameter \\$user of method TalentlmsIntegration\\\\Woocommerce\\:\\:tmls_customerChangedPassword\\(\\) has invalid type TalentlmsIntegration\\\\WP_User\\.$#"
+			count: 1
+			path: src/Woocommerce.php
+
+		-
+			message: "#^Parameter \\$user of method TalentlmsIntegration\\\\Woocommerce\\:\\:tmls_customerResetPassword\\(\\) has invalid type TalentlmsIntegration\\\\WP_User\\.$#"
+			count: 1
+			path: src/Woocommerce.php
