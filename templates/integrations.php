@@ -57,7 +57,7 @@
             </table>
 
             <p class="submit">
-                <input class="button button-primary" type="submit" value="<?php _e('Integrate', 'talentlms')?>" title="<?php esc_html_e('add selected courses as woocommerce products', 'talentlms')?>">
+                <input class="button button-primary" type="submit" value="<?php esc_html_e('Integrate', 'talentlms')?>" title="<?php esc_html_e('add selected courses as woocommerce products', 'talentlms')?>">
             </p>
 
         </form>

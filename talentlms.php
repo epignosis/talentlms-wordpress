@@ -38,10 +38,6 @@ if (file_exists(TLMS_BASEPATH . '/TalentLMSLib/lib/TalentLMS.php')) {
     require_once TLMS_BASEPATH . '/TalentLMSLib/lib/TalentLMS.php';
 }
 
-if (class_exists('TalentlmsIntegration\Utils')) {
-    new \TalentlmsIntegration\Utils();
-}
-
 if (class_exists('TalentlmsIntegration\Plugin')) {
     TalentlmsIntegration\Plugin::init();
 }

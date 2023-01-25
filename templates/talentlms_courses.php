@@ -75,7 +75,7 @@
 
     <div class="tlms-course-header">
         <img src="<?php echo esc_url($course['big_avatar']); ?>" alt="<?php echo esc_attr($course['name']); ?>" />
-        <h2><?php echo $course['name']; ?></h2>
+        <h2><?php echo esc_html($course['name']); ?></h2>
     </div>
 
     <h3><?php esc_html_e('Price', 'talentlms');?>:</h3>

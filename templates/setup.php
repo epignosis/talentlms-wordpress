@@ -41,7 +41,7 @@
         <hr/>
 
         <p class="submit">
-            <input class="button-primary" type="submit" name="Submit" value="<?php _e('Submit', 'talentlms') ?>"/>
+            <input class="button-primary" type="submit" name="Submit" value="<?php esc_html_e('Submit', 'talentlms'); ?>"/>
         </p>
     </form>
 

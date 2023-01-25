@@ -20,7 +20,7 @@ final class Plugin
             Enqueue::class,
             Woocommerce::class,
             ShortCodes::class,
-            TLMSWidget::class,
+            TLMSWidget::class
     );
 
     /**

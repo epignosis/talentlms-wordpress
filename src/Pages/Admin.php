@@ -27,40 +27,40 @@ class Admin implements PluginService
     public function tlms_registerAdministrationPages(): void
     {
         add_menu_page(
-            esc_html_e('TalentLMS', 'talentlms'),
-            esc_html_e('TalentLMS', 'talentlms'),
+            esc_html__('TalentLMS', 'talentlms'),
+            esc_html__('TalentLMS', 'talentlms'),
             'manage_options',
             'talentlms',
             array( $this, 'tlms_adminPanel' )
         );
         add_submenu_page(
             'talentlms',
-            esc_html_e('Dashboard', 'talentlms'),
-            esc_html_e('Dashboard', 'talentlms'),
+            esc_html__('Dashboard', 'talentlms'),
+            esc_html__('Dashboard', 'talentlms'),
             'manage_options',
             'talentlms',
             array( $this, 'tlms_adminPanel' )
         );
         add_submenu_page(
             'talentlms',
-            esc_html_e('Setup', 'talentlms'),
-            esc_html_e('Setup', 'talentlms'),
+            esc_html__('Setup', 'talentlms'),
+            esc_html__('Setup', 'talentlms'),
             'manage_options',
             'talentlms-setup',
             array( $this, 'tlms_setupPage' )
         );
         add_submenu_page(
             'talentlms',
-            esc_html_e('Integrations', 'talentlms'),
-            esc_html_e('Integrations', 'talentlms'),
+            esc_html__('Integrations', 'talentlms'),
+            esc_html__('Integrations', 'talentlms'),
             'manage_options',
             'talentlms-integrations',
             array( $this, 'tlms_integrationsPage' )
         );
         add_submenu_page(
             'talentlms',
-            esc_html_e('CSS', 'talentlms'),
-            esc_html_e('CSS', 'talentlms'),
+            esc_html__('CSS', 'talentlms'),
+            esc_html__('CSS', 'talentlms'),
             'manage_options',
             'talentlms-css',
             array( $this, 'tlms_cssPage' )
@@ -84,13 +84,13 @@ class Admin implements PluginService
                 ) {
                     $action_status     = 'error';
                     $domain_validation = 'form-invalid';
-                    $action_message    = __('Invalid TalentLMS Domain', 'talentlms') . '<br />';
+                    $action_message    = esc_html__('Invalid TalentLMS Domain', 'talentlms');
                 } elseif (strlen($_POST['tlms-apikey']) !== 30) { // TalentLMS API key is exactly 30 characters
                     $action_status  = 'error';
                     $api_validation = 'form-invalid';
-                    $action_message = __('Invalid TalentLMS API key', 'talentlms') . '<br />';
+                    $action_message = esc_html__('Invalid TalentLMS API key', 'talentlms');
                 } else {
-                    update_option('tlms-domain', esc_url_raw($_POST['tlms-domain']));
+                    update_option('tlms-domain', sanitize_text_field($_POST['tlms-domain']));
                     update_option('tlms-apikey', sanitize_text_field($_POST['tlms-apikey']));
                     update_option(
                         'tlms-enroll-user-to-courses',
@@ -105,20 +105,20 @@ class Admin implements PluginService
                     }
 
                     $action_status  = 'updated';
-                    $action_message = __('Details edited successfully', 'talentlms');
+                    $action_message = esc_html__('Details edited successfully', 'talentlms');
                 }
             } else {
                 $action_status = 'error';
 
                 if (! $_POST['tlms-domain']) {
                     $domain_validation = 'form-invalid';
-                    $action_message    = __('TalentLMS Domain required', 'talentlms') . '<br />';
+                    $action_message    = esc_html__('TalentLMS Domain required', 'talentlms');
                     update_option('tlms-domain', '');
                 }
 
                 if (! $_POST['tlms-apikey']) {
                     $api_validation = 'form-invalid';
-                    $action_message = __('TalentLMS API key required', 'talentlms') . '<br />';
+                    $action_message = esc_html__('TalentLMS API key required', 'talentlms');
                     update_option('tlms-apikey', '');
                 }
             }
@@ -142,7 +142,7 @@ class Admin implements PluginService
             }
 
             $action_status  = 'updated';
-            $action_message = __('Operation completed successfuly', 'talentlms');
+            $action_message = esc_html__('Operation completed successfuly', 'talentlms');
         }
 
         if (isset($_POST['action']) && $_POST['action'] == 'tlms-fetch-courses') {// refresh courses
@@ -184,7 +184,7 @@ class Admin implements PluginService
             $wp_filesystem->put_contents($customCssFileName, stripslashes(strip_tags($_POST['tl-edit-css'])), 0644);
 
             $action_status  = 'updated';
-            $action_message = __('Details edited successfully', 'talentlms');
+            $action_message = esc_html__('Details edited successfully', 'talentlms');
         }
 
         if ($wp_filesystem->exists($customCssFileName)) {

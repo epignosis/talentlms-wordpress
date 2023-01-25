@@ -236,7 +236,7 @@ class Utils
         return $courses;
     }
 
-    public static function tlms_selectCourse(int $course_id): ?object
+    public static function tlms_selectCourse(int $course_id): ?array
     {
         global $wpdb;
 
@@ -244,14 +244,14 @@ class Utils
                               .(new TLMSPositiveInteger($course_id))->getValue());
     }
 
-    public static function tlms_selectCategories(bool $where = false, bool $order = false): object
+    public static function tlms_selectCategories(bool $where = false, bool $order = false): array
     {
         global $wpdb;
 
         return $wpdb->get_results("SELECT * FROM ".TLMS_CATEGORIES_TABLE);
     }
 
-    public static function tlms_selectProductCategories(): object
+    public static function tlms_selectProductCategories(): array
     {
         global $wpdb;
 
@@ -622,7 +622,7 @@ class Utils
         }
     }
 
-    public static function tlms_buildSignUpArgumentsByUser(stdClass $user): array
+    public static function tlms_buildSignUpArgumentsByUser($user): array
     {
 
         $signup_arguments = array();
@@ -662,7 +662,7 @@ class Utils
         return $signup_arguments;
     }
 
-    public static function tlms_getUserByOrder(WC_Order $order): stdClass
+    public static function tlms_getUserByOrder($order): stdClass
     {
         $user = new stdClass();
         $user->user_firstname = $order->get_billing_first_name();

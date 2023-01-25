@@ -76,10 +76,10 @@ class Enqueue implements PluginService
         );
 
         $translations_array = array(
-            'progress_message' => esc_html_e('Please wait while syncing..', 'talentlms'),
-            'success_message' => esc_html_e('The operation completed successfully', 'talentlms'),
-            'select_all_message' => esc_html_e('Select all', 'talentlms'),
-            'unselect_all_message' => esc_html_e('Unselect all', 'talentlms'),
+            'progress_message' => esc_html__('Please wait while syncing..', 'talentlms'),
+            'success_message' => esc_html__('The operation completed successfully', 'talentlms'),
+            'select_all_message' => esc_html__('Select all', 'talentlms'),
+            'unselect_all_message' => esc_html__('Unselect all', 'talentlms'),
         );
 
         //Enqueue styles

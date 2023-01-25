@@ -78,11 +78,11 @@ class Errors implements PluginService
         ) {
             $this->tlms_logError(
                 '<p><strong>'
-                . esc_html_e('You need to specify a TalentLMS domain and a TalentLMS API key.', 'talentlms')
+                . esc_html__('You need to specify a TalentLMS domain and a TalentLMS API key.', 'talentlms')
                 . '</strong>'
                 . sprintf(
-                    esc_html_e('You must <a href="%1$s">enter your domain and API key</a> for it to work.', 'talentlms'),
-                    admin_url('admin.php?page=talentlms-setup')
+                    esc_html__('You must <a href="%1$s">enter your domain and API key</a> for it to work.', 'talentlms'),
+                    esc_url(admin_url('admin.php?page=talentlms-setup'))
                 )
                 . '</p>'
             );

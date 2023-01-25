@@ -59,7 +59,7 @@ class Woocommerce implements PluginService
         }
     }
 
-    public function tlms_processExistingCustomer(int $order_id): void
+    public function tlms_processExistingCustomer($order_id): void
     {
         $order_id = (new TLMSPositiveInteger($order_id))->getValue();
         $enroll_user_to_courses = get_option('tlms-enroll-user-to-courses');
@@ -76,7 +76,7 @@ class Woocommerce implements PluginService
     // enroll user to courses: setup is "upon submission"
     // and order's payment option is "payment gateway (stripe, paypal, etc)"
     // and transaction returned "success"
-    public function tlms_woocommerce_payment_complete(int $order_id): void
+    public function tlms_woocommerce_payment_complete($order_id): void
     {
         $order_id = (new TLMSPositiveInteger($order_id))->getValue();
         $enroll_user_to_courses = get_option('tlms-enroll-user-to-courses');
@@ -90,7 +90,7 @@ class Woocommerce implements PluginService
     }
 
     // enroll user to courses: setup is "upon completion" and order's status changed to "completed" (in most cases manually by eshop manager)
-    public function tlms_processWooComOrder(int $order_id): void
+    public function tlms_processWooComOrder($order_id): void
     {
         $order_id = (new TLMSPositiveInteger($order_id))->getValue();
         $enroll_user_to_courses = get_option('tlms-enroll-user-to-courses');
@@ -103,7 +103,7 @@ class Woocommerce implements PluginService
     }
 
     // for when a user changes his password
-    public function tmls_customerChangedPassword(WP_User $user): void
+    public function tmls_customerChangedPassword($user): void
     {
         try {
             $userEmail = (new TLMSEmail($_POST['account_email']))->getValue();
@@ -117,11 +117,11 @@ class Woocommerce implements PluginService
             );
         } catch (Exception $e) {
             Utils::tlms_recordLog($e->getMessage());
-            wc_add_notice(esc_html_e($e->getMessage()), 'error');
+            wc_add_notice(esc_html__($e->getMessage()), 'error');
         }
     }
 
-    public function tmls_customerResetPassword(WP_User $user, string $pass): void
+    public function tmls_customerResetPassword($user, $pass): void
     {
         try {
             $userEmail = (new TLMSEmail($user->data->user_email))->getValue();
@@ -135,12 +135,12 @@ class Woocommerce implements PluginService
             );
         } catch (Exception $e) {
             Utils::tlms_recordLog($e->getMessage());
-            wc_add_notice(esc_html_e($e->getMessage()), 'error');
+            wc_add_notice(esc_html__($e->getMessage()), 'error');
         }
     }
 
     // for when deleting a product from woocommerce
-    public function tlms_wooCommerceProductDeleted(int $post_id): void
+    public function tlms_wooCommerceProductDeleted($post_id): void
     {
         global $post_type;
         if ($post_type === 'product') {
@@ -160,11 +160,11 @@ class Woocommerce implements PluginService
             echo '<br/><a href="'
                 .esc_url($tlms_gotocourse['goto_url'])
                 .'" class="button" target="_blank" >'
-                .esc_html_e('Start course', 'talentlms').'</a>';
+                .esc_html__('Start course', 'talentlms').'</a>';
         }
     }
 
-    public function filter_woocommerce_is_sold_individually(bool $sold_individually, WC_Product $product): bool
+    public function filter_woocommerce_is_sold_individually($sold_individually, $product): bool
     {
         return !empty(
             get_post_meta($product->get_id(), '_talentlms_course_id')

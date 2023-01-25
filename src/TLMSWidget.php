@@ -18,7 +18,7 @@ class TLMSWidget extends WP_Widget implements PluginService
             'Tlms_widget', // Base ID
             'TalentLMS Widget', // Name
             array(
-                'description' => esc_html_e('A TalentLMS Widget', 'talentlms'),
+                'description' => esc_html__('A TalentLMS Widget', 'talentlms'),
             ) // Args
         );
         $this->enqueue_widget_assets();
@@ -49,7 +49,7 @@ class TLMSWidget extends WP_Widget implements PluginService
 
     public function form($instance): string
     {
-        $title     = ! empty($instance['title']) ? $instance['title'] : esc_html_e('Our Courses', 'talentlms');
+        $title     = ! empty($instance['title']) ? esc_html($instance['title']) : esc_html__('Our Courses', 'talentlms');
         $titleId   = strtolower($this->get_field_id('title'));
         $titleName = strtolower($this->get_field_name('title'));
         return TLMS_BASEPATH . '/templates/widget/form/tlmswidgetform.php';
