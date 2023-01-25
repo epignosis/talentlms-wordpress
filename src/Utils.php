@@ -415,7 +415,7 @@ class Utils
         } catch (Exception $e) {
             self::tlms_recordLog($e->getMessage());
 
-            return $e;
+            throw $e;
         }
 
         return $site_info;
@@ -428,7 +428,7 @@ class Utils
         } catch (Exception $e) {
             self::tlms_recordLog($e->getMessage());
 
-            return $e;
+            throw $e;
         }
 
         return $custom_fields;

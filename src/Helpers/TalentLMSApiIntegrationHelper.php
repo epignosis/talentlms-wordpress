@@ -2,6 +2,7 @@
 
 namespace TalentlmsIntegration\Helpers;
 
+use Error;
 use Exception;
 use TalentLMS;
 use TalentLMS_ApiError;
@@ -24,7 +25,7 @@ trait TalentLMSApiIntegrationHelper
             TalentLMS::setDomain(esc_html(get_option('tlms-domain')));
             TalentLMS::setApiKey(esc_html(get_option('tlms-apikey')));
         } catch (Exception $e) {
-            tlms_logError($e->getMessage());
+			(new Error())->tlms_logError($e->getMessage());
         }
     }
 }

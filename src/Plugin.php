@@ -38,9 +38,9 @@ final class Plugin
     /**
      * Loop through the classes, initialize them,
      * and call the register() method if it exists
-     * @return void
+     * @return Plugin
      */
-    public function register_services(): self
+    public function register_services(): Plugin
     {
         foreach ($this->get_services() as $class) {
             $service = new $class;
@@ -53,7 +53,7 @@ final class Plugin
         return $this;
     }
 
-    public static function init(): self
+    public static function init(): Plugin
     {
         return (new self())->register_services();
     }
