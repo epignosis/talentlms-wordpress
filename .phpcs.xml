@@ -21,6 +21,8 @@
         <exclude name="PSR1.Methods.CamelCapsMethodName" />
     </rule>
 
+    <rule ref="WordPress" />
+
     <rule ref="Squiz.PHP.GlobalKeyword" />
 
 	 <!-- 2. General -->

@@ -29,7 +29,8 @@
         "humanmade/psalm-plugin-wordpress": "2.1.0",
         "phpunit/phpunit": "^9",
         "php-stubs/woocommerce-stubs": "v7.3.0",
-        "php-stubs/wordpress-stubs": "v6.1.0"
+        "php-stubs/wordpress-stubs": "v6.1.0",
+        "phpcompatibility/php-compatibility": "9.3.5"
     },
     "autoload": {
         "psr-4": {
@@ -44,5 +45,9 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "composer/package-versions-deprecated": false
         }
+    },
+    "scripts": {
+        "post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/phpcompatibility/php-compatibility",
+        "post-update-cmd" : "\"vendor/bin/phpcs\" --config-set installed_paths vendor/phpcompatibility/php-compatibility"
     }
 }
