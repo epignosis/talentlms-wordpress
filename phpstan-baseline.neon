@@ -251,11 +251,6 @@ parameters:
 			path: src/Woocommerce.php
 
 		-
-			message: "#^Callback expects 1 parameter, \\$accepted_args is set to 4\\.$#"
-			count: 1
-			path: src/Woocommerce.php
-
-		-
 			message: "#^Parameter \\$product of method TalentlmsIntegration\\\\Woocommerce\\:\\:filter_woocommerce_is_sold_individually\\(\\) has invalid type TalentlmsIntegration\\\\WC_Product\\.$#"
 			count: 1
 			path: src/Woocommerce.php

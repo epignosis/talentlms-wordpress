@@ -149,7 +149,7 @@ class Woocommerce implements PluginService
         }
     }
 
-    public function action_woocommerce_order_item_meta_end(int $item_id): void
+    public function action_woocommerce_order_item_meta_end($item_id, $item, $order, $plain_text): void
     {
         $tlms_gotocourse = wc_get_order_item_meta(
             $item_id,
