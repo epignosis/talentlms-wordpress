@@ -30,7 +30,8 @@
         "phpunit/phpunit": "^9",
         "php-stubs/woocommerce-stubs": "v7.3.0",
         "php-stubs/wordpress-stubs": "v6.1.0",
-        "phpcompatibility/php-compatibility": "9.3.5"
+        "phpcompatibility/php-compatibility": "9.3.5",
+        "humanmade/psalm-plugin-wordpress": "2.1.0"
     },
     "autoload": {
         "psr-4": {
@@ -48,6 +49,7 @@
     },
     "scripts": {
         "post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/phpcompatibility/php-compatibility",
-        "post-update-cmd" : "\"vendor/bin/phpcs\" --config-set installed_paths vendor/phpcompatibility/php-compatibility"
+        "post-update-cmd" : "\"vendor/bin/phpcs\" --config-set installed_paths vendor/phpcompatibility/php-compatibility",
+        "post-install-cmd": "\"vendor/bin/psalm-plugin\" enable humanmade/psalm-plugin-wordpress"
     }
 }

@@ -20,7 +20,7 @@ class Database implements PluginService
         define("WP_POSTS_TABLE", $wpdb -> prefix . "posts");
     }
 
-    public static function tlms_createDB()
+    public static function tlms_createDB(): void
     {
         global $wpdb;
 

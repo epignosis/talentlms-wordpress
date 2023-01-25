@@ -1,11 +1,11 @@
 <?php if (!isset($_GET['tlms-course'])) : ?>
     <fieldset>
-        <legend><?php _e('Options', 'talentlms'); ?></legend>
-        <label><?php _e('All categories', 'talentlms');?></label>
+        <legend><?php esc_html_e('Options', 'talentlms'); ?></legend>
+        <label><?php esc_html_e('All categories', 'talentlms');?></label>
         <input type="checkbox" class="ef-category" value="all" checked="true">
 
         <?php foreach ($categories as $key => $category) : ?>
-            <label><?php echo $category->name;?></label>
+            <label><?php echo esc_html($category->name);?></label>
             <input type="checkbox" class="ef-category" value="<?php echo $category->id; ?>">
         <?php endforeach ?>
     </fieldset>
@@ -15,26 +15,26 @@
     <table id="tlms_courses_table" >
         <thead>
         <tr>
-            <th><?php _e('Image', 'talentlms'); ?></th>
-            <th><?php _e('Course', 'talentlms'); ?></th>
-            <th><?php _e('Description', 'talentlms'); ?></th>
-            <th><?php _e('Price', 'talentlms'); ?></th>
-            <th><?php _e('Created On', 'talentlms'); ?></th>
-            <th><?php _e('Last Updated On', 'talentlms'); ?></th>
-            <th style="display:none;"><?php _e('categories_ID', 'talentlms'); ?></th>
+            <th><?php esc_html_e('Image', 'talentlms'); ?></th>
+            <th><?php esc_html_e('Course', 'talentlms'); ?></th>
+            <th><?php esc_html_e('Description', 'talentlms'); ?></th>
+            <th><?php esc_html_e('Price', 'talentlms'); ?></th>
+            <th><?php esc_html_e('Created On', 'talentlms'); ?></th>
+            <th><?php esc_html_e('Last Updated On', 'talentlms'); ?></th>
+            <th style="display:none;"><?php esc_html_e('categories_ID', 'talentlms'); ?></th>
         </tr>
         </thead>
         <tbody>
         <?php foreach ($courses as $course) : ?>
             <tr>
-                <td><img src="<?php echo $course->big_avatar; ?>"/></td>
-                <td><a href="?tlms-course=<?php echo $course->id; ?>"><?php echo $course->name;
-                echo ($course->course_code) ? "(".$course->course_code.")":''; ?></a></td>
-                <td><?php echo $course->description; ?></td>
-                <td><?php echo $course->price; ?></td>
+                <td><img src="<?php echo esc_url($course->big_avatar); ?>"/></td>
+                <td><a href="?tlms-course=<?php echo (int)$course->id; ?>"><?php echo esc_html($course->name);
+                echo (isset($course->course_code)) ? "(".esc_html($course->course_code).")":''; ?></a></td>
+                <td><?php echo esc_html($course->description); ?></td>
+                <td><?php echo esc_html($course->price); ?></td>
                 <td><?php echo date($dateFormat, $course->creation_date); ?></td>
                 <td><?php echo date($dateFormat, $course->last_update_on); ?></td>
-                <td style="display:none;"><?php echo $course->category_id; ?></td>
+                <td style="display:none;"><?php echo (int)$course->category_id; ?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>
@@ -71,18 +71,18 @@
 
 
 <?php else : ?>
-    <?php $course = tlms_getCourse($_GET['tlms-course']); ?>
+    <?php $course = \TalentlmsIntegration\Utils::tlms_getCourse((bool)$_GET['tlms-course']); ?>
 
     <div class="tlms-course-header">
-        <img src="<?php echo $course['big_avatar']; ?>" alt="<?php echo $course['name']; ?>" />
+        <img src="<?php echo esc_url($course['big_avatar']); ?>" alt="<?php echo esc_attr($course['name']); ?>" />
         <h2><?php echo $course['name']; ?></h2>
     </div>
 
-    <h3><?php _e('Price', 'talentlms');?>:</h3>
-    <p><?php echo ($course['price']) ? $course['price'] : '-'; ?></p>
+    <h3><?php esc_html_e('Price', 'talentlms');?>:</h3>
+    <p><?php echo ($course['price']) ? esc_html($course['price']) : '-'; ?></p>
 
-    <h3><?php _e('Description', 'talentlms');?>:</h3>
-    <p><?php echo $course['description']; ?></p>
+    <h3><?php esc_html_e('Description', 'talentlms');?>:</h3>
+    <p><?php echo esc_html($course['description']); ?></p>
 
 
 <?php endif; ?>

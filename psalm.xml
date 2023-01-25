@@ -4,19 +4,19 @@
 		<pluginClass class="PsalmWordPress\Plugin" />
 	</plugins>
     <projectFiles>
-        <directory name="admin" />
-		<directory name="integrations" />
-		<directory name="shortcodes" />
-		<directory name="TalentLMSLib" />
-		<directory name="utils" />
-		<directory name="widgets" />
+        <directory name="src" />
+		<directory name="templates" />
 		<ignoreFiles>
+			<directory name="tests" />
+			<directory name="TalentLMSLib" />
 			<directory name="vendor" />
 			<directory name="resources" />
 			<directory name="docker" />
 			<directory name="css" />
-			<directory name="admin/css" />
-			<directory name="admin/js" />
+			<directory name="wpcs" />
 		</ignoreFiles>
     </projectFiles>
+	<plugins>
+		<pluginClass class="src" />
+	</plugins>
 </psalm>
