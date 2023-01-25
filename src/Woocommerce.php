@@ -20,7 +20,6 @@ class Woocommerce implements PluginService
             add_action(
                 'woocommerce_checkout_order_processed',
                 array($this, 'tlms_processExistingCustomer'),
-                1,
                 1
             );
             add_action(
@@ -29,15 +28,11 @@ class Woocommerce implements PluginService
             );
             add_action(
                 'woocommerce_order_status_completed',
-                array($this, 'tlms_processWooComOrder'),
-                10,
-                1
+                array($this, 'tlms_processWooComOrder')
             );
             add_action(
                 'woocommerce_save_account_details',
-                array($this, 'tmls_customerChangedPassword'),
-                10,
-                1
+                array($this, 'tmls_customerChangedPassword')
             );
             add_action(
                 'password_reset',
