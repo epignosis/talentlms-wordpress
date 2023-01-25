@@ -25,7 +25,7 @@ trait TalentLMSApiIntegrationHelper
             TalentLMS::setDomain(esc_html(get_option('tlms-domain')));
             TalentLMS::setApiKey(esc_html(get_option('tlms-apikey')));
         } catch (Exception $e) {
-			(new Error())->tlms_logError($e->getMessage());
+            (new Error())->tlms_logError($e->getMessage());
         }
     }
 }

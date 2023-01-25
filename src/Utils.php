@@ -98,12 +98,12 @@ class Utils
 
     public static function tlms_getDateFormat(bool $no_sec = false): string
     {
-		try{
-			$site_info = self::tlms_getTalentLMSSiteInfo();
-        	$date_format = $site_info['date_format'];
-		}catch(Exception $exception){
-			$date_format = '';
-		}
+        try {
+            $site_info = self::tlms_getTalentLMSSiteInfo();
+            $date_format = $site_info['date_format'];
+        } catch (Exception $exception) {
+            $date_format = '';
+        }
 
         switch ($date_format) {
             case 'DDMMYYYY':
@@ -192,8 +192,8 @@ class Utils
     public static function tlms_getCourse(int $course_id): array
     {
         return TalentLMS_Course::retrieve(
-			(new TLMSPositiveInteger($course_id))->getValue()
-		);
+            (new TLMSPositiveInteger($course_id))->getValue()
+        );
     }
 
     public static function tlms_getCategories(bool $force = false): void
@@ -350,8 +350,8 @@ class Utils
         $wpdb->delete(
             TLMS_PRODUCTS_TABLE,
             array(
-				'product_id' => (new TLMSPositiveInteger($product_id))->getValue()
-			)
+                'product_id' => (new TLMSPositiveInteger($product_id))->getValue()
+            )
         );
     }
 
@@ -451,7 +451,7 @@ class Utils
     {
         $arr = explode('key:', $url);
 
-		return ',key:'.$arr[1];
+        return ',key:'.$arr[1];
     }
 
     public static function tlms_currentPageURL(): string
