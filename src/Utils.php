@@ -98,8 +98,12 @@ class Utils
 
     public static function tlms_getDateFormat(bool $no_sec = false): string
     {
-        $site_info = self::tlms_getTalentLMSSiteInfo();
-        $date_format = $site_info instanceof Exception ? '' : $site_info['date_format'];
+		try{
+			$site_info = self::tlms_getTalentLMSSiteInfo();
+        	$date_format = $site_info['date_format'];
+		}catch(Exception $exception){
+			$date_format = '';
+		}
 
         switch ($date_format) {
             case 'DDMMYYYY':
@@ -346,8 +350,8 @@ class Utils
         $wpdb->delete(
             TLMS_PRODUCTS_TABLE,
             array(
-                          'product_id' => (new TLMSPositiveInteger($product_id))->getValue()
-                      )
+				'product_id' => (new TLMSPositiveInteger($product_id))->getValue()
+			)
         );
     }
 
