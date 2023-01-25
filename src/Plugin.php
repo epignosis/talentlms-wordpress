@@ -11,7 +11,7 @@ use TalentlmsIntegration\Services\PluginService;
 
 final class Plugin
 {
-    private $services = [
+	private $services = array(
             Pages\Admin::class,
             Pages\Errors::class,
             Pages\Help::class,
@@ -20,8 +20,8 @@ final class Plugin
             Enqueue::class,
             Woocommerce::class,
             ShortCodes::class,
-            TLMSWidget::class
-    ];
+            TLMSWidget::class,
+    );
 
     /**
      * @return PluginService[]
@@ -34,14 +34,15 @@ final class Plugin
     /**
      * Loop through the classes, initialize them,
      * and call the register() method if it exists
+     *
      * @return Plugin
      */
     public function register_services(): Plugin
     {
         foreach ($this->get_services() as $class) {
-            $service = new $class;
-            if (!$service instanceof PluginService) {
-                throw new \RuntimeException("A plugin must conform PluginService contract");
+            $service = new $class();
+            if (! $service instanceof PluginService) {
+                throw new \RuntimeException('A plugin must conform PluginService contract');
             }
             $service->register();
         }
@@ -51,6 +52,6 @@ final class Plugin
 
     public static function init(): Plugin
     {
-        return (new self())->register_services();
+        return ( new self() )->register_services();
     }
 }

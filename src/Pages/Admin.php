@@ -13,15 +13,14 @@ use TalentlmsIntegration\Validations\TLMSPositiveInteger;
 
 class Admin implements PluginService
 {
-
-    use TalentLMSApiIntegrationHelper;
+	use TalentLMSApiIntegrationHelper;
 
     /**
      * @throws TalentLMS_ApiError
      */
     public function register(): void
     {
-        add_action('admin_menu', array($this, 'tlms_registerAdministrationPages'));
+        add_action('admin_menu', array( $this, 'tlms_registerAdministrationPages' ));
         $this->enableTalentLMSLib();
     }
 
@@ -32,7 +31,7 @@ class Admin implements PluginService
             esc_html_e('TalentLMS', 'talentlms'),
             'manage_options',
             'talentlms',
-            array($this, 'tlms_adminPanel')
+            array( $this, 'tlms_adminPanel' )
         );
         add_submenu_page(
             'talentlms',
@@ -40,7 +39,7 @@ class Admin implements PluginService
             esc_html_e('Dashboard', 'talentlms'),
             'manage_options',
             'talentlms',
-            array($this, 'tlms_adminPanel')
+            array( $this, 'tlms_adminPanel' )
         );
         add_submenu_page(
             'talentlms',
@@ -48,7 +47,7 @@ class Admin implements PluginService
             esc_html_e('Setup', 'talentlms'),
             'manage_options',
             'talentlms-setup',
-            array($this, 'tlms_setupPage')
+            array( $this, 'tlms_setupPage' )
         );
         add_submenu_page(
             'talentlms',
@@ -56,7 +55,7 @@ class Admin implements PluginService
             esc_html_e('Integrations', 'talentlms'),
             'manage_options',
             'talentlms-integrations',
-            array($this,'tlms_integrationsPage')
+            array( $this, 'tlms_integrationsPage' )
         );
         add_submenu_page(
             'talentlms',
@@ -64,13 +63,13 @@ class Admin implements PluginService
             esc_html_e('CSS', 'talentlms'),
             'manage_options',
             'talentlms-css',
-            array($this, 'tlms_cssPage')
+            array( $this, 'tlms_cssPage' )
         );
     }
 
     public function tlms_adminPanel(): void
     {
-        require_once TLMS_BASEPATH.'/templates/dashboard.php';
+        require_once TLMS_BASEPATH . '/templates/dashboard.php';
     }
 
     public function tlms_setupPage(): void
@@ -83,13 +82,13 @@ class Admin implements PluginService
                 if (stripos(strtolower($_POST['tlms-domain']), 'http') === 0
                     || stripos(strtolower($_POST['tlms-domain']), 'https') === 0
                 ) {
-                    $action_status = 'error';
+                    $action_status     = 'error';
                     $domain_validation = 'form-invalid';
-                    $action_message = __('Invalid TalentLMS Domain', 'talentlms').'<br />';
+                    $action_message    = __('Invalid TalentLMS Domain', 'talentlms') . '<br />';
                 } elseif (strlen($_POST['tlms-apikey']) !== 30) { // TalentLMS API key is exactly 30 characters
-                    $action_status = 'error';
+                    $action_status  = 'error';
                     $api_validation = 'form-invalid';
-                    $action_message = __('Invalid TalentLMS API key', 'talentlms').'<br />';
+                    $action_message = __('Invalid TalentLMS API key', 'talentlms') . '<br />';
                 } else {
                     update_option('tlms-domain', esc_url_raw($_POST['tlms-domain']));
                     update_option('tlms-apikey', sanitize_text_field($_POST['tlms-apikey']));
@@ -105,27 +104,27 @@ class Admin implements PluginService
                         );
                     }
 
-                    $action_status = 'updated';
+                    $action_status  = 'updated';
                     $action_message = __('Details edited successfully', 'talentlms');
                 }
             } else {
                 $action_status = 'error';
 
-                if (!$_POST['tlms-domain']) {
+                if (! $_POST['tlms-domain']) {
                     $domain_validation = 'form-invalid';
-                    $action_message = __('TalentLMS Domain required', 'talentlms').'<br />';
+                    $action_message    = __('TalentLMS Domain required', 'talentlms') . '<br />';
                     update_option('tlms-domain', '');
                 }
 
-                if (!$_POST['tlms-apikey']) {
+                if (! $_POST['tlms-apikey']) {
                     $api_validation = 'form-invalid';
-                    $action_message = __('TalentLMS API key required', 'talentlms').'<br />';
+                    $action_message = __('TalentLMS API key required', 'talentlms') . '<br />';
                     update_option('tlms-apikey', '');
                 }
             }
         }
 
-        require_once TLMS_BASEPATH.'/templates/setup.php';
+        require_once TLMS_BASEPATH . '/templates/setup.php';
     }
 
     public function tlms_integrationsPage(): void
@@ -136,45 +135,45 @@ class Admin implements PluginService
             Utils::tlms_addProductCategories();
 
             foreach ($_POST['tlms_products'] as $course_id) {
-                $course_id = (new TLMSPositiveInteger($course_id))->getValue();
-                if (!Utils::tlms_productExists($course_id)) {
+                $course_id = ( new TLMSPositiveInteger($course_id) )->getValue();
+                if (! Utils::tlms_productExists($course_id)) {
                     Utils::tlms_addProduct($course_id, $courses);
                 }
             }
 
-            $action_status = 'updated';
+            $action_status  = 'updated';
             $action_message = __('Operation completed successfuly', 'talentlms');
         }
 
-        if (isset($_POST['action']) && $_POST['action'] == 'tlms-fetch-courses') {//refresh courses
+        if (isset($_POST['action']) && $_POST['action'] == 'tlms-fetch-courses') {// refresh courses
             Utils::tlms_getCourses(true);
             wp_redirect(admin_url('admin.php?page=talentlms-integrations'));
         }
 
-        require_once TLMS_BASEPATH.'/templates/integrations.php';
+        require_once TLMS_BASEPATH . '/templates/integrations.php';
     }
 
     public function tlms_cssPage(): void
     {
         global $wp_filesystem;
-        require_once(ABSPATH.'/wp-admin/includes/file.php');
+        require_once ABSPATH . '/wp-admin/includes/file.php';
         WP_Filesystem();
 
         $upload_dir = wp_upload_dir();
-        $dir = trailingslashit($upload_dir['basedir']).TLMS_UPLOAD_DIR;
+        $dir        = trailingslashit($upload_dir['basedir']) . TLMS_UPLOAD_DIR;
 
-        $customCssFileName = $dir.'/css/talentlms-style.css';
+        $customCssFileName    = $dir . '/css/talentlms-style.css';
         $customCssFileContent = null;
 
         if ($_POST['action'] == 'edit-css') {
             // Create main folder within upload if not exist
-            if (!$wp_filesystem->is_dir($dir)) {
+            if (! $wp_filesystem->is_dir($dir)) {
                 $wp_filesystem->mkdir($dir);
             }
 
             // Create a subfolder in my new folder if not exist
-            if (!$wp_filesystem->is_dir($dir.'/css')) {
-                $wp_filesystem->mkdir($dir.'/css');
+            if (! $wp_filesystem->is_dir($dir . '/css')) {
+                $wp_filesystem->mkdir($dir . '/css');
             }
 
             if ($wp_filesystem->exists($customCssFileName)) {
@@ -184,7 +183,7 @@ class Admin implements PluginService
             // Save file and set permission to 0644
             $wp_filesystem->put_contents($customCssFileName, stripslashes(strip_tags($_POST['tl-edit-css'])), 0644);
 
-            $action_status = 'updated';
+            $action_status  = 'updated';
             $action_message = __('Details edited successfully', 'talentlms');
         }
 
@@ -193,14 +192,14 @@ class Admin implements PluginService
         }
 
         $presentCssFileName = pathinfo($customCssFileName)['filename'];
-        require_once TLMS_BASEPATH.'/templates/css.php';
+        require_once TLMS_BASEPATH . '/templates/css.php';
     }
 
     public static function getCustomCssFilePath(): string
     {
         $upload_dir = wp_upload_dir();
-        $dir = trailingslashit($upload_dir['baseurl']).TLMS_UPLOAD_DIR;
+        $dir        = trailingslashit($upload_dir['baseurl']) . TLMS_UPLOAD_DIR;
 
-        return $dir.'/css/talentlms-style.css';
+        return $dir . '/css/talentlms-style.css';
     }
 }

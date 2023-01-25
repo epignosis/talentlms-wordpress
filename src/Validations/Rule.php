@@ -4,7 +4,6 @@ namespace TalentlmsIntegration\Validations;
 
 abstract class Rule
 {
-
     protected $value;
 
     public function __construct($value)

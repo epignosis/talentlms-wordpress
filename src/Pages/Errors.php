@@ -13,14 +13,14 @@ use TalentlmsIntegration\Utils;
 
 class Errors implements PluginService
 {
-    public $talentlmsAdminErrors = array();  // Stores all the errors that need to be displayed to the admin.
+	public $talentlmsAdminErrors = array();  // Stores all the errors that need to be displayed to the admin.
     public $screen_id;
 
     public function register(): void
     {
         add_action(
             'admin_notices',
-            array($this, 'tlms_showWarnings')
+            array( $this, 'tlms_showWarnings' )
         );
     }
 
@@ -42,8 +42,8 @@ class Errors implements PluginService
      */
     public function tlms_showWarnings(): void
     {
-        if ((defined('DOING_AJAX') && DOING_AJAX)
-            || !is_admin()
+        if (( defined('DOING_AJAX') && DOING_AJAX )
+            || ! is_admin()
         ) {
             die();
         }
@@ -57,9 +57,9 @@ class Errors implements PluginService
             $this->tlms_displayErrors();
         }
 
-        if (!empty($this->talentlmsAdminErrors)) {
+        if (! empty($this->talentlmsAdminErrors)) {
             foreach ($this->talentlmsAdminErrors as $message) {
-                echo '<div class="error notice is-dismissible">'.$message.'</div>';
+                echo '<div class="error notice is-dismissible">' . $message . '</div>';
             }
         }
     }
@@ -72,26 +72,26 @@ class Errors implements PluginService
             )
             &&
             (
-                !get_option('tlms-domain')
-                && !get_option('tlms-apikey')
+                ! get_option('tlms-domain')
+                && ! get_option('tlms-apikey')
             )
         ) {
             $this->tlms_logError(
                 '<p><strong>'
-                .esc_html_e('You need to specify a TalentLMS domain and a TalentLMS API key.', 'talentlms')
-                .'</strong>'
-                .sprintf(
+                . esc_html_e('You need to specify a TalentLMS domain and a TalentLMS API key.', 'talentlms')
+                . '</strong>'
+                . sprintf(
                     esc_html_e('You must <a href="%1$s">enter your domain and API key</a> for it to work.', 'talentlms'),
                     admin_url('admin.php?page=talentlms-setup')
                 )
-                .'</p>'
+                . '</p>'
             );
         } else {
             try {
                 TalentLMS::setDomain(esc_html(get_option('tlms-domain')));
                 TalentLMS::setApiKey(esc_html(get_option('tlms-apikey')));
 
-                if (is_admin() && !wp_doing_ajax()) {
+                if (is_admin() && ! wp_doing_ajax()) {
                     Utils::tlms_getCourses();
                     Utils::tlms_getCategories();
                 }
