@@ -29,14 +29,17 @@ class Enqueue implements PluginService
 
     private function tlms_commonLibs(): void
     {
-        wp_register_style(
+        //Register styles
+		wp_register_style(
             'tlms-widget',
             TLMS_BASEURL . 'assets/css/talentlms-widget.css',
             false,
             TLMS_VERSION
         );
+		wp_register_style('tlms-datatables-css', TLMS_BASEURL . 'assets/css/jquery.dataTables.min.css');
 
-        wp_register_script(
+        //Register scripts
+		wp_register_script(
             'bootstrap-js',
             TLMS_BASEURL . 'assets/js/bootstrap.min.js',
             ['jquery'],
@@ -50,9 +53,19 @@ class Enqueue implements PluginService
             TLMS_VERSION
         );
 
-        wp_enqueue_style('tlms-widget');
+		wp_register_script(
+			'tlms-datatables-js',
+			TLMS_BASEURL . 'assets/js/jquery.dataTables.min.js',
+			['jquery']
+		);
+
+        //Enqueue styles
+		wp_enqueue_style('tlms-widget');
+		wp_enqueue_style('tlms-datatables-css');
+
+		//Enqueue scripts
         wp_enqueue_script('bootstrap-js');
-        wp_enqueue_script('tlms-font-awesome');
+        wp_enqueue_script('tlms-font-awesome');wp_enqueue_script('tlms-datatables-js');
     }
 
     public function tlms_enqueueAdminScripts(): void
@@ -84,18 +97,12 @@ class Enqueue implements PluginService
 
         //Enqueue styles
         wp_enqueue_style('tlms-admin');
-        wp_enqueue_style(
-            'tlms-datatables-css',
-            TLMS_BASEURL . 'resources/DataTables-1.10.15/media/css/jquery.dataTables.css'
-        );
+
 
         //Enqueue scripts
         wp_localize_script('tlms-admin', 'translations', $translations_array);
         wp_enqueue_script('tlms-admin');
-        wp_enqueue_script(
-            'tlms-datatables-js',
-            TLMS_BASEURL . 'resources/DataTables-1.10.15/media/js/jquery.dataTables.js'
-        );
+
     }
 
     public function tlms_enqueueFrontScripts(): void
@@ -111,14 +118,7 @@ class Enqueue implements PluginService
         );
 
         wp_enqueue_style('tlms-front');
-        wp_enqueue_style(
-            'tlms-datatables-css',
-            TLMS_BASEURL . 'resources/DataTables-1.10.15/media/css/jquery.dataTables.css'
-        );
-        wp_enqueue_script(
-            'tlms-datatables-js',
-            TLMS_BASEURL . 'resources/DataTables-1.10.15/media/js/jquery.dataTables.js'
-        );
+
     }
 
 
