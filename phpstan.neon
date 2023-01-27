@@ -9,8 +9,6 @@ parameters:
         - vendor
         - wpcs
         - docker
-        - css
-        - resources
         - TalentLMSLib
     paths:
         - src
