@@ -25,19 +25,27 @@
         "squizlabs/php_codesniffer": "3.*",
         "phpstan/phpstan": "1.9.4",
         "szepeviktor/phpstan-wordpress": "1.1.6",
-        "vimeo/psalm": "4.30.0",
-        "humanmade/psalm-plugin-wordpress": "2.1.0"
+        "phpunit/phpunit": "^9",
+        "php-stubs/woocommerce-stubs": "v7.3.0",
+        "php-stubs/wordpress-stubs": "v6.1.0",
+        "phpcompatibility/php-compatibility": "9.3.5"
     },
     "autoload": {
         "psr-4": {
-            "TalentlmsIntegration\\": "src/"
+            "TalentlmsIntegration\\": "src/",
+            "TalentlmsIntegrationTests\\": "tests/"
         }
     },
     "minimum-stability": "stable",
     "config": {
         "allow-plugins": {
             "composer/installers": false,
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "composer/package-versions-deprecated": false
         }
+    },
+    "scripts": {
+        "post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/phpcompatibility/php-compatibility",
+        "post-update-cmd" : "\"vendor/bin/phpcs\" --config-set installed_paths vendor/phpcompatibility/php-compatibility"
     }
 }

@@ -12,8 +12,8 @@
 /**
  * Require once the Composer Autoload
  */
-if(file_exists(plugin_dir_path( __FILE__ ) . 'vendor/autoload.php')){
-	require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+if (file_exists(plugin_dir_path(__FILE__) . 'vendor/autoload.php')) {
+    require_once plugin_dir_path(__FILE__) . 'vendor/autoload.php';
 }
 
 /**
@@ -26,48 +26,31 @@ define('TLMS_UPLOAD_DIR', 'talentlmswpplugin');
 /**
  * The code that runs during plugin activation
  */
-function activate(): void{
-	TalentlmsIntegration\Activate::tlms_activate();
+function activate(): void
+{
+    TalentlmsIntegration\Activate::tlms_activate();
 }
 register_activation_hook(__FILE__, 'activate');
 
 register_uninstall_hook(__FILE__, 'tlms_uninstall');
 
-if(file_exists(TLMS_BASEPATH . '/TalentLMSLib/lib/TalentLMS.php')){
-	require_once TLMS_BASEPATH . '/TalentLMSLib/lib/TalentLMS.php';
+if (file_exists(TLMS_BASEPATH . '/TalentLMSLib/lib/TalentLMS.php')) {
+    require_once TLMS_BASEPATH . '/TalentLMSLib/lib/TalentLMS.php';
 }
 
-if(file_exists(TLMS_BASEPATH . '/src/Utils.php')){
-	require_once TLMS_BASEPATH . '/src/Utils.php';
+if (class_exists('TalentlmsIntegration\Plugin')) {
+    TalentlmsIntegration\Plugin::init();
 }
 
-if(class_exists('TalentlmsIntegration\Utils')){
-	new \TalentlmsIntegration\Utils();
-}
-
-if(class_exists('TalentlmsIntegration\Plugin')){
-	TalentlmsIntegration\Plugin::init();
-}
-
-//register_activation_hook(__FILE__, 'tlms_install');
-//register_uninstall_hook(__FILE__, 'tlms_uninstall');
-//require_once (TLMS_BASEPATH . '/TalentLMSLib/lib/TalentLMS.php');
-//require_once (TLMS_BASEPATH . '/utils/utils.php');
-//require_once (TLMS_BASEPATH . '/utils/db.php');
-//require_once (TLMS_BASEPATH . '/utils/install.php');
-//require_once (TLMS_BASEPATH . '/admin/admin.php');
-//require_once (TLMS_BASEPATH . '/widgets/reg_widgets.php');
-//require_once (TLMS_BASEPATH . '/shortcodes/reg_shortcodes.php');
-//require_once (TLMS_BASEPATH . '/integrations/woocommerce.php');
-
-function tlms_isWoocommerceActive() {
-	if ( is_plugin_active('woocommerce/woocommerce.php') ) {
-		update_option('tlms-woocommerce-active', 1);
-	} else {
-		update_option('tlms-woocommerce-active', 0);
-	}
-    if( empty(get_option('tlms-enroll-user-to-courses')) ){
-        update_option('tlms-enroll-user-to-courses', 'submission');    
+function tlms_isWoocommerceActive()
+{
+    if (is_plugin_active('woocommerce/woocommerce.php')) {
+        update_option('tlms-woocommerce-active', 1);
+    } else {
+        update_option('tlms-woocommerce-active', 0);
+    }
+    if (empty(get_option('tlms-enroll-user-to-courses'))) {
+        update_option('tlms-enroll-user-to-courses', 'submission');
     }
 }
-add_action( 'admin_init', 'tlms_isWoocommerceActive' );
+add_action('admin_init', 'tlms_isWoocommerceActive');
