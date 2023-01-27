@@ -7,8 +7,6 @@
 
 	<exclude-pattern>/wpcs/*</exclude-pattern>
     <exclude-pattern>/vendor/*</exclude-pattern>
-	<exclude-pattern>/css/*</exclude-pattern>
-	<exclude-pattern>/resources/*</exclude-pattern>
     <exclude-pattern>/templates/*</exclude-pattern>
     <exclude-pattern>/TalentLMSLib/*</exclude-pattern>
     <exclude-pattern>/assets/*</exclude-pattern>
