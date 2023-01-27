@@ -26,7 +26,7 @@ class Activate
     {
         update_option('tlms-enroll-user-to-courses', 'submission');
     }
-	
+
     public static function tlms_setupWPPages(): void
     {
         self::tlms_addCoursesPage();
