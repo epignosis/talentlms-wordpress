@@ -5,14 +5,14 @@
 
 namespace TalentlmsIntegration\Pages;
 
-use Exception;
-use TalentLMS;
 use TalentLMS_ApiError;
+use TalentlmsIntegration\Helpers\TalentLMSApiIntegrationHelper;
 use TalentlmsIntegration\Services\PluginService;
 use TalentlmsIntegration\Utils;
 
 class Errors implements PluginService
 {
+	use TalentLMSApiIntegrationHelper;
     public $talentlmsAdminErrors = array();  // Stores all the errors that need to be displayed to the admin.
     public $screen_id;
 
@@ -64,7 +64,10 @@ class Errors implements PluginService
         }
     }
 
-    public function tlms_displayErrors(): void
+	/**
+	 * @throws TalentLMS_ApiError
+	 */
+	public function tlms_displayErrors(): void
     {
         if ((
                 empty($_POST['tlms-domain'])
@@ -87,19 +90,7 @@ class Errors implements PluginService
                 . '</p>'
             );
         } else {
-            try {
-                TalentLMS::setDomain(esc_html(get_option('tlms-domain')));
-                TalentLMS::setApiKey(esc_html(get_option('tlms-apikey')));
-
-                if (is_admin() && ! wp_doing_ajax()) {
-                    Utils::tlms_getCourses();
-                    Utils::tlms_getCategories();
-                }
-            } catch (Exception $e) {
-                if ($e instanceof TalentLMS_ApiError) {
-                    $this->tlms_logError($e->getMessage());
-                }
-            }
+            $this->enableTalentLMSLib();
         }
     }
 }
