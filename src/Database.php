@@ -13,11 +13,11 @@ class Database implements PluginService
     {
         global $wpdb;
 
-        define("TLMS_COURSES_TABLE", $wpdb -> prefix . "talentlms_courses");
-        define("TLMS_CATEGORIES_TABLE", $wpdb -> prefix . "talentlms_categories");
-        define("TLMS_PRODUCTS_TABLE", $wpdb -> prefix . "talentlms_products");
-        define("TLMS_PRODUCTS_CATEGORIES_TABLE", $wpdb -> prefix . "talentlms_products_categories");
-        define("WP_POSTS_TABLE", $wpdb -> prefix . "posts");
+        define("TLMS_COURSES_TABLE", $wpdb->prefix . "talentlms_courses");
+        define("TLMS_CATEGORIES_TABLE", $wpdb->prefix . "talentlms_categories");
+        define("TLMS_PRODUCTS_TABLE", $wpdb->prefix . "talentlms_products");
+        define("TLMS_PRODUCTS_CATEGORIES_TABLE", $wpdb->prefix . "talentlms_products_categories");
+        define("WP_POSTS_TABLE", $wpdb->prefix . "posts");
     }
 
     public static function tlms_createDB(): void
