@@ -4,7 +4,7 @@ Tags: TalentLMS, elearning, lms, lcms, hcm, learning management system
 Requires at least: 2.0
 Tested up to: 6.1.1
 Requires PHP: 5.2.4
-Stable tag: 6.6.9.5
+Stable tag: 7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

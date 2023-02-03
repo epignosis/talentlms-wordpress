@@ -21,7 +21,7 @@ if (file_exists(plugin_dir_path(__FILE__) . 'vendor/autoload.php')) {
  */
 define('TLMS_BASEPATH', dirname(__FILE__));
 define('TLMS_BASEURL', plugin_dir_url(__FILE__));
-define('TLMS_VERSION', '6.6.9.5');
+define('TLMS_VERSION', '7.0');
 define('TLMS_UPLOAD_DIR', 'talentlmswpplugin');
 /**
  * The code that runs during plugin activation
