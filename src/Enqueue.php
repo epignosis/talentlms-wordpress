@@ -31,13 +31,6 @@ class Enqueue implements PluginService
     {
         //Register styles
         wp_register_style(
-            'tlms-widget',
-            TLMS_BASEURL . 'assets/css/talentlms-widget.css',
-            false,
-            TLMS_VERSION
-        );
-
-        wp_register_style(
             'tlms-datatables-css',
             TLMS_BASEURL . 'assets/css/jquery.dataTables.min.css'
         );
@@ -64,7 +57,6 @@ class Enqueue implements PluginService
         );
 
         //Enqueue styles
-        wp_enqueue_style('tlms-widget');
         wp_enqueue_style('tlms-datatables-css');
 
         //Enqueue scripts
