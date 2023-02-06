@@ -31,7 +31,7 @@ class Errors implements PluginService
      */
     public function tlms_logError(string $message): void
     {
-        $this->talentlmsAdminErrors[] = esc_html($message);
+        $this->talentlmsAdminErrors[] = $message;
         Utils::tlms_recordLog($message);
     }
 
@@ -84,7 +84,7 @@ class Errors implements PluginService
                 . esc_html__('You need to specify a TalentLMS domain and a TalentLMS API key.', 'talentlms')
                 . '</strong>'
                 . sprintf(
-                    esc_html__('You must <a href="%1$s">enter your domain and API key</a> for it to work.', 'talentlms'),
+                    __('You must <a href="%1$s">enter your domain and API key</a> for it to work.', 'talentlms'),
                     esc_url(admin_url('admin.php?page=talentlms-setup'))
                 )
                 . '</p>'
