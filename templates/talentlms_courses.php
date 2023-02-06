@@ -10,9 +10,7 @@
         <?php endforeach ?>
     </fieldset>
 
-
-
-    <table id="tlms_courses_table" >
+    <table id="tlms_courses_table">
         <thead>
         <tr>
             <th><?php esc_html_e('Image', 'talentlms'); ?></th>
@@ -24,6 +22,7 @@
             <th style="display:none;"><?php esc_html_e('categories_ID', 'talentlms'); ?></th>
         </tr>
         </thead>
+
         <tbody>
         <?php foreach ($courses as $course) : ?>
             <tr>
@@ -66,12 +65,10 @@
             }
             jQuery(this).siblings('input:checkbox').not(this).removeAttr('checked');
         });
-
     </script>
 
-
 <?php else : ?>
-    <?php $course = \TalentlmsIntegration\Utils::tlms_getCourse((bool)$_GET['tlms-course']); ?>
+    <?php $course = \TalentlmsIntegration\Utils::tlms_getCourse((int)$_GET['tlms-course']); ?>
 
     <div class="tlms-course-header">
         <img src="<?php echo esc_url($course['big_avatar']); ?>" alt="<?php echo esc_attr($course['name']); ?>" />
@@ -83,6 +80,4 @@
 
     <h3><?php esc_html_e('Description', 'talentlms');?>:</h3>
     <p><?php echo esc_html($course['description']); ?></p>
-
-
 <?php endif; ?>
