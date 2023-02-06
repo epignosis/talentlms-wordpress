@@ -26,7 +26,7 @@ class Database implements PluginService
 
         $charset_collate = $wpdb->get_charset_collate();
 
-        $sql = "CREATE TABLE " .TLMS_COURSES_TABLE. " (
+        $sql1 = "CREATE TABLE " .TLMS_COURSES_TABLE. " (
 		id mediumint(9) unsigned NOT NULL AUTO_INCREMENT,
 		name varchar(150) NOT NULL,
 		course_code varchar(20),
@@ -46,10 +46,7 @@ class Database implements PluginService
 		PRIMARY KEY  (id)
 		) $charset_collate;";
 
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-        dbDelta($sql);
-
-        $sql = "CREATE TABLE " . TLMS_CATEGORIES_TABLE . " (
+        $sql2 = "CREATE TABLE " . TLMS_CATEGORIES_TABLE . " (
 		id mediumint(9) unsigned NOT NULL,
 		name varchar(150) NOT NULL,
 		price float DEFAULT '0',
@@ -57,26 +54,21 @@ class Database implements PluginService
 		PRIMARY KEY  (id)
 		) $charset_collate;";
 
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-        dbDelta($sql);
-
-        $sql = "CREATE TABLE ".TLMS_PRODUCTS_TABLE." (
+        $sql3 = "CREATE TABLE ".TLMS_PRODUCTS_TABLE." (
 			id mediumint(9) NOT NULL AUTO_INCREMENT,
 			product_id mediumint(9) NOT NULL,
 			course_id mediumint (9) NOT NULL,
 			PRIMARY KEY  (id)
 		) $charset_collate;";
 
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-        dbDelta($sql);
-
-        $sql = "CREATE TABLE " . TLMS_PRODUCTS_CATEGORIES_TABLE . " (
+        $sql4 = "CREATE TABLE " . TLMS_PRODUCTS_CATEGORIES_TABLE . " (
 			id mediumint(9) unsigned NOT NULL AUTO_INCREMENT,
 			tlms_categories_ID mediumint (9),
 			woo_categories_ID mediumint (9),
 			PRIMARY KEY  (id)
 		) $charset_collate;";
+
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-        dbDelta($sql);
+        dbDelta(array($sql1,$sql2,$sql3,$sql4));
     }
 }
