@@ -1,2 +1,7 @@
 errorLog.txt
 .env
+.idea
+.vscode
+/csfix.report
+vendor
+wpcs

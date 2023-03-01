@@ -6,7 +6,7 @@
 * **Requires at least:** 2.0
 * **Tested up to:** 6.1.1
 * **Requires PHP:** 5.2.4
-* **Stable tag:** trunk
+* **Stable tag:** 7.0
 
 This plugin integrates TalentLMS with WordPress. Promote your TalentLMS content through your WordPress site.
 
