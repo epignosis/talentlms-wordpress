@@ -55,6 +55,13 @@ If you have a question or any feedback you want to share send us an email at [su
 
 == Changelog ==
 
+= 7.0 =
+
+* Added support for Wordpress 6.1.1
+* Refactor plugin's codebase
+* Use your own custom css rules
+* No support for Wordpress Site Editor
+
 = 6.6.9.5 =
 
 * Updated the readme file

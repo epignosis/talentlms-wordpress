@@ -1,6 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+### [7.0] - 2023-3-2
+
+* Added support for Wordpress 6.1.1
+* Refactor plugin's codebase
+* Use your own custom css rules
+* No support for Wordpress Site Editor
+
 ### [6.6.9.5] - 2022-11-30
 
 * Updated the readme file
