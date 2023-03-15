@@ -457,19 +457,24 @@ class Utils
     public static function tlms_currentPageURL(): string
     {
         $pageURL = 'http';
-        if (isset($_SERVER["HTTPS"])) {
-            if ($_SERVER["HTTPS"] == "on") {
+        $https = sanitize_text_field($_SERVER["HTTPS"]);
+        $port = sanitize_text_field($_SERVER["SERVER_PORT"]);
+        $serverName = sanitize_text_field($_SERVER["SERVER_NAME"]);
+        $requestUri = sanitize_text_field($_SERVER["REQUEST_URI"]);
+
+        if (isset($https)) {
+            if ($https == "on") {
                 $pageURL .= "s";
             }
         }
         $pageURL .= "://";
-        if ($_SERVER["SERVER_PORT"] !== "80") {
-            $pageURL .= $_SERVER["SERVER_NAME"]
-                .":".$_SERVER["SERVER_PORT"]
-                .$_SERVER["REQUEST_URI"];
+        if ($port !== "80") {
+            $pageURL .= $serverName
+                .":".$port
+                .$requestUri;
         } else {
-            $pageURL .= $_SERVER["SERVER_NAME"]
-                .$_SERVER["REQUEST_URI"];
+            $pageURL .= $serverName
+                .$requestUri;
         }
 
         return $pageURL;
@@ -480,39 +485,39 @@ class Utils
         $iconClass = '';
         switch ($unit_type) {
             case 'Unit':
-                $iconClass = 'fa fa-check';
+                $iconClass = 'fa-solid fa-check';
                 break;
             case 'Document':
-                $iconClass = 'fa fa-desktop';
+                $iconClass = 'fa-solid fa-desktop';
                 break;
             case 'Video':
-                $iconClass = 'fa fa-film';
+                $iconClass = 'fa-solid fa-film';
                 break;
             case 'SCORM | TinCan':
             case 'Scorm':
-                $iconClass = 'fa fa-book';
+                $iconClass = 'fa-solid fa-book';
                 break;
             case 'Content':
             case 'Webpage':
-                $iconClass = 'fa fa-bookmark-o';
+                $iconClass = 'fa-solid fa-bookmark';
                 break;
             case 'Test':
-                $iconClass = 'fa fa-edit';
+                $iconClass = 'fa-solid fa-pen-to-square';
                 break;
             case 'Section':
             case 'Survey':
                 break;
             case 'Audio':
-                $iconClass = 'fa fa-file-audio-o';
+                $iconClass = 'fa-solid fa-file-audio';
                 break;
             case 'Flash':
-                $iconClass = 'fa fa-asterisk';
+                $iconClass = 'fa-solid fa-asterisk';
                 break;
             case 'IFrame':
-                $iconClass = 'fa fa-bookmark';
+                $iconClass = 'fa-solid fa-bookmark';
                 break;
             case 'Assignment':
-                $iconClass = 'fa fa-calendar-o';
+                $iconClass = 'fa-solid fa-calendar';
                 break;
         }
 

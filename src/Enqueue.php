@@ -43,9 +43,17 @@ class Enqueue implements PluginService
             false,
             true
         );
+
         wp_register_script(
             'tlms-font-awesome',
             TLMS_BASEURL . 'assets/js/font-awesome.min.js',
+            false,
+            TLMS_VERSION
+        );
+
+        wp_register_script(
+            'tlms-font-awesome-solid',
+            TLMS_BASEURL . 'assets/js/solid.min.js',
             false,
             TLMS_VERSION
         );
@@ -62,6 +70,7 @@ class Enqueue implements PluginService
         //Enqueue scripts
         wp_enqueue_script('bootstrap-js');
         wp_enqueue_script('tlms-font-awesome');
+        wp_enqueue_script('tlms-font-awesome-solid');
         wp_enqueue_script('tlms-datatables-js');
     }
 
