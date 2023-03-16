@@ -76,11 +76,13 @@ class Admin implements PluginService
     {
         $action_status = $action_message = $api_validation = $domain_validation = '';
 
-        $action = sanitize_text_field($_POST['action']);
-        $tlmsDomain = sanitize_text_field($_POST['tlms-domain']);
-        $tlmsApiKey = sanitize_text_field($_POST['tlms-apikey']);
-        $enrollUserToCourses = sanitize_text_field($_POST['tlms-enroll-user-to-courses']);
-        $automaticallyCompleteOrders = sanitize_text_field($_POST['tlms-automtically-complete-orders']);
+        $action = isset($_POST['action']) ? sanitize_text_field(trim($_POST['action'])) : null;
+        $tlmsDomain = isset($_POST['tlms-domain']) ? sanitize_text_field(trim(strtolower($_POST['tlms-domain']))) : null;
+        $tlmsApiKey = isset($_POST['tlms-apikey']) ? sanitize_text_field(trim($_POST['tlms-apikey'])) : null;
+        $enrollUserToCourses = isset($_POST['tlms-enroll-user-to-courses']) ?
+            sanitize_text_field(trim($_POST['tlms-enroll-user-to-courses'])) : null;
+        $automaticallyCompleteOrders = isset($_POST['tlms-automtically-complete-orders']) ?
+            sanitize_text_field(trim($_POST['tlms-automtically-complete-orders'])) : null;
 
         if (isset($action) && $action == 'tlms-setup') {
             if (isset($tlmsDomain, $tlmsApiKey, $enrollUserToCourses)
