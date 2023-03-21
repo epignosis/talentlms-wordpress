@@ -24,8 +24,13 @@ trait TalentLMSApiIntegrationHelper
 
             TalentLMS::setDomain(esc_html(get_option('tlms-domain')));
             TalentLMS::setApiKey(esc_html(get_option('tlms-apikey')));
+
+            // Sample call to siteinfo to test whether API is enabled for the domain
+            $siteInfo = \TalentLMS_Siteinfo::get();
         } catch (Exception $e) {
-            (new Errors())->tlms_logError($e->getMessage());
+            $err = new Errors();
+            $err->tlms_logError($e->getMessage());
+            $err->tlms_ManualShowWarnings();
         }
     }
 }

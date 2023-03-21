@@ -119,6 +119,16 @@ class TalentLMS_ApiRequestor
     
     protected static function _handleApiError($rbody, $rcode, $response)
     {
+        if(isset($response['error'])){
+            $msg =
+                '<p><strong>'
+                . esc_html__(esc_html($response['error']['message']), 'talentlms')
+                . '</strong>'
+                . '</p>';
+
+            throw new TalentLMS_ApiError($msg, $rcode, $rbody, $response);
+        }
+
         if (!is_array($response) || !isset($response['error'])) {
             throw new TalentLMS_ApiError("Invalid response object from API: ".$rbody." (HTTP response code was: ".$rcode.")", $rcode, $rbody, $response);
         }
