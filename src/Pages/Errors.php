@@ -59,7 +59,7 @@ class Errors implements PluginService
 
         if (! empty($this->talentlmsAdminErrors)) {
             foreach ($this->talentlmsAdminErrors as $message) {
-                echo '<div class="error notice is-dismissible">' . wp_kses($message, array('strong'=>array()), array('http', 'https')) . '</div>';
+                echo '<div class="error notice is-dismissible">' . wp_kses(esc_html($message), array('strong'=>array()), array('http', 'https')) . '</div>';
             }
         }
     }

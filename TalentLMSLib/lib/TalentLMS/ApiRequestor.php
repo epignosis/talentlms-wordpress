@@ -122,7 +122,7 @@ class TalentLMS_ApiRequestor
         if(isset($response['error'])){
             $msg =
                 '<p><strong>'
-                . esc_html__(esc_html($response['error']['message']), 'talentlms')
+                . $response['error']['message']
                 . '</strong>'
                 . '</p>';
 
