@@ -88,8 +88,8 @@ class Admin implements PluginService
             if (isset($tlmsDomain, $tlmsApiKey, $enrollUserToCourses)
             ) {
                 // we accept the domain only, without the protocol
-                if (stripos(strtolower($tlmsDomain), 'http') === 0
-                    || stripos(strtolower($tlmsDomain), 'https') === 0
+                if (stripos($tlmsDomain, 'http') === 0
+                    || stripos($tlmsDomain, 'https') === 0
                 ) {
                     $action_status     = 'error';
                     $domain_validation = 'form-invalid';
