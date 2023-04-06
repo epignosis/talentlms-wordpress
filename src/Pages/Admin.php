@@ -75,12 +75,21 @@ class Admin implements PluginService
     public function tlms_setupPage(): void
     {
         $action_status = $action_message = $api_validation = $domain_validation = '';
-        if (isset($_POST['action']) && $_POST['action'] == 'tlms-setup') {
-            if (isset($_POST['tlms-domain'], $_POST['tlms-apikey'], $_POST['tlms-enroll-user-to-courses'])
+
+        $action = isset($_POST['action']) ? sanitize_text_field(trim($_POST['action'])) : null;
+        $tlmsDomain = isset($_POST['tlms-domain']) ? sanitize_text_field(trim(strtolower($_POST['tlms-domain']))) : null;
+        $tlmsApiKey = isset($_POST['tlms-apikey']) ? sanitize_text_field(trim($_POST['tlms-apikey'])) : null;
+        $enrollUserToCourses = isset($_POST['tlms-enroll-user-to-courses']) ?
+            sanitize_text_field(trim($_POST['tlms-enroll-user-to-courses'])) : null;
+        $automaticallyCompleteOrders = isset($_POST['tlms-automtically-complete-orders']) ?
+            sanitize_text_field(trim($_POST['tlms-automtically-complete-orders'])) : null;
+
+        if (isset($action) && $action == 'tlms-setup') {
+            if (isset($tlmsDomain, $tlmsApiKey, $enrollUserToCourses)
             ) {
                 // we accept the domain only, without the protocol
-                if (stripos(strtolower($_POST['tlms-domain']), 'http') === 0
-                    || stripos(strtolower($_POST['tlms-domain']), 'https') === 0
+                if (stripos($tlmsDomain, 'http') === 0
+                    || stripos($tlmsDomain, 'https') === 0
                 ) {
                     $action_status     = 'error';
                     $domain_validation = 'form-invalid';
@@ -90,17 +99,14 @@ class Admin implements PluginService
                     $api_validation = 'form-invalid';
                     $action_message = esc_html__('Invalid TalentLMS API key', 'talentlms');
                 } else {
-                    update_option('tlms-domain', sanitize_text_field($_POST['tlms-domain']));
-                    update_option('tlms-apikey', sanitize_text_field($_POST['tlms-apikey']));
-                    update_option(
-                        'tlms-enroll-user-to-courses',
-                        sanitize_text_field($_POST['tlms-enroll-user-to-courses'])
-                    );
+                    update_option('tlms-domain', $tlmsDomain);
+                    update_option('tlms-apikey', $tlmsApiKey);
+                    update_option('tlms-enroll-user-to-courses', $enrollUserToCourses);
 
                     if (isset($_POST['tlms-automtically-complete-orders'])) {
                         update_option(
                             'tlms-automtically-complete-orders',
-                            sanitize_text_field($_POST['tlms-automtically-complete-orders'])
+                            $automaticallyCompleteOrders
                         );
                     }
 

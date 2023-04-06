@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <h2><i class="fa fa-check-square-o"></i>&nbsp;<?php esc_html_e('Edit CSS', 'talentlms'); ?></h2>
+    <h2><i class="fa fa-square-check"></i>&nbsp;<?php esc_html_e('Edit CSS', 'talentlms'); ?></h2>
     
     <div id='action-message' class='<?php echo esc_attr($action_status); ?> tl-admin-edit-css-message-container fade'>
         <p><?php echo esc_html($action_message); ?></p>

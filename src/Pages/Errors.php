@@ -59,7 +59,27 @@ class Errors implements PluginService
 
         if (! empty($this->talentlmsAdminErrors)) {
             foreach ($this->talentlmsAdminErrors as $message) {
-                echo '<div class="error notice is-dismissible">' . $message . '</div>';
+                echo '<div class="error notice is-dismissible">' . wp_kses($message, array('strong'=>array()), array('http', 'https')) . '</div>';
+            }
+        }
+    }
+
+    /**
+     * Show warnings (only on Dashboard, Setup and Integrations pages)
+     * @return void
+     */
+    public function tlms_ManualShowWarnings(){
+        require_once(ABSPATH . 'wp-admin/includes/screen.php');
+        $screen_id = get_current_screen()->id;
+
+        if (($screen_id === 'toplevel_page_talentlms'
+            || $screen_id == 'talentlms_page_talentlms-setup'
+            || $screen_id == 'talentlms_page_talentlms-integrations')) {
+
+            if (!empty($this->talentlmsAdminErrors)) {
+                foreach ($this->talentlmsAdminErrors as $message) {
+                    echo '<div class="error notice is-dismissible">' . wp_kses($message, array('strong' => array()), array('http', 'https')) . '</div>';
+                }
             }
         }
     }

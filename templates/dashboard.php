@@ -9,7 +9,7 @@
             <div class="tl-admin-options-grid">
                 <a href="<?php echo esc_url(admin_url('admin.php?page=talentlms-setup')); ?>">
                     <div class="tl-admin-option">
-                        <i class="fa fa-cog fa-3x"></i>
+                        <i class="fa-solid fa-cog fa-3x"></i>
                         <h3><?php esc_html_e('Setup', 'talentlms'); ?></h3>
                         <p><?php esc_html_e('Connect TalentLMS with your WordPress site', 'talentlms'); ?></p>
                     </div>
@@ -17,7 +17,7 @@
 
                 <a href="<?php echo esc_url(admin_url('admin.php?page=talentlms-integrations')); ?>">
                     <div class="tl-admin-option">
-                        <i class="fa fa-check-square-o fa-3x"></i>
+                        <i class="fa-solid fa-square-check fa-3x"></i>
                         <h3><?php esc_html_e('Integrations', 'talentlms'); ?></h3>
                         <p><?php esc_html_e('Integrate your plugin with other WP plugins', 'talentlms'); ?></p>
                     </div>
@@ -25,7 +25,7 @@
 
                 <a href="<?php echo esc_url(admin_url('admin.php?page=talentlms-css')); ?>">
                     <div class="tl-admin-option">
-                        <i class="fa fa-check-square-o fa-3x"></i>
+                        <i class="fa-solid fa-square-check fa-3x"></i>
                         <h3><?php esc_html_e('CSS', 'talentlms'); ?></h3>
                         <p><?php esc_html_e('Customize the plugin appearance', 'talentlms'); ?></p>
                     </div>
@@ -33,7 +33,7 @@
 
                 <a href="javascript:void(0);">
                     <div class="tl-admin-option" data-toggle="modal" data-target="#shortcodesModal">
-                        <i class="fa fa-code fa-3x"></i>
+                        <i class="fa-solid fa-code fa-3x"></i>
                         <h3><?php esc_html_e('Shortcodes', 'talentlms'); ?></h3>
                         <p><?php esc_html_e('Shortcodes to use with your WordPress site.', 'talentlms'); ?></p>
                     </div>
@@ -41,7 +41,7 @@
                 <!-- snom 7-->
                 <a href="<?php echo esc_url(admin_url('widgets.php')); ?>">
                     <div class="tl-admin-option">
-                        <i class="fa fa-cogs fa-3x"></i>
+                        <i class="fa-solid fa-cogs fa-3x"></i>
                         <h3><?php esc_html_e('Widgets', 'talentlms'); ?></h3>
                         <p><?php esc_html_e('Insert TalentLMS widget in any registered sidebar of your site.', 'talentlms'); ?></p>
                     </div>
@@ -49,7 +49,7 @@
 
                 <a href="javascript:void(0);">
                     <div class="tl-admin-option" data-toggle="modal" data-target="#helpModal">
-                        <i class="fa fa-question-circle fa-3x"></i>
+                        <i class="fa-solid fa-question-circle fa-3x"></i>
                         <h3><?php esc_html_e('Help', 'talentlms'); ?></h3>
                         <p><?php esc_html_e('Instructions and best practices', 'talentlms'); ?></p>
                     </div>
