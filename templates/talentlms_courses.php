@@ -6,7 +6,7 @@
 
         <?php foreach ($categories as $key => $category) : ?>
             <label><?php echo esc_html($category->name);?></label>
-            <input type="checkbox" class="ef-category" value="<?php echo $category->id; ?>">
+            <input type="checkbox" class="ef-category" value="<?php echo esc_attr($category->id); ?>">
         <?php endforeach ?>
     </fieldset>
 
@@ -27,13 +27,13 @@
         <?php foreach ($courses as $course) : ?>
             <tr>
                 <td><img src="<?php echo esc_url($course->big_avatar); ?>"/></td>
-                <td><a href="?tlms-course=<?php echo (int)$course->id; ?>"><?php echo esc_html($course->name);
+                <td><a href="?tlms-course=<?php echo esc_attr((int)$course->id); ?>"><?php echo esc_html($course->name);
                 echo (isset($course->course_code)) ? "(".esc_html($course->course_code).")":''; ?></a></td>
                 <td><?php echo esc_html($course->description); ?></td>
                 <td><?php echo esc_html($course->price); ?></td>
                 <td><?php echo date($dateFormat, $course->creation_date); ?></td>
                 <td><?php echo date($dateFormat, $course->last_update_on); ?></td>
-                <td style="display:none;"><?php echo (int)$course->category_id; ?></td>
+                <td style="display:none;"><?php echo esc_html((int)$course->category_id); ?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>
@@ -76,7 +76,7 @@
     </div>
 
     <h3><?php esc_html_e('Price', 'talentlms');?>:</h3>
-    <p><?php echo ($course['price']) ? esc_html($course['price']) : '-'; ?></p>
+    <p><?php echo (esc_html($course['price'])) ? esc_html($course['price']) : '-'; ?></p>
 
     <h3><?php esc_html_e('Description', 'talentlms');?>:</h3>
     <p><?php echo esc_html($course['description']); ?></p>

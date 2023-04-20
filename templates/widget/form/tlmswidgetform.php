@@ -4,5 +4,5 @@
            id="<?php echo esc_attr($titleId); ?>"
            name="<?php echo esc_attr($titleName); ?>"
            type="text"
-           value="<?php echo $title; ?>">
+           value="<?php echo esc_attr($title); ?>">
 </p>
