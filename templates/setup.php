@@ -14,7 +14,7 @@
                     <label for="tlms-domain"><?php esc_html_e("TalentLMS Domain", 'talentlms'); ?> <span class="description">(<?php esc_html_e("Required", 'talentlms'); ?>)</span>:</label>
                 </th>
                 <td class="form-field form-required <?php echo esc_attr($domain_validation); ?>">
-                    <input id="tlms-domain" name="tlms-domain" style="width: 25em;" value="<?php echo get_option('tlms-domain'); ?>"/>
+                    <input id="tlms-domain" name="tlms-domain" style="width: 25em;" value="<?php echo esc_attr(get_option('tlms-domain')); ?>"/>
                 </td>
             </tr>
             <tr>
@@ -22,7 +22,7 @@
                     <label for="tlms-apikey"><?php esc_html_e("API Key", 'talentlms'); ?> <span class="description"><?php esc_html_e("Required", 'talentlms'); ?></span>:</label>
                 </th>
                 <td class="form-field form-required <?php echo esc_attr($api_validation); ?>">
-                    <input id="tlms-apikey" name="tlms-apikey" style="width: 25em;" value="<?php echo get_option('tlms-apikey'); ?>"/>
+                    <input id="tlms-apikey" name="tlms-apikey" style="width: 25em;" value="<?php echo esc_attr(get_option('tlms-apikey')); ?>"/>
                 </td>
             </tr>
             <tr style="border-top: 1px dashed #c9c9c9">
@@ -31,8 +31,8 @@
                 </th>
                 <td class="form-field form-required <?php echo esc_attr($enroll_user_validation); ?>">
                     <select name="tlms-enroll-user-to-courses">
-                        <option value="submission" <?php echo (get_option('tlms-enroll-user-to-courses') == 'submission')? 'selected="Selected"': ''; ?> ><?php esc_html_e("Upon order submission", 'talentlms'); ?></option>
-                        <option value="completion" <?php echo (get_option('tlms-enroll-user-to-courses') == 'completion')? 'selected="Selected"': ''; ?> ><?php esc_html_e("Upon order completion", 'talentlms'); ?></option>
+                        <option value="submission" <?php if(get_option('tlms-enroll-user-to-courses') == 'submission'){ echo 'selected="Selected"';}else{ echo '';} ?> ><?php esc_html_e("Upon order submission", 'talentlms'); ?></option>
+                        <option value="completion" <?php if(get_option('tlms-enroll-user-to-courses') == 'completion'){ echo 'selected="Selected"';}else{ echo '';} ?> ><?php esc_html_e("Upon order completion", 'talentlms'); ?></option>
                     </select>
                 </td>
             </tr>
