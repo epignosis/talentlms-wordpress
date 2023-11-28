@@ -2,7 +2,7 @@
 Contributors: panagop, papagel75, simosnomikos
 Tags: TalentLMS, elearning, lms, lcms, hcm, learning management system
 Requires at least: 2.0
-Tested up to: 6.1.1
+Tested up to: 6.4.1
 Requires PHP: 5.2.4
 Stable tag: 7.0
 License: GPLv2 or later
