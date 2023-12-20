@@ -12,6 +12,7 @@ use TalentLMS_Category;
 use TalentLMS_Course;
 use TalentLMS_Siteinfo;
 use TalentLMS_User;
+use TalentlmsIntegration\TalentLMSLibExt\WPTalentLMSCourse;
 use TalentlmsIntegration\Validations\TLMSEmail;
 use TalentlmsIntegration\Validations\TLMSFloat;
 use TalentlmsIntegration\Validations\TLMSInteger;
@@ -284,7 +285,11 @@ class Utils
         wp_set_object_terms($product_id, sanitize_text_field($courses[$course_id]->category_name), 'product_cat');
         wp_set_object_terms($product_id, 'simple', 'product_type');
 
-        $price = filter_var(html_entity_decode($courses[$course_id]->price), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $price = filter_var(
+            html_entity_decode($courses[$course_id]->price),
+            FILTER_SANITIZE_NUMBER_FLOAT,
+            FILTER_FLAG_ALLOW_FRACTION
+        );
 
         update_post_meta($product_id, '_visibility', 'visible');
         update_post_meta($product_id, '_stock_status', 'instock');
@@ -527,7 +532,9 @@ class Utils
     public static function tlms_orderHasLatePaymentMethod(int $order_id): bool
     {
 
-        $order = wc_get_order((new TLMSPositiveInteger($order_id))->getValue()); //tlms_recordLog('payment_method: ' . $order->get_payment_method());
+        $order = wc_get_order(
+            (new TLMSPositiveInteger($order_id))->getValue()
+        ); //tlms_recordLog('payment_method: ' . $order->get_payment_method());
 
         return in_array($order->get_payment_method(), array('bacs', 'cheque', 'cod'));
     }
@@ -613,7 +620,7 @@ class Utils
                     wc_add_order_item_meta(
                         $item->get_id(),
                         'tlms_go-to-course',
-                        TalentLMS_Course::gotoCourse(
+                        WPTalentLMSCourse::gotoCourse(
                             array(
                                 'course_id' => (int)$product_tlms_course[0],
                                 'user_id' => (int)$enrolled_course[0]['user_id']

@@ -12,7 +12,7 @@ use TalentlmsIntegration\Utils;
 
 class Errors implements PluginService
 {
-	use TalentLMSApiIntegrationHelper;
+    use TalentLMSApiIntegrationHelper;
     public $talentlmsAdminErrors = array();  // Stores all the errors that need to be displayed to the admin.
     public $screen_id;
 
@@ -68,14 +68,14 @@ class Errors implements PluginService
      * Show warnings (only on Dashboard, Setup and Integrations pages)
      * @return void
      */
-    public function tlms_ManualShowWarnings(){
+    public function tlms_ManualShowWarnings()
+    {
         require_once(ABSPATH . 'wp-admin/includes/screen.php');
         $screen_id = get_current_screen()->id;
 
         if (($screen_id === 'toplevel_page_talentlms'
             || $screen_id == 'talentlms_page_talentlms-setup'
             || $screen_id == 'talentlms_page_talentlms-integrations')) {
-
             if (!empty($this->talentlmsAdminErrors)) {
                 foreach ($this->talentlmsAdminErrors as $message) {
                     echo '<div class="error notice is-dismissible">' . wp_kses($message, array('strong' => array()), array('http', 'https')) . '</div>';
@@ -84,10 +84,10 @@ class Errors implements PluginService
         }
     }
 
-	/**
-	 * @throws TalentLMS_ApiError
-	 */
-	public function tlms_displayErrors(): void
+    /**
+     * @throws TalentLMS_ApiError
+     */
+    public function tlms_displayErrors(): void
     {
         if ((
                 empty($_POST['tlms-domain'])
