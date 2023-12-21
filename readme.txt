@@ -4,7 +4,7 @@ Tags: TalentLMS, elearning, lms, lcms, hcm, learning management system
 Requires at least: 2.0
 Tested up to: 6.4.1
 Requires PHP: 5.2.4
-Stable tag: 7.0
+Stable tag: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,10 @@ If you have a question or any feedback you want to share send us an email at [su
 3. Integration pages `assets/screenshot-3.png`
 
 == Changelog ==
+
+= 7.0 =
+
+* Provided an alternative way to provide access into course, by using a two factor authentication (2fa) code, after customer's purchase.
 
 = 7.0 =
 

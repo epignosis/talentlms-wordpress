@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+### [7.1] - 2023-3-2
+
+* Provided an alternative way to provide access into course, by using a two factor authentication (2fa) code, after customer's purchase.
+
 ### [7.0] - 2023-3-2
 
 * Added support for Wordpress 6.1.1
