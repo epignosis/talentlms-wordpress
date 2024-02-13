@@ -55,7 +55,7 @@ If you have a question or any feedback you want to share send us an email at [su
 
 == Changelog ==
 
-= 7.0 =
+= 7.1 =
 
 * Provided an alternative way to provide access into course, by using a two factor authentication (2fa) code, after customer's purchase.
 
