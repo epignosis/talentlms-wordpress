@@ -16,11 +16,11 @@ trait TalentLMSApiIntegrationHelper
     public function enableTalentLMSLib(): void
     {
         try {
-			if (empty(get_option('tlms-domain')) || empty(get_option('tlms-apikey'))) {
-				throw new TalentLMS_ApiError(
-					esc_html__('You need to specify a TalentLMS domain and a TalentLMS API key.', 'talentlms')
-				);
-			}
+            if (empty(get_option('tlms-domain')) || empty(get_option('tlms-apikey'))) {
+                throw new TalentLMS_ApiError(
+                    esc_html__('You need to specify a TalentLMS domain and a TalentLMS API key.', 'talentlms')
+                );
+            }
 
             TalentLMS::setDomain(esc_html(get_option('tlms-domain')));
             TalentLMS::setApiKey(esc_html(get_option('tlms-apikey')));

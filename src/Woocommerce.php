@@ -24,11 +24,15 @@ class Woocommerce implements PluginService
             );
             add_action(
                 'woocommerce_payment_complete',
-                array($this, 'tlms_woocommerce_payment_complete')
+                array($this, 'tlms_woocommerce_payment_complete'),
+                10,
+                1
             );
             add_action(
                 'woocommerce_order_status_completed',
-                array($this, 'tlms_processWooComOrder')
+                array($this, 'tlms_processWooComOrder'),
+                10,
+                1
             );
             add_action(
                 'woocommerce_save_account_details',
