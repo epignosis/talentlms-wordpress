@@ -1,12 +1,13 @@
 <a name="readme-top"></a>
+
 ## TalentLMS WordPress plugin
 
-* **Contributors:** panagop, papagel75, simosnomikos
-* **Tags:** TalentLMS, elearning, lms, lcms, learning management system
-* **Requires at least:** 2.0
-* **Tested up to:** 6.7.1
-* **Requires PHP:** 5.2.4
-* **Stable tag:** 7.1
+- **Contributors:** panagop, papagel75, simosnomikos
+- **Tags:** TalentLMS, elearning, lms, lcms, learning management system
+- **Requires at least:** 2.0
+- **Tested up to:** 6.8.1
+- **Requires PHP:** 5.2.4
+- **Stable tag:** 7.1
 
 This plugin integrates TalentLMS with WordPress. Promote your TalentLMS content through your WordPress site.
 
@@ -34,17 +35,17 @@ This plugin integrates TalentLMS with WordPress. Promote your TalentLMS content 
 
 ### About The Project
 
-[TalentLMS](http://www.talentlms.com/ "TalentLMS super-easy, cloud-based learning platform") is a cloud-based, lean LMS with an emphasis on usability and easy course creation. With TalentLMS we wanted to create a better learning experience in every way that actually matters – and we are excited about this new offering. The product focuses on small but growing organizations. There are a number of obstacles that prohibit small organizations from using elearning. To be productive, small businesses need a number of tools and several related services such as setup and maintenance, course creation and the support of end-users. All these require ample time, resources and money. It comes as no surprise that most small organizations find elearning a non-viable pursuit and prefer on-job or informal training methods.
+[TalentLMS](http://www.talentlms.com/ 'TalentLMS super-easy, cloud-based learning platform') is a cloud-based, lean LMS with an emphasis on usability and easy course creation. With TalentLMS we wanted to create a better learning experience in every way that actually matters – and we are excited about this new offering. The product focuses on small but growing organizations. There are a number of obstacles that prohibit small organizations from using elearning. To be productive, small businesses need a number of tools and several related services such as setup and maintenance, course creation and the support of end-users. All these require ample time, resources and money. It comes as no surprise that most small organizations find elearning a non-viable pursuit and prefer on-job or informal training methods.
 
 Read more about TalentLMS in:
 
-* [TalentLMS - an Introduction](https://www.talentlms.com/blog/talentlms-an-introduction/ "TalentLMS - an Introduction")
-* [TalentLMS - Get started in 5'](https://www.talentlms.com/blog/talentlms-get-started-in-5/ "TalentLMS - Get started in 5'")
+- [TalentLMS - an Introduction](https://www.talentlms.com/blog/talentlms-an-introduction/ 'TalentLMS - an Introduction')
+- [TalentLMS - Get started in 5'](https://www.talentlms.com/blog/talentlms-get-started-in-5/ "TalentLMS - Get started in 5'")
 
 ### Plugin Features
 
-* List your TalentLMS courses and their content in WordPress.
-* Integrate your TalentLMS courses as WooCommerce products
+- List your TalentLMS courses and their content in WordPress.
+- Integrate your TalentLMS courses as WooCommerce products
 
 ## Getting Started
 
@@ -55,16 +56,16 @@ Read more about TalentLMS in:
 3. Upload `/talentlms/` folder to the `/wp-content/plugins/` folder on your site
 4. Visit your WordPress _Administration -> Plugins_ and activate TalentLMS WordPress plugin
 
-Alternatively you can automatically install TalentLMS WordPress plugin from the  WordPress Plugin Directory. 
+Alternatively you can automatically install TalentLMS WordPress plugin from the WordPress Plugin Directory.
 
 ## Usage
 
-* Once you have activated the plugin, provide your TalentLMS Domain name and TalentLMS API key.
-* You must update your permalinks to use "Custom Structure" or if your using WordPress 3.3 and above you can use the "Post name" option just as long as you have `/%postname%/` at the end of the url.
-* Use the shortcodes:
-	* `[talentlms-courses]` : to list your TalentLMS courses
-* Use the widget:
-	* Insert TalentLMS widget in any registered sidebar of your site.
+- Once you have activated the plugin, provide your TalentLMS Domain name and TalentLMS API key.
+- You must update your permalinks to use "Custom Structure" or if your using WordPress 3.3 and above you can use the "Post name" option just as long as you have `/%postname%/` at the end of the url.
+- Use the shortcodes:
+  - `[talentlms-courses]` : to list your TalentLMS courses
+- Use the widget:
+  - Insert TalentLMS widget in any registered sidebar of your site.
 
 ## License
 
