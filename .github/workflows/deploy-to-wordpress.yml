@@ -28,8 +28,10 @@ jobs:
           php-version: '8.0'
           tools: composer
 
-      - name: Install Composer dependencies
-        run: composer install --no-dev --no-scripts --optimize-autoloader
+      - name: Clean and install production dependencies
+        run: |
+          rm -rf vendor
+          composer install --no-dev --no-scripts --optimize-autoloader
 
       - name: Get version from release or input
         id: version
