@@ -1,0 +1,10 @@
+/.git
+/.github
+/.gitattributes
+/.gitignore
+/.distignore
+/docker
+/tests
+/phpstan.neon
+/phpstan-baseline.neon
+
