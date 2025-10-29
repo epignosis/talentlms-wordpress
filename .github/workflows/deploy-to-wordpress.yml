@@ -1,6 +1,9 @@
 name: Deploy to WordPress.org
 
 on:
+  push:
+    branches:
+      - github-action-to-deploy-on-wordpress
   release:
     types: [published]
   workflow_dispatch:
@@ -33,6 +36,8 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" == "release" ]; then
             VERSION="${{ github.event.release.tag_name }}"
+          elif [ "${{ github.event_name }}" == "push" ]; then
+            VERSION="v1.1.1"
           else
             VERSION="${{ github.event.inputs.version }}"
           fi
