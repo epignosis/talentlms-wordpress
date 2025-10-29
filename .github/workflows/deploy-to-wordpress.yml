@@ -39,7 +39,7 @@ jobs:
           if [ "${{ github.event_name }}" == "release" ]; then
             VERSION="${{ github.event.release.tag_name }}"
           elif [ "${{ github.event_name }}" == "push" ]; then
-            VERSION="v1.1.1"
+            VERSION="v7.2.0"
           else
             VERSION="${{ github.event.inputs.version }}"
           fi
