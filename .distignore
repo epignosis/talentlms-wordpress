@@ -7,20 +7,7 @@
 /tests
 /phpstan.neon
 /phpstan-baseline.neon
-vendor/phpcompatibility
-vendor/phpunit
-vendor/phpstan
-vendor/squizlabs
-vendor/wp-coding-standards
-vendor/szepeviktor
-vendor/sebastian
-vendor/theseer
-vendor/myclabs
-vendor/nikic
-vendor/phar-io
-vendor/doctrine
-vendor/webmozart
-vendor/dealerdirect
-vendor/roave
-vendor/php-stubs
+/composer.json
+/composer.lock
+/vendor
 
