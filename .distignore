@@ -9,5 +9,4 @@
 /phpstan-baseline.neon
 /composer.json
 /composer.lock
-/vendor
 
