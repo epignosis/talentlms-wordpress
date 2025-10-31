@@ -1,3 +1,4 @@
+/.wordpress-org
 /.git
 /.github
 /.gitattributes
@@ -9,4 +10,3 @@
 /phpstan-baseline.neon
 /composer.json
 /composer.lock
-
