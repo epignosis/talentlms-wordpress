@@ -8,3 +8,4 @@
 /tests
 /phpstan.neon
 /phpstan-baseline.neon
+/README.md

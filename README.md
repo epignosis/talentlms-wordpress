@@ -1,78 +1,81 @@
-<a name="readme-top"></a>
+# TalentLMS WordPress Plugin
 
-## TalentLMS WordPress plugin
+This plugin integrates TalentLMS with WordPress, allowing you to promote TalentLMS content through a WordPress site. It provides features such as listing TalentLMS courses, displaying course content, and integrating courses as WooCommerce products.
 
-- **Contributors:** panagop, papagel75, yrizos
-- **Tags:** TalentLMS, elearning, lms, lcms, learning management system
-- **Requires at least:** 2.0
-- **Tested up to:** 6.8.1
-- **Requires PHP:** 5.2.4
-- **Stable tag:** 7.1.1
+For further documentation, see: [TalentLMS and WordPress](https://epignosis.atlassian.net/wiki/spaces/TL/pages/2790785025/TalentLMS+and+WordPress)
 
-This plugin integrates TalentLMS with WordPress. Promote your TalentLMS content through your WordPress site.
+## Directory Structure
 
-<!-- TABLE OF CONTENTS -->
-<details open>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#plugin-features">Plugin Features</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#license">License</a></li>
-	<li><a href="#faq">FAQ</a></li>
-  </ol>
-</details>
+```
+├── assets/                    # Frontend assets (CSS, JS, images)
+├── docker/                    # Docker configuration
+├── src/                       # Main plugin source code
+│   ├── Helpers/               # Helper classes
+│   ├── Pages/                 # Admin page classes
+│   ├── Services/              # Service classes
+│   ├── TalentLMSLibExt/       # TalentLMS library extensions
+│   ├── Validations/           # Validation classes
+│   └── [Core plugin files]    # Main plugin PHP files
+├── TalentLMSLib/              # TalentLMS PHP library
+├── templates/                 # PHP templates
+├── tests/                     # Test files
+├── talentlms.php              # Main plugin file
+├── readme.txt                 # WordPress.org readme
+└── composer.json              # PHP dependencies
+```
 
-### About The Project
+## Deployment
 
-[TalentLMS](http://www.talentlms.com/ 'TalentLMS super-easy, cloud-based learning platform') is a cloud-based, lean LMS with an emphasis on usability and easy course creation. With TalentLMS we wanted to create a better learning experience in every way that actually matters – and we are excited about this new offering. The product focuses on small but growing organizations. There are a number of obstacles that prohibit small organizations from using elearning. To be productive, small businesses need a number of tools and several related services such as setup and maintenance, course creation and the support of end-users. All these require ample time, resources and money. It comes as no surprise that most small organizations find elearning a non-viable pursuit and prefer on-job or informal training methods.
+This plugin uses an automated deployment pipeline to publish releases to WordPress.org. The deployment process is managed through GitHub Actions and integrates with WordPress.org's SVN repository system.
 
-Read more about TalentLMS in:
+### How It Works
 
-- [TalentLMS - an Introduction](https://www.talentlms.com/blog/talentlms-an-introduction/ 'TalentLMS - an Introduction')
-- [TalentLMS - Get started in 5'](https://www.talentlms.com/blog/talentlms-get-started-in-5/ "TalentLMS - Get started in 5'")
+1. **Development**: All development happens in this Git repository using standard Git workflows (branches, pull requests, etc.)
 
-### Plugin Features
+2. **Release Process**: When a new version is ready:
 
-- List your TalentLMS courses and their content in WordPress.
-- Integrate your TalentLMS courses as WooCommerce products
+   - Version numbers are updated in [talentlms.php](talentlms.php) and [readme.txt](readme.txt)
+   - Changes are committed and a Git tag is created (e.g., `v7.1.1`)
+   - A GitHub release is published, which triggers the deployment workflow
 
-## Getting Started
+3. **Automated Deployment**: The [deploy-to-wordpress.yml](.github/workflows/deploy-to-wordpress.yml) workflow automatically:
 
-### Installation
+   - Checks out the code and sets up PHP 8.1
+   - Installs production dependencies via Composer
+   - Extracts the version number from the Git tag
+   - Deploys the code to WordPress.org's SVN repository using the [10up/action-wordpress-plugin-deploy](https://github.com/10up/action-wordpress-plugin-deploy) action
+   - Updates both `/trunk` and `/tags/VERSION` in the SVN repository
+   - Syncs assets to the WordPress.org plugin directory
 
-1. Download TalentLMS WordPress plugin
-2. Unzip the file into a folder on your hard drive
-3. Upload `/talentlms/` folder to the `/wp-content/plugins/` folder on your site
-4. Visit your WordPress _Administration -> Plugins_ and activate TalentLMS WordPress plugin
+4. **WordPress.org Distribution**: WordPress.org automatically:
+   - Generates ZIP files for the new version
+   - Makes the update available to WordPress installations
+   - Notifies users about the new version
 
-Alternatively you can automatically install TalentLMS WordPress plugin from the WordPress Plugin Directory.
+### Key Components
 
-## Usage
+- **SVN Credentials**: Stored as GitHub Secrets (`SVN_USERNAME` and `SVN_PASSWORD`)
+- **Plugin Slug**: `talentlms` (the WordPress.org directory name)
+- **File Exclusions**: Defined in [.distignore](.distignore) to exclude development files (tests, Docker configs, etc.)
+- **Manual Deployment**: Can be triggered manually via GitHub Actions workflow_dispatch if needed
 
-- Once you have activated the plugin, provide your TalentLMS Domain name and TalentLMS API key.
-- You must update your permalinks to use "Custom Structure" or if your using WordPress 3.3 and above you can use the "Post name" option just as long as you have `/%postname%/` at the end of the url.
-- Use the shortcodes:
-  - `[talentlms-courses]` : to list your TalentLMS courses
-- Use the widget:
-  - Insert TalentLMS widget in any registered sidebar of your site.
+### Version Management
 
-## License
+This plugin follows semantic versioning (MAJOR.MINOR.PATCH). Version consistency is critical:
 
-Distributed under the [GPLv2 or later License](http://www.gnu.org/licenses/gpl-2.0.html). See `LICENSE.txt` for more information.
+- Version in plugin header ([talentlms.php](talentlms.php))
+- Stable tag in [readme.txt](readme.txt)
+- Git tag name
+- SVN tag directory
 
-## FAQ
+All four must match for proper deployment and user updates to work correctly.
 
-If you have a question or any feedback you want to share send us an email at [support@talentlms.com](mailto:support@talentlms.com 'support')
+### SVN Repository Structure
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+The WordPress.org SVN repository contains:
+
+- `/trunk/` - Latest development version
+- `/tags/` - Numbered release versions (e.g., `/tags/7.1.1`)
+- `/assets/` - Plugin screenshots, banners, and icons
+
+Users only receive updates from `/tags/`, not `/trunk`, based on the stable tag specified in [readme.txt](readme.txt).
