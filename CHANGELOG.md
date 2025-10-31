@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+### [7.1.2] - 2025-31-10
+
+* Updated plugin assets
+
 ### [7.1] - 2023-13-2
 
 * Provided an alternative way to provide access into course, by using a two factor authentication (2fa) code, after customer's purchase.
