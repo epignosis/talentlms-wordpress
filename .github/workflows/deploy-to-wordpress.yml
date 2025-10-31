@@ -48,9 +48,10 @@ jobs:
           echo "Deploying version: $VERSION"
 
       - name: WordPress Plugin Deploy
+        id: deploy
         uses: 10up/action-wordpress-plugin-deploy@stable
         with:
-          generate-zip: false
+          generate-zip: true
           dry-run: true
         env:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
@@ -58,9 +59,12 @@ jobs:
           SLUG: talentlms
           VERSION: ${{ steps.version.outputs.version }}
 
-      - name: Verify deployment
-        run: |
-          echo "✅ Plugin deployed successfully!"
-          echo "Version: ${{ steps.version.outputs.version }}"
-          echo "Check the plugin page at: https://wordpress.org/plugins/talentlms/"
+      - name: Upload plugin ZIP as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: talentlms-${{ steps.version.outputs.version }}
+          path: ${{ steps.deploy.outputs.zip-path }}
+          retention-days: 30
+
+
 
