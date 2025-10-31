@@ -8,5 +8,3 @@
 /tests
 /phpstan.neon
 /phpstan-baseline.neon
-/composer.json
-/composer.lock
