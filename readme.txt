@@ -1,10 +1,10 @@
 === TalentLMS WordPress plugin ===
-Contributors: panagop, papagel75, yrizos, wptalentlms
+Contributors: panagop, papagel75, yrizos, wptalentlms, themisgeo
 Tags: TalentLMS, elearning, lms, lcms, learning management system
-Requires at least: 2.0
-Tested up to: 6.8.1
-Requires PHP: 5.2.4
-Stable tag: 7.1.4
+Requires at least: 6.1
+Tested up to: 7.0
+Requires PHP: 7.3
+Stable tag: 7.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,11 @@ If you have a question or any feedback you want to share send us an email at [su
 3. Integration pages `assets/screenshot-3.png`
 
 == Changelog ==
+
+= 7.1.5 =
+
+* Tested with WordPress 7.0
+* Corrected the declared minimum PHP version to 7.3 and minimum WordPress version to 6.1
 
 = 7.1 =
 

@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+### [7.1.5] - 2026-30-07
+
+* Tested with WordPress 7.0
+* Corrected the declared minimum PHP version to 7.3 and minimum WordPress version to 6.1
+
 ### [7.1.2] - 2025-31-10
 
 * Updated plugin assets
