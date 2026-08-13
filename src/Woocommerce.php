@@ -8,7 +8,6 @@ namespace TalentlmsIntegration;
 use Exception;
 use TalentLMS_User;
 use TalentlmsIntegration\Services\PluginService;
-use TalentlmsIntegration\Validations\TLMSEmail;
 use TalentlmsIntegration\Validations\TLMSPositiveInteger;
 
 class Woocommerce implements PluginService
@@ -109,13 +108,19 @@ class Woocommerce implements PluginService
     // for when a user changes his password
     public function tmls_customerChangedPassword($user): void
     {
+        if (empty($_POST['password_1'])) {
+            return;
+        }
+
+        $tlmsUserId = Utils::tlms_getBoundTlmsUserId((int) $user);
+        if (! $tlmsUserId) {
+            return;
+        }
+
         try {
-            $userEmail = (new TLMSEmail($_POST['account_email']))->getValue();
-            $tlmsUser = TalentLMS_User::retrieve(array('email' => $userEmail));
-            $userId = (new TLMSPositiveInteger($tlmsUser['id']))->getValue();
             TalentLMS_User::edit(
                 array(
-                    'user_id' => $userId,
+                    'user_id' => $tlmsUserId,
                     'password' => $_POST['password_1']
                 )
             );
@@ -127,13 +132,19 @@ class Woocommerce implements PluginService
 
     public function tmls_customerResetPassword($user, $pass): void
     {
+        if (empty($_POST['password_1'])) {
+            return;
+        }
+
+        $tlmsUserId = Utils::tlms_getBoundTlmsUserId((int) $user->ID);
+        if (! $tlmsUserId) {
+            return;
+        }
+
         try {
-            $userEmail = (new TLMSEmail($user->data->user_email))->getValue();
-            $tlmsUser = TalentLMS_User::retrieve(array('email' => $userEmail));
-            $userId = (new TLMSPositiveInteger($tlmsUser['id']))->getValue();
             TalentLMS_User::edit(
                 array(
-                    'user_id' => $userId,
+                    'user_id' => $tlmsUserId,
                     'password' => sanitize_text_field($_POST['password_1'])
                 )
             );

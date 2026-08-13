@@ -8,6 +8,7 @@ namespace TalentlmsIntegration\Pages;
 use TalentLMS_ApiError;
 use TalentlmsIntegration\Helpers\TalentLMSApiIntegrationHelper;
 use TalentlmsIntegration\Services\PluginService;
+use TalentlmsIntegration\UserSync;
 use TalentlmsIntegration\Utils;
 use TalentlmsIntegration\Validations\TLMSPositiveInteger;
 
@@ -74,7 +75,7 @@ class Admin implements PluginService
 
     public function tlms_setupPage(): void
     {
-        $action_status = $action_message = $api_validation = $domain_validation = '';
+        $action_status = $action_message = $api_validation = $domain_validation = $enroll_user_validation = '';
 
         $action = isset($_POST['action']) ? sanitize_text_field(trim($_POST['action'])) : null;
         $tlmsDomain = isset($_POST['tlms-domain']) ? sanitize_text_field(trim(strtolower($_POST['tlms-domain']))) : null;
@@ -109,6 +110,8 @@ class Admin implements PluginService
                             $automaticallyCompleteOrders
                         );
                     }
+
+                    UserSync::tlms_startBackfill();
 
                     $action_status  = 'updated';
                     $action_message = esc_html__('Details edited successfully', 'talentlms');
