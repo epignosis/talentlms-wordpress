@@ -2,7 +2,7 @@
 Contributors: panagop, papagel75, yrizos, wptalentlms, themisgeo
 Tags: TalentLMS, elearning, lms, lcms, learning management system
 Requires at least: 6.1
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.3
 Stable tag: 7.1.5
 License: GPLv2 or later
