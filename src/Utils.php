@@ -575,6 +575,83 @@ class Utils
         return !empty($tmls_courses);
     }
 
+    const TLMS_USER_ID_META = 'tlms_user_id';
+
+    public static function tlms_getBoundTlmsUserId(int $wpUserId): ?int
+    {
+        $stored = get_user_meta($wpUserId, self::TLMS_USER_ID_META, true);
+        if ($stored === '' || $stored === false) {
+            return null;
+        }
+        $id = (int) $stored;
+
+        return $id > 0 ? $id : null;
+    }
+
+    /**
+     * Binds a WP user to a TalentLMS user id (persisted as user meta). The id is
+     * validated as a positive integer before it is stored.
+     */
+    public static function tlms_bindTlmsUser(int $wpUserId, int $tlmsUserId): void
+    {
+        $id = (new TLMSPositiveInteger($tlmsUserId))->getValue();
+        update_user_meta($wpUserId, self::TLMS_USER_ID_META, $id);
+    }
+
+    /**
+     * Records that a WP user has no TalentLMS account (sentinel 0) so the backfill
+     * and login lazy-bind stop re-querying the API for them.
+     */
+    public static function tlms_markNoLmsAccount(int $wpUserId): void
+    {
+        update_user_meta($wpUserId, self::TLMS_USER_ID_META, 0);
+    }
+
+    /**
+     * Resolves a WP user's TalentLMS account by email and stores the binding.
+     * Shared by the login lazy-bind and the one-time backfill worker.
+     *
+     * - account found              -> bind the returned id
+     * - account not found (HTTP 404) -> store the "no account" sentinel
+     * - invalid email              -> store the "no account" sentinel (can never match)
+     * - transient/network/5xx/429  -> leave unprocessed so it is retried later
+     *
+     * @return bool true when resolved (bound or sentinel-marked), false when left
+     *              unprocessed for a later retry.
+     */
+    public static function tlms_resolveAndBindByEmail(int $wpUserId, string $email): bool
+    {
+        try {
+            $validEmail = (new TLMSEmail($email))->getValue();
+        } catch (Exception $e) {
+            // Not a valid email — it can never match a TalentLMS account.
+            self::tlms_markNoLmsAccount($wpUserId);
+            return true;
+        }
+
+        try {
+            $tlmsUser = TalentLMS_User::retrieve(array('email' => $validEmail));
+        } catch (Exception $e) {
+            // Only a definitive "not found" is safe to mark as "no account".
+            if ((int) $e->getCode() === 404) {
+                self::tlms_markNoLmsAccount($wpUserId);
+                return true;
+            }
+            // Anything else is transient (network, 5xx, rate limit): retry later so
+            // we never wrongly disable a real account-holder's password sync.
+            self::tlms_recordLog($e->getMessage());
+            return false;
+        }
+
+        if (empty($tlmsUser['id'])) {
+            self::tlms_markNoLmsAccount($wpUserId);
+            return true;
+        }
+
+        self::tlms_bindTlmsUser($wpUserId, (int) $tlmsUser['id']);
+        return true;
+    }
+
     public static function tlms_enrollUserToCoursesByOrderId(int $order_id): void
     {
 
@@ -589,6 +666,11 @@ class Utils
                     )->getValue())
             );
             $retrieved_user_exists = true;
+            // Bind-on-link: an existing TalentLMS account for this registered WP
+            // user — record the id so future password syncs resolve by id, not email.
+            if (!empty($user->wp_user_id) && !empty($retrieved_user['id'])) {
+                self::tlms_bindTlmsUser((int) $user->wp_user_id, (int) $retrieved_user['id']);
+            }
         } catch (Exception $e) {
             self::tlms_recordLog($e->getMessage());
             $retrieved_user_exists = false;
@@ -596,7 +678,12 @@ class Utils
 
         if (!$retrieved_user_exists) {
             try {
-                TalentLMS_User::signup(self::tlms_buildSignUpArgumentsByUser($user));
+                // Bind-on-creation: capture the signup response (previously discarded)
+                // so the WP user is linked to the account we just created for them.
+                $created_user = TalentLMS_User::signup(self::tlms_buildSignUpArgumentsByUser($user));
+                if (!empty($user->wp_user_id) && !empty($created_user['id'])) {
+                    self::tlms_bindTlmsUser((int) $user->wp_user_id, (int) $created_user['id']);
+                }
             } catch (Exception $e) {
                 self::tlms_recordLog($e->getMessage());
             }
@@ -685,10 +772,12 @@ class Utils
             $user->user_login = $existing_user->data->user_login;
             $user->user_password = !empty($_POST['account_password']) ?
                 substr($_POST['account_password'], 0, 20) : self::tlms_passgen();
+            $user->wp_user_id = (int) $existing_user->ID; // carried through for ID-binding
         } else { //guest user
             $user->user_email = $order->get_billing_email();
             $user->user_login = $user->user_firstname.'.'.$user->user_lastname;
             $user->user_password = self::tlms_passgen();
+            $user->wp_user_id = null; // guest checkout — no WP account to bind
         }
 
         return $user;

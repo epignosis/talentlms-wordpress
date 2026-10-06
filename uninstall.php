@@ -14,6 +14,7 @@ if (! defined('WP_UNINSTALL_PLUGIN')) {
 function tlms_uninstall()
 {
     tlms_deleteOptions();
+    tlms_deleteUserBindings();
     tlms_deleteWPPages();
     Utils::tlms_deleteWoocomerceProducts();
     tlms_dropDB();
@@ -24,6 +25,17 @@ function tlms_deleteOptions()
     delete_option('tlms-domain');
     delete_option('tlms-apikey');
     delete_option('tlms-woocommerce-active');
+    delete_option('tlms-db-version');
+    delete_option('tlms-backfill-status');
+    delete_option('tlms-backfill-lock');
+    delete_option('tlms-backfill-stalls');
+}
+
+function tlms_deleteUserBindings()
+{
+    // Remove the WP-user -> TalentLMS-user id bindings and any queued backfill.
+    delete_metadata('user', 0, 'tlms_user_id', '', true);
+    wp_clear_scheduled_hook('tlms_run_user_backfill');
 }
 
 function tlms_deleteWPPages()
