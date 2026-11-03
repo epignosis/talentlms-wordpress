@@ -19,6 +19,7 @@ final class Plugin
             Database::class,
             Enqueue::class,
             Woocommerce::class,
+            UserSync::class,
             ShortCodes::class,
             TLMSWidget::class
     );
