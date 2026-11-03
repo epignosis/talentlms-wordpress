@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+### [7.1.6] - 2026-05-10
+
+* Tested with WordPress 7.1
+
 ### [7.1.5] - 2026-30-07
 
 * Tested with WordPress 7.0
